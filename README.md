@@ -1,3 +1,20 @@
+<!-- music visualized - the concept
+    user searches youtube for a song. the song/lyrics/words to the video is then represented in some visual way using d3
+    - graphing relationship of words (cant remember which one that was)
+    - word cloud
+    - regional words? on a map, see where certain words are used most frequently (would need another api)
+    - some pretty art that's made from it somehow? p5.js would work  think. this videos would have it https://www.youtube.com/playlist?list=PLRqwX-V7Uu6YxDKpFzf_2D84p0cyk4T7X
+                            this one too https://www.youtube.com/playlist?list=PLRqwX-V7Uu6a343yZ_JcPzIric4SOGqMZ
+-->
+
+<!-- using react
+    when user senter the app, see bar to search video/song on youtube, it pops up with the options, user selects one.
+    next is dropdown of what they want to see using the words of the video
+-->
+
+<!-- and add the kanye rest api as a fun addition -->
+
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
