@@ -1,25 +1,24 @@
 import './App.css';
 import { useState } from 'react'
-import { apikey } from './urls' // not sure how i'd do this
+import { apikey, url } from './urls' // not sure how i'd do this
+import styles from './App';
+import 'bootstrap/dist/css/bootstrap.css';
+import { Button, Col, Container, Row, DropdownButton, Dropdown, Form } from 'react-bootstrap';
+import { Label } from 'reactstrap';
 
-// const lyric_url = `matcher.lyrics.get?q_track${nameofsonglike:sexy%20and%20i%20know%20it}&q_artist=${artist}`;
-//ex of url for lyrics 'matcher.lyrics.get?q_track=sexy%20and%20i%20know%20it&q_artist=lmfao' 
-
-
-
+// use react-bootstrap for making page mobile friendly (remem this is where its really useful)
 function App() {
   const [lyrics, setLyrics] = useState('');
   const [artist, setArtist] = useState('');
   const [song, setSong] = useState('');
-  const url = 'https://api.musixmatch.com/ws/1.1/matcher.lyrics.get';
 
   const getLyrics = async () => {
     try { //not sure if this is being used correctly here
-    const res = await fetch(`${url}?q_track=${song.replace(" ", '%20')}q_artist=${artist.replace(" ", '%20')}o&apikey=${apikey}`);//this has to change
-    const data = await res.json(); //i might be able to desctructure this to get to the lyrics_body
-    const almostThere = data.message.body.lyrics.lyrics_body;
-    setLyrics(almostThere.substring(0, almostThere.length - 69))
-    console.log(lyrics)
+      const res = await fetch(`${url}?q_track=${song.replace(" ", '%20')}q_artist=${artist.replace(" ", '%20')}o&apikey=${apikey}`);
+      const data = await res.json(); //i might be able to desctructure this to get to the lyrics_body
+      const almostThere = data.message.body.lyrics.lyrics_body;
+      setLyrics(almostThere.substring(0, almostThere.length - 69))
+      console.log(lyrics)
     } catch (err) {
       alert(err)
     }
@@ -57,35 +56,57 @@ function App() {
 
   function MusicForm() {
     return (
-      <form>
-        <label>
-          Song title:
-          <input
-            type="text"
-            value={song}
-            onChange={e => setSong(e.target.value)} //e is this whole big object
-          />
-        </label>
-        {/* break here */}
-        <label>
-          Artist:
-          <input
-            type="text"
-            value={artist}
-            onChange={e => setArtist(e.target.value)}
-          />
-        </label>
-        {/* <input type="submit" value="Submit" /> replace(" ", '%20') */}
-      </form>
+      // <Container fluid>
+        <Form>
+          <Row className="justify-content-sm-center">
+            <Col sm="auto">
+              <Label> 
+                Song title:   
+                <input
+                  type="text"
+                  value={song}
+                  onChange={e => setSong(e.target.value)} //e is this whole big object
+                />
+              </Label>
+            </Col>
+            {/* break here */}
+            <Col sm="auto">
+              <Label>
+                Artist:
+                <input
+                  type="text"
+                  value={artist}
+                  onChange={e => setArtist(e.target.value)}
+                />
+              </Label>
+            </Col>
+            <Col sm="auto">
+            <Form.Select>
+              <option value="0">Select preferred way of displaying the data</option>
+              <option value="1">1st way of displaying the data</option>
+              <option value="2">2nd way of displaying the data</option>
+              <option value="3">3rd way of displaying the data</option>
+            </Form.Select>
+            </Col>
+          </Row>
+          <Button onClick={getLyrics}>Get Those Lyrics</Button> {/* this will handle submission of the music form */}
+
+          {/* <input type="submit" value="Submit" /> replace(" ", '%20') */}
+        </Form>
+      // </Container>
     )
   }
 
 
-  function dropDowns() {
+  const dropDowns = () => {
     return (
-      <div>
-        {/* i need to figure out how to get this to work */}
-      </div>
+      <Container>
+        <DropdownButton id="dropdown-basic-button" title="Dropdown button" variant='info'>
+          <Dropdown.Item href="#/action-1">Action</Dropdown.Item>
+          <Dropdown.Item href="#/action-2">Another action</Dropdown.Item>
+          <Dropdown.Item href="#/action-3">Something else</Dropdown.Item>
+        </DropdownButton>
+      </Container>
     );
   }
 
@@ -98,7 +119,7 @@ function App() {
         {projectExplanation()}
         {/* {dropDowns()} */}
         {MusicForm()}
-        <button onClick={getLyrics}>Get Those Lyrics</button> {/* this will handle submission of the music form */}
+        {/* {dropDowns()}  i think i prefer to use the select w/in the form*/}
         <p>{lyrics}</p>
       </body>
     </div>
