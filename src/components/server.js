@@ -1,5 +1,5 @@
-import { url, apikey } from './urls';
-import App from './App';
+import { url, apikey } from '../urls';
+import App from '../App';
 const express = require('express');
 const request = require('request'); //not sure i need?
 
