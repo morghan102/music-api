@@ -4,10 +4,11 @@ import { apikey, url } from './urls';
 import 'bootstrap/dist/css/bootstrap.css'; //i think i dont use
 import { Button, Col, Container, Row, DropdownButton, Dropdown, Form } from 'react-bootstrap';
 import { Label } from 'reactstrap';
+import Sketchy from './sketch';
 
 
 // use react-bootstrap for making page mobile friendly (remem this is where its really useful)
-function App() {
+export default function App() {
   const [lyrics, setLyrics] = useState('');
   const [artist, setArtist] = useState('');
   const [song, setSong] = useState('');
@@ -139,16 +140,17 @@ function App() {
       </header>
       <body>
         {projectExplanation()}
-        {/* {dropDowns()} */}
         {MusicForm()}
-        {/* {dropDowns()}  i think i prefer to use the select w/in the form*/}
         <p>{lyrics}</p>
+        {console.log(Sketchy)}
+        <div>
+          <Sketchy />
+        </div>
+        {/* <rect x="0" y="0" width="300" height="200"></rect> */}
       </body>
     </div>
   );
 }
-
-export default App;
 
 // 
 // musixmatch expects a tracking thing in here that i need to add
