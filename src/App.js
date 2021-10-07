@@ -17,7 +17,6 @@ export default function App() {
     switch (actionType) {
       case 'GET_LYRICS':
         setLyrics(payload);
-        console.log(payload)
         // need to clear lyrics afterwards too to make room for a new set
         return;
       default:
@@ -82,7 +81,13 @@ export default function App() {
           {projectExplanation()}
           <LyricGetterForm />
           <div>
-            {!error && lyrics ? <Sketchy /> : error ? <p>Some error, ccan't figure out how to render for the user to see</p> : <p>npthong yet</p>}
+            {
+              !error && lyrics ?
+                <Sketchy /> 
+                // && <p>Explains this specific rendering of the project</p>:
+                : error ? <p>Some error, ccan't figure out how to render for the user to see</p> :
+                  <p>Nothing yet</p>
+            }
           </div>
         </body>
       </AppContext.Provider>

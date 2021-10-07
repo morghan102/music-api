@@ -14,22 +14,26 @@
 
 <!-- and add the kanye rest api as a fun addition -->
 
+todo:
+1. add spotify api
+    - https://developer.spotify.com/documentation/general/guides/authorization-guide/#client-credentials-flow for reference to how to add w/o user auth
+    - https://community.spotify.com/t5/Spotify-for-Developers/Accessing-Spotify-API-without-Logging-In/td-p/5063968 also this
 
-# Getting Started with Create React App
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-## Available Scripts
 
-In the project directory, you can run:
 
-### `yarn start`
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+
+
+
+
+
+
+
+
+
 
 ### `yarn test`
 
