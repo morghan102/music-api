@@ -1,13 +1,11 @@
 import './App.css';
 import { useState } from 'react'
-// import { apikey, url } from './shared/urls';
 import 'bootstrap/dist/css/bootstrap.css'; //i think i dont use
 import Sketchy from './components/Sketch';
 import LyricGetterForm from './components/LyricGetter';
 import { AppContext } from './context';
 
 
-// use react-bootstrap for making page mobile friendly (remem this is where its really useful)
 export default function App() {
 
   const [lyrics, setLyrics] = useState('');
@@ -22,13 +20,22 @@ export default function App() {
         console.log(payload)
         // need to clear lyrics afterwards too to make room for a new set
         return;
-      // case 'SET_ERROR':
-      //   setError(payload.error);
-      //   return;
       default:
         return;
     }
   };
+
+  const dispatchError = (actionType, payload) => {
+    switch (actionType) {
+      case 'SET_ERROR':
+        console.log(payload);
+        setError(payload);
+        return;
+      default:
+        return;
+    }
+  };
+
 
 
   // trying to fix the cors error. also reference server.js
@@ -67,7 +74,7 @@ export default function App() {
 
   return (
     <div className="App">
-      <AppContext.Provider value={{ lyrics, dispatchLyricEvent }}>
+      <AppContext.Provider value={{ lyrics, dispatchLyricEvent, dispatchError }}>
         <header >
           <h1>This is the header </h1>
         </header>
@@ -75,7 +82,7 @@ export default function App() {
           {projectExplanation()}
           <LyricGetterForm />
           <div>
-            <Sketchy />
+            {!error && lyrics ? <Sketchy /> : error ? <p>Some error, ccan't figure out how to render for the user to see</p> : <p>npthong yet</p>}
           </div>
         </body>
       </AppContext.Provider>
@@ -85,3 +92,5 @@ export default function App() {
 
 // 
 // musixmatch expects a tracking thing in here that i need to add
+
+// https://medium.com/nerd-for-tech/using-context-api-in-react-with-functional-components-dbc653c7d485

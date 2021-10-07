@@ -3,32 +3,23 @@ import { Button, Col, Row, Form } from 'react-bootstrap';
 import { apikey, url } from '../shared/urls.js';
 import 'bootstrap/dist/css/bootstrap.css'; //i think i dont use
 import { Label } from 'reactstrap';
-// import { Context } from '../Store.js';
 import { AppContext } from '../context';
 
 export default function LyricGetterForm(props) {
-    // const [lyrics, setLyrics] = useState('');
     const [artist, setArtist] = useState('');
     const [song, setSong] = useState('');
 
-    const {dispatchLyricEvent} = useContext(AppContext);
+    const { dispatchLyricEvent, dispatchError } = useContext(AppContext);
 
 
     const getLyrics = async () => {
-        try { //not sure if this is being used correctly here
+        try {
             const res = await fetch(`${url}?q_track=${song.replace(" ", '%20')}q_artist=${artist.replace(" ", '%20')}o&apikey=${apikey}`);
-            const data = await res.json(); //i might be able to desctructure this to get to the lyrics_body
-            // console.log(data)
+            const data = await res.json()
             const fullLyrics = data.message.body.lyrics.lyrics_body;
-            // console.log(fullLyrics)
-            // setLyrics(fullLyrics.substring(0, fullLyrics.length - 69))
-            dispatchLyricEvent('GET_LYRICS', fullLyrics.substring(0, fullLyrics.length - 69))
-            // console.log(lyrics)
-            // } catch (err) { //this was the way before adding context
-            //     alert(err) 
-            // }
+            dispatchLyricEvent('GET_LYRICS', fullLyrics.substring(0, fullLyrics.length - 69)) //dont need setLyrics(fullLyrics.substring(0, fullLyrics.length - 69)) bc Contexterror handling
         } catch (err) {
-            dispatchLyricEvent('SET_ERROR', err)
+            dispatchError('SET_ERROR', err)
         }
     }
 
@@ -55,7 +46,7 @@ export default function LyricGetterForm(props) {
                         <input
                             type="text"
                             value={song}
-                            onChange={e => setSong(e.target.value)} //e is this whole big object
+                            onChange={e => setSong(e.target.value)}
                         />
                     </Label>
                 </Col>
