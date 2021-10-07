@@ -1,14 +1,35 @@
 import './App.css';
-import { useEffect, useState } from 'react'
-import { apikey, url } from './shared/urls';
+import { useState } from 'react'
+// import { apikey, url } from './shared/urls';
 import 'bootstrap/dist/css/bootstrap.css'; //i think i dont use
-import { Label } from 'reactstrap';
 import Sketchy from './components/Sketch';
-import LyricGetterForm, {lyrics} from './components/LyricGetter';
+import LyricGetterForm from './components/LyricGetter';
+import { AppContext } from './context';
 
 
 // use react-bootstrap for making page mobile friendly (remem this is where its really useful)
 export default function App() {
+
+  const [lyrics, setLyrics] = useState('');
+  const [error, setError] = useState('');
+
+
+
+  const dispatchLyricEvent = (actionType, payload) => {
+    switch (actionType) {
+      case 'GET_LYRICS':
+        setLyrics(payload);
+        console.log(payload)
+        // need to clear lyrics afterwards too to make room for a new set
+        return;
+      // case 'SET_ERROR':
+      //   setError(payload.error);
+      //   return;
+      default:
+        return;
+    }
+  };
+
 
   // trying to fix the cors error. also reference server.js
   // const [data, setData] = useState('');
@@ -44,36 +65,20 @@ export default function App() {
     )
   }
 
-  // const useInput = initialValue => { //this is a custom hook found here https://rangle.io/blog/simplifying-controlled-inputs-with-hooks/
-  //   const [val, setVal] = useState(initialValue); 
-
-  //   return {
-  //     val,
-  //     setVal,
-  //     reset: () => setVal(""),
-  //     bind: {
-  //       val,
-  //       onChange: event => {
-  //         setVal(event.target.value); //that might need to be val instead of value
-  //       }
-  //     }
-  //   };
-  // };
-
   return (
     <div className="App">
-      <header >
-        <h1>This is the header </h1>
-      </header>
-      <body>
-        {projectExplanation()}
-        <LyricGetterForm />
-        <p>{console.log(LyricGetterForm)}</p>
-        <div>
-          <Sketchy />
-        </div>
-        {/* <rect x="0" y="0" width="300" height="200"></rect> */}
-      </body>
+      <AppContext.Provider value={{ lyrics, dispatchLyricEvent }}>
+        <header >
+          <h1>This is the header </h1>
+        </header>
+        <body>
+          {projectExplanation()}
+          <LyricGetterForm />
+          <div>
+            <Sketchy />
+          </div>
+        </body>
+      </AppContext.Provider>
     </div>
   );
 }

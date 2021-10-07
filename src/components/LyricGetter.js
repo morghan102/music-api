@@ -1,16 +1,17 @@
 import { useState, useContext } from 'react'
-import { Button, Col, Container, Row, DropdownButton, Dropdown, Form } from 'react-bootstrap';
+import { Button, Col, Row, Form } from 'react-bootstrap';
 import { apikey, url } from '../shared/urls.js';
 import 'bootstrap/dist/css/bootstrap.css'; //i think i dont use
 import { Label } from 'reactstrap';
-import { Context } from '../Store.js';
+// import { Context } from '../Store.js';
+import { AppContext } from '../context';
 
 export default function LyricGetterForm(props) {
-    const [lyrics, setLyrics] = useState('');
+    // const [lyrics, setLyrics] = useState('');
     const [artist, setArtist] = useState('');
     const [song, setSong] = useState('');
 
-    const [state, dispatch] = useContext(Context);
+    const {dispatchLyricEvent} = useContext(AppContext);
 
 
     const getLyrics = async () => {
@@ -19,15 +20,15 @@ export default function LyricGetterForm(props) {
             const data = await res.json(); //i might be able to desctructure this to get to the lyrics_body
             // console.log(data)
             const fullLyrics = data.message.body.lyrics.lyrics_body;
-            console.log(fullLyrics)
-            setLyrics(fullLyrics.substring(0, fullLyrics.length - 69))
-            dispatch({ type: 'GET_LYRICS', payload: lyrics })
+            // console.log(fullLyrics)
+            // setLyrics(fullLyrics.substring(0, fullLyrics.length - 69))
+            dispatchLyricEvent('GET_LYRICS', fullLyrics.substring(0, fullLyrics.length - 69))
             // console.log(lyrics)
             // } catch (err) { //this was the way before adding context
             //     alert(err) 
             // }
         } catch (err) {
-            dispatch({ type: 'SET_ERROR', payload: err })
+            dispatchLyricEvent('SET_ERROR', err)
         }
     }
 

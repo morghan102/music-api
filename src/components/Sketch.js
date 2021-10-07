@@ -1,11 +1,13 @@
-import React, { useEffect, useContext } from 'react';
+import React, { useContext } from 'react';
 import Sketch from "react-p5";
-import { Context } from '../Store';
+// import { Context } from '../Store';
+import { AppContext } from '../context';
 
 let x = 50;
 let y = 50;
-export default function Sketchy(props) {
-    const [state, dispatch] = useContext(Context);
+export default function Sketchy() {
+    // const [state, dispatch] = useContext(Context);
+    const { lyrics, error } = useContext(AppContext);
 
     const setup = (p5, canvasParentRef) => {
         // use parent to render the canvas in this ref
@@ -25,11 +27,14 @@ export default function Sketchy(props) {
         y--;
     };
 
-    if (state.error) {
-        return <p>Something went wrong: <span>{state.error}</span></p>
-    } else if (!state.error && state.lyrics) {
+    if (error) {
+        console.log(error)        
+        return <p>Something went wrong: <span>{error}</span></p> //NEED ERROR HANDLING
+    } else if (!error && lyrics) {
+        console.log(lyrics);
         return <Sketch setup={setup} draw={draw} />;
     } else {
-        return null;
+        // console.log(AppContext)
+        return <p>Something will show up here</p>;
     }
 };
