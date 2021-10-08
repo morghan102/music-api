@@ -5,12 +5,12 @@ import 'bootstrap/dist/css/bootstrap.css'; //i think i dont use
 import { Label } from 'reactstrap';
 import { AppContext } from '../context';
 
-export default function LyricGetterForm(props) {
+export default function MusicGetterForm() {
     const [artist, setArtist] = useState('');
     const [song, setSong] = useState('');
-    const [canvas, setCanvas] = useState('');
+    const [trackorLyric, setTrackorLyrics] = useState('');
 
-    const { dispatchLyricEvent, dispatchError } = useContext(AppContext);
+    const { dispatchSongEvent, dispatchError } = useContext(AppContext);
 
 
     const getLyrics = async () => {
@@ -19,7 +19,19 @@ export default function LyricGetterForm(props) {
             const data = await res.json()
             const fullLyrics = data.message.body.lyrics.lyrics_body;
             console.log(fullLyrics)
-            dispatchLyricEvent('GET_LYRICS', fullLyrics.substring(0, fullLyrics.length - 69)) //dont need setLyrics(fullLyrics.substring(0, fullLyrics.length - 69)) bc Contexterror handling
+            dispatchSongEvent('GET_LYRICS', fullLyrics.substring(0, fullLyrics.length - 69)) //dont need setLyrics(fullLyrics.substring(0, fullLyrics.length - 69)) bc Contexterror handling
+        } catch (err) {
+            dispatchError('SET_ERROR', err)
+        }
+    }
+
+    const getTrack = async () => {
+        try {
+            const res = await fetch("spotifyAPI");
+            const data = await res.json()
+            const track = '';
+            // smth
+            dispatchSongEvent('GET_TRACK', track)
         } catch (err) {
             dispatchError('SET_ERROR', err)
         }
@@ -66,16 +78,40 @@ export default function LyricGetterForm(props) {
                 </Col>
                 <Col sm="auto">
                     <Form.Control
-                        // onChange={e => setCanvas(e.target.value)}
-                        onChange={e => dispatchLyricEvent('SET_CANVAS', e.target.value)}
+                        onChange={e => setTrackorLyrics(e.target.value)}
                         as="select"
                     >
-                        <option>Select a Canvas</option>
-                        <option value="a">Text Shuffle</option>
-                        <option value="b">Text in Color</option>
-                        <option value="c">C</option>
+                        <option>Would you like to use tracks or lyrics?</option>
+                        <option value="lyrics">Lyrics</option>
+                        <option value="track">Track</option>
                     </Form.Control>
                 </Col>
+                {trackorLyric === 'lyrics' ?
+                    <Col sm="auto">
+                        <Form.Control
+                            // onChange={e => setCanvas(e.target.value)}
+                            onChange={e => dispatchSongEvent('SET_CANVAS', e.target.value)}
+                            as="select"
+                        >
+                            <option>Select a Canvas</option>
+                            <option value="a">Text Shuffle</option>
+                            <option value="b">Text in Color</option>
+                            <option value="c">C</option>
+                        </Form.Control>
+                    </Col>
+                    : <Col sm="auto">
+                        <Form.Control
+                            // onChange={e => setCanvas(e.target.value)}
+                            onChange={e => dispatchSongEvent('SET_CANVAS', e.target.value)} //setcanvas is gonna work right?
+                            as="select"
+                        >
+                            <option>Select a Canvas</option>
+                            <option value="a">a</option>
+                            <option value="b">b</option>
+                            <option value="c">C</option>
+                        </Form.Control>
+                    </Col>
+                }
             </Row>
             <Button onClick={getLyrics}>Get Those Lyrics</Button>
         </Form>
