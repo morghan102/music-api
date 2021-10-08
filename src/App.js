@@ -1,15 +1,18 @@
 import './App.css';
 import { useState } from 'react'
 import 'bootstrap/dist/css/bootstrap.css'; //i think i dont use
-import Sketchy from './components/Sketch';
+import TextShuffle from './sketches/TextShuffle';
 import LyricGetterForm from './components/LyricGetter';
 import { AppContext } from './context';
+import Sketch2 from './sketches/Sketch2';
+import Sketch3 from './sketches/Sketch3';
 
 
 export default function App() {
 
   const [lyrics, setLyrics] = useState('');
   const [error, setError] = useState('');
+  const [canvas, setCanvas] = useState('');
 
 
 
@@ -19,6 +22,9 @@ export default function App() {
         setLyrics(payload);
         // need to clear lyrics afterwards too to make room for a new set
         return;
+      case 'SET_CANVAS': //this updates ea time you make a new selection
+        setCanvas(payload);
+        return
       default:
         return;
     }
@@ -34,6 +40,19 @@ export default function App() {
         return;
     }
   };
+
+  const SelectedCanvas = () => {
+    console.log(canvas)
+    return (
+      canvas === "a" ?
+        <TextShuffle />
+        : canvas === "b" ?
+          <Sketch2 />
+          : canvas === "c" ?
+            <Sketch3 />
+            : <p>Please select a canvas</p>
+    )
+  }
 
 
 
@@ -73,7 +92,7 @@ export default function App() {
 
   return (
     <div className="App">
-      <AppContext.Provider value={{ lyrics, dispatchLyricEvent, dispatchError }}>
+      <AppContext.Provider value={{ lyrics, canvas, dispatchLyricEvent, dispatchError }}>
         <header >
           <h1>This is the header </h1>
         </header>
@@ -83,10 +102,12 @@ export default function App() {
           <div>
             {
               !error && lyrics ?
-                <Sketchy /> 
-                // && <p>Explains this specific rendering of the project</p>:
-                : error ? <p>Some error, ccan't figure out how to render for the user to see</p> :
-                  <p>Nothing yet</p>
+                <div>
+                  <SelectedCanvas />
+                  {/* { if (canvas != 0) <p>Explains this specific rendering of the project</p>} this needs to only be rendered if a canvas has been selected*/}
+                </div>
+                : error ? <p>Some error, can't figure out how to render for the user to see</p>
+                  : <p>Nothing yet</p>
             }
           </div>
         </body>

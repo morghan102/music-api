@@ -8,6 +8,7 @@ import { AppContext } from '../context';
 export default function LyricGetterForm(props) {
     const [artist, setArtist] = useState('');
     const [song, setSong] = useState('');
+    const [canvas, setCanvas] = useState('');
 
     const { dispatchLyricEvent, dispatchError } = useContext(AppContext);
 
@@ -17,6 +18,7 @@ export default function LyricGetterForm(props) {
             const res = await fetch(`${url}?q_track=${song.replace(" ", '%20')}q_artist=${artist.replace(" ", '%20')}o&apikey=${apikey}`);
             const data = await res.json()
             const fullLyrics = data.message.body.lyrics.lyrics_body;
+            console.log(fullLyrics)
             dispatchLyricEvent('GET_LYRICS', fullLyrics.substring(0, fullLyrics.length - 69)) //dont need setLyrics(fullLyrics.substring(0, fullLyrics.length - 69)) bc Contexterror handling
         } catch (err) {
             dispatchError('SET_ERROR', err)
@@ -36,6 +38,7 @@ export default function LyricGetterForm(props) {
     //         </Container>
     //     );
     // }
+
 
     return (
         <Form>
@@ -62,12 +65,16 @@ export default function LyricGetterForm(props) {
                     </Label>
                 </Col>
                 <Col sm="auto">
-                    <Form.Select>
-                        <option value="0">Select preferred way of displaying the data</option>
-                        <option value="1">1st way of displaying the data</option>
-                        <option value="2">2nd way of displaying the data</option>
-                        <option value="3">3rd way of displaying the data</option>
-                    </Form.Select>
+                    <Form.Control
+                        // onChange={e => setCanvas(e.target.value)}
+                        onChange={e => dispatchLyricEvent('SET_CANVAS', e.target.value)}
+                        as="select"
+                    >
+                        <option>Select a Canvas</option>
+                        <option value="a">Text Shuffle</option>
+                        <option value="b">B</option>
+                        <option value="c">C</option>
+                    </Form.Control>
                 </Col>
             </Row>
             <Button onClick={getLyrics}>Get Those Lyrics</Button>

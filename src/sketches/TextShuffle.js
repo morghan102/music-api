@@ -2,18 +2,16 @@ import React, { useContext } from 'react';
 import Sketch from "react-p5";
 import { AppContext } from '../context';
 
-let x = 50;
-let y = 50;
-export default function Sketchy() {
-    const { lyrics } = useContext(AppContext);
-    const lyricArr = lyrics.split(/\s+/); //splits on spaces and line breaks
-    const lyricsInLines = lyrics.split(/[\r\n]+/); //splits on line reaks only
 
+export default function TextShuffle() {
+    const { lyrics } = useContext(AppContext);
+    const lyricsInLines = lyrics.split(/[\r\n]+/); //splits on line reaks only
+    let cnv;
 
     const setup = (p5, canvasParentRef) => {
         // use parent to render the canvas in this ref
         // (without that p5 will render the canvas outside of your component)
-        p5.createCanvas(500, 600).parent(canvasParentRef);
+        cnv = p5.createCanvas(500, 600).parent(canvasParentRef);
     };
 
     const draw = (p5) => {
@@ -32,7 +30,8 @@ export default function Sketchy() {
         // x--;
         // y--;)
     };
-    function mousePressed(p5) { //is tehre a way to focus this inside the canvas?
+    function mousePressed(p5, event) { //is tehre a way to focus this inside the canvas?
+        // console.log(cnv)
         p5.shuffle(lyricsInLines, true);
     }
 
