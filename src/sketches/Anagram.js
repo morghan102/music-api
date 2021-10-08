@@ -5,7 +5,7 @@ import { AppContext } from '../context';
 
 // ref https://p5js.org/examples/typography-letters.html
 //take the lyrics, just the letters all together, highlight some and not others to... make a new word? dunno how to doy
-export default function TextColor() {
+export default function Anagram() {
     const { lyrics } = useContext(AppContext);
     const lyricArr = lyrics.toLowerCase().replaceAll(" ", "").replace(/\s+/, "").split(""); //splits on spaces and line breaks
 
@@ -31,12 +31,13 @@ export default function TextColor() {
                 // console.log(lett)
 
                 // Add different color to the vowels and other characters
-                if (
+                if ( //would be nice to do a poem or something.
+                    // I wonder if it's possible to bring in a poem api or something and have it find the words from that poem?
                     lett === 'a' ||
-                    lett === 'e' ||
-                    lett === 'i' ||
-                    lett === 'o' ||
-                    lett === 'u'
+                    lett === 'r' ||
+                    lett === 't' 
+                    // lett === 'o' ||
+                    // lett === 'u'
                 ) {
                     p5.fill('#ed225d');
                 } else {

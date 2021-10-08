@@ -1,10 +1,11 @@
 import './App.css';
 import { useState } from 'react'
 import 'bootstrap/dist/css/bootstrap.css'; //i think i dont use
+import { Container } from 'react-bootstrap';
 import TextShuffle from './sketches/TextShuffle';
 import LyricGetterForm from './components/LyricGetter';
 import { AppContext } from './context';
-import TextColor from './sketches/TextColor';
+import Anagram from './sketches/Anagram';
 import Sketch3 from './sketches/Sketch3';
 
 
@@ -47,7 +48,7 @@ export default function App() {
       canvas === "a" ?
         <TextShuffle />
         : canvas === "b" ?
-          <TextColor />
+          <Anagram />
           : canvas === "c" ?
             <Sketch3 />
             : <p>Please select a canvas</p>
@@ -81,12 +82,12 @@ export default function App() {
 
   function projectExplanation() {
     return (
-      <div>
-        <div>
-          <h3>This is an explanation of what the project is about</h3>
-          <p>This is what I'll type in the explanation. Also note that I'm only allowed to use "X" number of lyrics</p>
-        </div>
-      </div>
+      <Container>
+          <h4>What is this project about?</h4>
+          <p> When I was in school studying literature, we did a very special project in my 20th C lit class. Using the texts we'd read throughout the quarter, we were tasked to make some artistic rendering of them. I honestly can't remember what I made -- I didn't consider myself very artistic at the time. Now, I wished I'd had access to tools like P5.js and coding knowledge. This project is inspired by that, by my love of music and reading, and by Rodez's lack of song-memorizing ability. I hope you enjoy it as much as I did.
+            <br/> Unfortunately, due to MusixMatch, I can only display a certain number of lyrics.
+          </p>
+      </Container>
     )
   }
 
@@ -94,7 +95,7 @@ export default function App() {
     <div className="App">
       <AppContext.Provider value={{ lyrics, canvas, dispatchLyricEvent, dispatchError }}>
         <header >
-          <h1>This is the header </h1>
+          <h1>Musical Lyrics Expressed Artistically </h1>
         </header>
         <body>
           {projectExplanation()}
@@ -102,10 +103,10 @@ export default function App() {
           <div>
             {
               !error && lyrics ?
-                <div>
+                <Container>
                   <SelectedCanvas />
                   {/* { if (canvas != 0) <p>Explains this specific rendering of the project</p>} this needs to only be rendered if a canvas has been selected*/}
-                </div>
+                </Container>
                 : error ? <p>Some error, can't figure out how to render for the user to see</p>
                   : <p>Nothing yet</p>
             }
