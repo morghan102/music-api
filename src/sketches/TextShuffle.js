@@ -2,16 +2,15 @@ import React, { useContext } from 'react';
 import Sketch from "react-p5";
 import { AppContext } from '../context';
 
-
+// FOCUS CLICK ON CANVAS??????????//
 export default function TextShuffle() {
     const { lyrics } = useContext(AppContext);
     const lyricsInLines = lyrics.split(/[\r\n]+/); //splits on line reaks only
-    let cnv;
 
     const setup = (p5, canvasParentRef) => {
         // use parent to render the canvas in this ref
         // (without that p5 will render the canvas outside of your component)
-        cnv = p5.createCanvas(500, 600).parent(canvasParentRef);
+        p5.createCanvas(500, 600).parent(canvasParentRef);
     };
 
     const draw = (p5) => {
@@ -38,7 +37,7 @@ export default function TextShuffle() {
     return (
         <div>
             <Sketch setup={setup} draw={draw} mousePressed={mousePressed} />
-            <p>{lyrics}</p>
+            <p className="displayedLyr">{lyrics}</p>
         </div>
     );
 };

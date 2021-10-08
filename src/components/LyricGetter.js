@@ -72,7 +72,7 @@ export default function LyricGetterForm(props) {
                     >
                         <option>Select a Canvas</option>
                         <option value="a">Text Shuffle</option>
-                        <option value="b">B</option>
+                        <option value="b">Text in Color</option>
                         <option value="c">C</option>
                     </Form.Control>
                 </Col>

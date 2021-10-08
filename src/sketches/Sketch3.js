@@ -3,7 +3,7 @@ import Sketch from "react-p5";
 import { AppContext } from '../context';
 
 
-export default function Sketch2() {
+export default function Sketch3() {
     const { lyrics } = useContext(AppContext);
     const lyricArr = lyrics.split(/\s+/); //splits on spaces and line breaks
     let cnv;
@@ -25,7 +25,7 @@ export default function Sketch2() {
     return (
         <div>
             <Sketch setup={setup} draw={draw} />
-            <p>{lyrics}</p>
+            <p className="displayedLyr">{lyrics}</p>
         </div>
     );
 };

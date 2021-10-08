@@ -4,7 +4,7 @@ import 'bootstrap/dist/css/bootstrap.css'; //i think i dont use
 import TextShuffle from './sketches/TextShuffle';
 import LyricGetterForm from './components/LyricGetter';
 import { AppContext } from './context';
-import Sketch2 from './sketches/Sketch2';
+import TextColor from './sketches/TextColor';
 import Sketch3 from './sketches/Sketch3';
 
 
@@ -47,7 +47,7 @@ export default function App() {
       canvas === "a" ?
         <TextShuffle />
         : canvas === "b" ?
-          <Sketch2 />
+          <TextColor />
           : canvas === "c" ?
             <Sketch3 />
             : <p>Please select a canvas</p>
