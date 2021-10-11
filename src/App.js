@@ -1,3 +1,9 @@
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Link
+} from "react-router-dom";
 import './App.css';
 import { useState } from 'react'
 import 'bootstrap/dist/css/bootstrap.css'; //i think i dont use
@@ -7,7 +13,7 @@ import MusicGetterForm from './components/MusicGetter';
 import { AppContext } from './context';
 import Anagram from './sketches/Anagram';
 import Sketch3 from './sketches/Sketch3';
-
+// import Login from './Login';
 
 export default function App() {
 
@@ -95,28 +101,45 @@ export default function App() {
   }
 
   return (
-    <div className="App">
-      <AppContext.Provider value={{ lyrics, canvas, track, error, dispatchSongEvent, dispatchError }}>
-        <header >
-          <h1>Music Expressed Artistically </h1>
-        </header>
-        <body>
-          {projectExplanation()}
-          <MusicGetterForm />
-          <div>
-            {
-              !error && lyrics ?
-                <Container>
-                  <SelectedCanvas />
-                  {/* { if (canvas != 0) <p>Explains this specific rendering of the project</p>} this needs to only render if a canvas has been selected*/}
-                </Container>
-                : error ? <p>Some error, can't figure out how to render for the user to see</p>
-                  : <p>Nothing yet</p>
-            }
+    // not sure I need router? will decide later 
+    <Router>
+      {/* navbar? I don't think I want that but meybs */}
+      <Switch>
+        <Route path='/home'>
+          <div className="App">
+            <AppContext.Provider value={{ lyrics, canvas, track, error, dispatchSongEvent, dispatchError }}>
+              <header >
+                <h1>Music Expressed Artistically </h1>
+              </header>
+              <body>
+                {projectExplanation()}
+                <MusicGetterForm />
+                <div>
+                  {
+                    !error && lyrics ?
+                      <Container>
+                        <SelectedCanvas />
+                        {/* { if (canvas != 0) <p>Explains this specific rendering of the project</p>} this needs to only render if a canvas has been selected*/}
+                      </Container>
+                      : error ? <p>Some error, can't figure out how to render for the user to see</p>
+                        : <p>Nothing yet</p>
+                  }
+                </div>
+              </body>
+            </AppContext.Provider>
           </div>
-        </body>
-      </AppContext.Provider>
-    </div>
+        </Route>
+      </Switch>
+
+      <Switch>
+        <Route path='/'>
+          {/* <Login /> */}
+          <h1>hi</h1>
+        </Route>
+      </Switch>
+
+
+    </Router>
   );
 }
 

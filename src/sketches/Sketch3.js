@@ -2,7 +2,8 @@ import React, { useContext } from 'react';
 import Sketch from "react-p5";
 import { AppContext } from '../context';
 
-
+// no canvas but the words float around the screen?
+// or move to the beat? not sure that's possible
 export default function Sketch3() {
     const { lyrics } = useContext(AppContext);
     const lyricArr = lyrics.split(/\s+/); //splits on spaces and line breaks
