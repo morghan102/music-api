@@ -1,5 +1,6 @@
 import { useEffect } from 'react'
 import { spotifyClientID } from '../shared/urls.js';
+import { Button, Col, Row, Form, Container } from 'react-bootstrap';
 
 
 const spotify_auth_endpoint = 'https://accounts.spotify.com/authorize';
@@ -29,7 +30,8 @@ export default function SpotifyLoginButton() {
             localStorage.setItem("tokenType", token_type);
         }
     })
-    const handleLogin = () => {
+    const handleLogin = (e) => {
+        e.preventDefault();
         window.location = `${spotify_auth_endpoint}?client_id=${spotifyClientID}&redirect_uri=${redirect_uri_after_login}&scope=${scopes_url_param}&response_type=token&show_dialog=true`
     }
 

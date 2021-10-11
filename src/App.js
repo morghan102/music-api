@@ -19,7 +19,7 @@ export default function App() {
   const [lyrics, setLyrics] = useState('');
   const [error, setError] = useState('');
   const [canvas, setCanvas] = useState('');
-  const [track, setTrack] = useState('');
+  const [playlists, setPlaylists] = useState('');
 
 
   const dispatchSongEvent = (actionType, payload) => {
@@ -31,8 +31,10 @@ export default function App() {
       case 'SET_CANVAS': //this updates ea time you make a new selection
         setCanvas(payload);
         return
-      case 'GET_TRACK':
-        setTrack(payload);
+      case 'SET_PLAYLISTS':
+        setPlaylists(payload);
+        console.log("payload")
+        console.log(payload)
         return
       default:
         return;
@@ -50,14 +52,14 @@ export default function App() {
     }
   };
 
-  const SelectedCanvas = () => {
+  const SelectedCanvas = () => { //add canvases for the playlists
     console.log(canvas)
     return (
-      canvas === "a" ?
+      canvas === "lyricsA" ?
         <TextShuffle />
-        : canvas === "b" ?
+        : canvas === "lyricsB" ?
           <Anagram />
-          : canvas === "c" ?
+          : canvas === "lyricsC" ?
             <Sketch3 />
             : <p>Please select a canvas</p>
     )
@@ -106,7 +108,7 @@ export default function App() {
       // <Switch>
       //   <Route path='/home'>
           <div className="App">
-            <AppContext.Provider value={{ lyrics, canvas, track, error, dispatchSongEvent, dispatchError }}>
+            <AppContext.Provider value={{ lyrics, canvas, playlists, error, dispatchSongEvent, dispatchError }}>
               <header >
                 <h1>Music Expressed Artistically </h1>
               </header>
@@ -115,7 +117,7 @@ export default function App() {
                 <MusicGetterForm />
                 <div>
                   {
-                    !error && lyrics ?
+                    !error && lyrics || !error && playlists ?
                       <Container>
                         <SelectedCanvas />
                         {/* { if (canvas != 0) <p>Explains this specific rendering of the project</p>} this needs to only render if a canvas has been selected*/}
