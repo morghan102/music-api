@@ -1,17 +1,20 @@
 import { useState, useContext, useEffect } from 'react'
-import { Button, Col, Row, Form } from 'react-bootstrap';
+import { Button, Col, Row, Form, Container } from 'react-bootstrap';
 import { musixApikey, musixUrl, spotifyClientID, spotifySecret } from '../shared/urls.js';
+import '../App.css'
 import 'bootstrap/dist/css/bootstrap.css'; //i think i dont use
 import { Label } from 'reactstrap';
 import { AppContext } from '../context';
-import Spotify from 'spotify-web-api-js';
-import SpotifyWebApi from 'spotify-web-api-js';
+import SpotifyGetPlaylists from './SpotifyGetPlaylists';
+import SpotifyLoginButton from './SpotifyLoginButton.js';
+// import Spotify from 'spotify-web-api-js';
+// import SpotifyWebApi from 'spotify-web-api-js';
 // var s = new Spotify(); not sure when this is to be used over the spotifywebapi
 // const spotifyApi = new SpotifyWebApi();
 // console.log(spotifyApi)
 
 const spotify_auth_endpoint = 'https://accounts.spotify.com/authorize';
-const redirect_uri_after_login = 'http://localhost:3000/home';
+const redirect_uri_after_login = 'http://localhost:3000/';
 const scopes = ['playlist-read-private'] //can add more here https://developer.spotify.com/documentation/general/guides/scopes/
 const scopes_url_param = scopes.join("%20");
 
@@ -36,10 +39,10 @@ export default function MusicGetterForm() {
     useEffect(() => {
         if (window.location.hash) {
             const { access_token, expires_in, token_type } = getReturnedParamsFromSpotAuth(window.location.hash); //desctructuing the value
-        localStorage.clear(); //localstorage is just a temp solution?
-        localStorage.setItem("accessToken", access_token);
-        localStorage.setItem("expiresIn", expires_in);
-        localStorage.setItem("tokenType", token_type);
+            localStorage.clear(); //localstorage is just a temp solution?
+            localStorage.setItem("accessToken", access_token);
+            localStorage.setItem("expiresIn", expires_in);
+            localStorage.setItem("tokenType", token_type);
         }
     })
 
@@ -94,7 +97,6 @@ export default function MusicGetterForm() {
 
     return (
         <div>
-            <Button onClick={handleLogin}>Login to Spotify</Button>
             <Form>
                 <Row className="justify-content-sm-center">
                     <Col sm="auto">
@@ -145,16 +147,24 @@ export default function MusicGetterForm() {
                         </Col>
                         : trackorLyric === 'track' ?
                             <Col sm="auto">
-                                <Form.Control
-                                    // onChange={e => setCanvas(e.target.value)}
-                                    onChange={e => dispatchSongEvent('SET_CANVAS', e.target.value)} //setcanvas is gonna work right?
-                                    as="select"
-                                >
-                                    <option>Select a Canvas</option>
-                                    <option value="a">a</option>
-                                    <option value="b">b</option>
-                                    <option value="c">C</option>
-                                </Form.Control>
+                                <Row>
+                                    <Col sm="auto">
+                                        <Form.Control
+                                            // onChange={e => setCanvas(e.target.value)}
+                                            onChange={e => dispatchSongEvent('SET_CANVAS', e.target.value)} //setcanvas is gonna work right?
+                                            as="select"
+                                        >
+                                            <option>Select a Canvas</option>
+                                            <option value="a">a</option>
+                                            <option value="b">b</option>
+                                            <option value="c">C</option>
+                                        </Form.Control>
+                                    </Col>
+                                    <Col sm="auto">
+                                        <SpotifyLoginButton />
+                                        <SpotifyGetPlaylists />
+                                    </Col>
+                                </Row>
                             </Col>
                             : <div></div>
                     }

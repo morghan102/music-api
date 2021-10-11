@@ -1,9 +1,9 @@
-import {
-  BrowserRouter as Router,
-  Switch,
-  Route,
-  Link
-} from "react-router-dom";
+// import {
+//   BrowserRouter as Router,
+//   Switch,
+//   Route,
+//   Link
+// } from "react-router-dom";
 import './App.css';
 import { useState } from 'react'
 import 'bootstrap/dist/css/bootstrap.css'; //i think i dont use
@@ -13,7 +13,6 @@ import MusicGetterForm from './components/MusicGetter';
 import { AppContext } from './context';
 import Anagram from './sketches/Anagram';
 import Sketch3 from './sketches/Sketch3';
-// import Login from './Login';
 
 export default function App() {
 
@@ -27,7 +26,7 @@ export default function App() {
     switch (actionType) {
       case 'GET_LYRICS':
         setLyrics(payload);
-        // need to clear lyrics afterwards too to make room for a new set
+        // need to clear lyrics afterwards too to make room for a new set?? i shouldnt need to i think!
         return;
       case 'SET_CANVAS': //this updates ea time you make a new selection
         setCanvas(payload);
@@ -102,10 +101,10 @@ export default function App() {
 
   return (
     // not sure I need router? will decide later 
-    <Router>
-      {/* navbar? I don't think I want that but meybs */}
-      <Switch>
-        <Route path='/home'>
+    // <Router>
+      // {/* navbar? I don't think I want that but meybs */}
+      // <Switch>
+      //   <Route path='/home'>
           <div className="App">
             <AppContext.Provider value={{ lyrics, canvas, track, error, dispatchSongEvent, dispatchError }}>
               <header >
@@ -128,18 +127,18 @@ export default function App() {
               </body>
             </AppContext.Provider>
           </div>
-        </Route>
-      </Switch>
+      //   </Route>
+      // </Switch>
 
-      <Switch>
-        <Route path='/'>
-          {/* <Login /> */}
-          <h1>hi</h1>
-        </Route>
-      </Switch>
+    //   <Switch>
+    //     <Route path='/'>
+    //       {/* <Login /> */}
+    //       <h1>hi</h1>
+    //     </Route>
+    //   </Switch>
 
 
-    </Router>
+    // </Router>
   );
 }
 
