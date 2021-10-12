@@ -21,7 +21,7 @@ export default function App() {
   const [error, setError] = useState('');
   const [canvas, setCanvas] = useState('');
   const [allPlaylists, setAllPlaylists] = useState('');
-  const [playlist, setPlaylist] = useState('');
+  const [tracks, setTracks] = useState('');
 
 
   const dispatchSongEvent = (actionType, payload) => {
@@ -36,8 +36,9 @@ export default function App() {
       case 'SET_ALL_PLAYLISTS':
         setAllPlaylists(payload);
         return
-      case 'SET_PLAYLIST':
-        setPlaylist(payload)
+      case 'SET_TRACKS':
+        setTracks(payload)
+        console.log(payload)
         return
       default:
         return;
@@ -92,6 +93,17 @@ export default function App() {
   //   return lyrics;
   // }
 
+  const Music = () => {
+      if (error && lyrics) {
+        return <Container>
+          <SelectedCanvas />
+          {/* { if (canvas != 0) <p>Explains this specific rendering of the project</p>} this needs to only render if a canvas has been selected*/}
+        </Container>
+        } else if (error) return <p>Some error, can't figure out how to render for the user to see</p>
+        else if (!error && allPlaylists) return <SpotifyPlaylists />
+        else return <p>Nothing yet</p>
+  }
+
 
   function projectExplanation() {
     return (
@@ -111,26 +123,14 @@ export default function App() {
     // <Switch>
     //   <Route path='/home'>
     <div className="App">
-      <AppContext.Provider value={{ lyrics, canvas, allPlaylists, playlist, error, dispatchSongEvent, dispatchError }}>
+      <AppContext.Provider value={{ lyrics, canvas, allPlaylists, tracks, error, dispatchSongEvent, dispatchError }}>
         <header >
           <h1>Music Expressed Artistically </h1>
         </header>
         <body>
           {projectExplanation()}
           <MusicGetterForm />
-          <div>
-            {
-              !error && lyrics ?
-                <Container>
-                  <SelectedCanvas />
-                  {/* { if (canvas != 0) <p>Explains this specific rendering of the project</p>} this needs to only render if a canvas has been selected*/}
-                </Container>
-                : error ? <p>Some error, can't figure out how to render for the user to see</p>
-                  : !error && allPlaylists ?
-                    <SpotifyPlaylists />
-                    : <p>Nothing yet</p>
-            }
-          </div>
+            <Music />
         </body>
       </AppContext.Provider>
     </div>

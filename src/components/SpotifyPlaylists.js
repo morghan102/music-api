@@ -7,8 +7,7 @@ import axios from 'axios';
 
 
 export default function SpotifyPlaylists() {
-    const { dispatchSongEvent, dispatchError, allPlaylists } = useContext(AppContext);
-    const { playlist, setPlaylist } = useState();
+    const { dispatchSongEvent, dispatchError, allPlaylists, tracks } = useContext(AppContext);
     const [token, setToken] = useState('');
 
     useEffect(() => {
@@ -17,32 +16,21 @@ export default function SpotifyPlaylists() {
         }
     }, [])
 
-
     function PlaylistList() {
         let counter = 0;
         return (
             allPlaylists ? allPlaylists.map((pl) => {
                 return (
-                    // <Accordion>
-                    //     <Accordion.Item eventKey={counter}>
-                    //         <Accordion.Header>{pl.name}</Accordion.Header>
-                    //         <Accordion.Body>{pl.description}</Accordion.Body>
-                    //     </Accordion.Item>
-                    // </Accordion>
                     <ListGroup variant="flush">
                         <ListGroup.Item
                             action
-                            onClick={() => {
-                                handleItemClick(pl)
-                                setPlaylist(pl)
-                            }}
+                            onClick={() => handleItemClick(pl)}
                             eventKey={pl.name}
                             key={counter}
                             // Im getting an error about key not being set??? not sure why
                         >
                             {pl.name}
                         </ListGroup.Item>
-                        {/* {counter++} */}
                     </ListGroup>
                 )
             }, counter++) : null
@@ -50,7 +38,9 @@ export default function SpotifyPlaylists() {
     }
 
     const handleItemClick = (pl) => {
-        // setPlaylist(pl); //this kept returning an error for some reason
+
+        // setPlaylist({pl}); //this kept returning an error for some reason
+            console.log(pl.href)
 
         // e.preventDefault();
         axios.get(pl.href, {
@@ -58,8 +48,7 @@ export default function SpotifyPlaylists() {
                 Authorization: 'Bearer ' + token,
             },
         }).then((res) => {
-            dispatchSongEvent('SET_PLAYLIST', res.data.tracks.items)
-            console.log(res.data.tracks.items)
+            dispatchSongEvent('SET_TRACKS', res.data.tracks.items) //sets it with the songs
         }).catch((err) => {
             dispatchError('SET_ERROR', err)
             console.log(err)
