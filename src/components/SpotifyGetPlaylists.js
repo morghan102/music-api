@@ -9,7 +9,7 @@ const SpotifyGetPlaylists = () => {
     const [token, setToken] = useState('');
     // const [isLoading, setIsLoading] = useState(false); need to put this in the context
     // const [data, setData] = useState({});//this will be teh data we get from spotify
-    const { dispatchSongEvent, dispatchError, allPlaylists } = useContext(AppContext);
+    const { dispatchSongEvent, dispatchError } = useContext(AppContext);
 
     useEffect(() => {
         if (localStorage.getItem('accessToken')) {

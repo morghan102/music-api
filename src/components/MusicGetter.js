@@ -1,6 +1,6 @@
-import { useState, useContext, useEffect } from 'react'
-import { Button, Col, Row, Form, Container } from 'react-bootstrap';
-import { musixApikey, musixUrl, spotifyClientID, spotifySecret } from '../shared/urls.js';
+import { useState, useContext } from 'react'
+import { Button, Col, Row, Form } from 'react-bootstrap';
+import { musixApikey, musixUrl } from '../shared/urls.js';
 import '../App.css'
 import 'bootstrap/dist/css/bootstrap.css'; //i think i dont use
 import { Label } from 'reactstrap';

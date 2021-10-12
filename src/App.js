@@ -38,7 +38,6 @@ export default function App() {
         return
       case 'SET_TRACKS':
         setTracks(payload)
-        console.log(payload)
         return
       default:
         return;
@@ -57,7 +56,7 @@ export default function App() {
   };
 
   const SelectedCanvas = () => { //add canvases for the playlists
-    console.log(canvas)
+    // console.log(canvas)
     return (
       canvas === "lyricsA" ?
         <TextShuffle />
@@ -100,8 +99,8 @@ export default function App() {
           {/* { if (canvas != 0) <p>Explains this specific rendering of the project</p>} this needs to only render if a canvas has been selected*/}
         </Container>
         } else if (error) return <p>Some error, can't figure out how to render for the user to see</p>
-        else if (!error && allPlaylists && tracks === undefined) return <SpotifyPlaylists />
-        else if (!error && tracks) return <p>{tracks}</p>
+        else if (!error && allPlaylists && tracks === '') return <SpotifyPlaylists />
+        else if (!error && tracks) return <p>You have tracks!</p>
         else return <p>Nothing yet</p>
   }
 

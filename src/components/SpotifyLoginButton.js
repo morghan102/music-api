@@ -1,6 +1,6 @@
 import { useEffect } from 'react'
 import { spotifyClientID } from '../shared/urls.js';
-import { Button, Col, Row, Form, Container } from 'react-bootstrap';
+// import { Button, Col, Row, Form, Container } from 'react-bootstrap';
 
 
 const spotify_auth_endpoint = 'https://accounts.spotify.com/authorize';
