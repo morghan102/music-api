@@ -10,7 +10,7 @@ const scopes_url_param = scopes.join("%20");
 
 const getReturnedParamsFromSpotAuth = (hash) => {
     const params = hash.substring(1).split("&").reduce((acc, curr) => {
-        console.log(curr)
+        // console.log(curr)
         const [k, v] = curr.split("=");
         acc[k] = v;
         return acc;

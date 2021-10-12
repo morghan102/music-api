@@ -81,7 +81,7 @@ export default function MusicGetterForm() {
                             </Col>
                             <Row>
                                 <Col>
-                                <Button onClick={getLyrics}>Get Those Lyrics</Button>
+                                    <Button onClick={getLyrics}>Get Those Lyrics</Button>
                                 </Col>
                             </Row>
                         </>

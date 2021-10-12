@@ -1,11 +1,12 @@
 .App {
   text-align: center;
+  margin: 4em;
   /* background-color: burlywood; */
 }
 
-.displayedLyr {
-  margin-top: 20px;
-}
+/* .displayedLyr {
+  margin-top: 50px;
+} */
 
 
 .spotifyBtn {

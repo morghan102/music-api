@@ -7,8 +7,9 @@ const playlists_endpoint = 'https://api.spotify.com/v1/me/playlists';//this is f
 
 const SpotifyGetPlaylists = () => {
     const [token, setToken] = useState('');
-    const [data, setData] = useState({});//this will be teh data we get from spotify
-    const { dispatchSongEvent, dispatchError, playlists } = useContext(AppContext);
+    // const [isLoading, setIsLoading] = useState(false); need to put this in the context
+    // const [data, setData] = useState({});//this will be teh data we get from spotify
+    const { dispatchSongEvent, dispatchError, allPlaylists } = useContext(AppContext);
 
     useEffect(() => {
         if (localStorage.getItem('accessToken')) {
@@ -18,22 +19,27 @@ const SpotifyGetPlaylists = () => {
 
     const handleGetPlaylists = (e) => {
         e.preventDefault();
+        // setIsLoading(true);
         axios.get(playlists_endpoint, {
             headers: {
                 Authorization: 'Bearer ' + token,
             },
         }).then((res) => {
-            dispatchSongEvent('SET_PLAYLISTS', res.data.items)
+            // setIsLoading(false);
+            dispatchSongEvent('SET_ALL_PLAYLISTS', res.data.items)
             // setData(res.data) //i want to set this info with the context
         }).catch((err) => {
             dispatchError('SET_ERROR', err)
             console.log(err)
         });
     };
-//adding loading thing is necessary
+    //adding loading thing is necessary
     return (
         <>
             <button onClick={handleGetPlaylists} className='spotifyBtn'>Get Your Playlists</button>
+            {/* moved to app.js {!isLoading && playlists ? playlists.map((ele) => <p>{ele.name}</p>)
+                : isLoading ? <p>Hold on, loading</p>
+                    : null} */}
             {/* // using experimental optional chaining */}
             {/* {data?.items ? data.items.map((ele) => <p>{ele.name}</p>) : null} */}
         </>

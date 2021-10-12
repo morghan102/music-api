@@ -10,6 +10,7 @@ import 'bootstrap/dist/css/bootstrap.css'; //i think i dont use
 import { Container } from 'react-bootstrap';
 import TextShuffle from './sketches/TextShuffle';
 import MusicGetterForm from './components/MusicGetter';
+import SpotifyPlaylists from './components/SpotifyPlaylists';
 import { AppContext } from './context';
 import Anagram from './sketches/Anagram';
 import Sketch3 from './sketches/Sketch3';
@@ -19,7 +20,8 @@ export default function App() {
   const [lyrics, setLyrics] = useState('');
   const [error, setError] = useState('');
   const [canvas, setCanvas] = useState('');
-  const [playlists, setPlaylists] = useState('');
+  const [allPlaylists, setAllPlaylists] = useState('');
+  const [playlist, setPlaylist] = useState('');
 
 
   const dispatchSongEvent = (actionType, payload) => {
@@ -31,10 +33,11 @@ export default function App() {
       case 'SET_CANVAS': //this updates ea time you make a new selection
         setCanvas(payload);
         return
-      case 'SET_PLAYLISTS':
-        setPlaylists(payload);
-        console.log("payload")
-        console.log(payload)
+      case 'SET_ALL_PLAYLISTS':
+        setAllPlaylists(payload);
+        return
+      case 'SET_PLAYLIST':
+        setPlaylist(payload)
         return
       default:
         return;
@@ -104,33 +107,35 @@ export default function App() {
   return (
     // not sure I need router? will decide later 
     // <Router>
-      // {/* navbar? I don't think I want that but meybs */}
-      // <Switch>
-      //   <Route path='/home'>
-          <div className="App">
-            <AppContext.Provider value={{ lyrics, canvas, playlists, error, dispatchSongEvent, dispatchError }}>
-              <header >
-                <h1>Music Expressed Artistically </h1>
-              </header>
-              <body>
-                {projectExplanation()}
-                <MusicGetterForm />
-                <div>
-                  {
-                    !error && lyrics || !error && playlists ?
-                      <Container>
-                        <SelectedCanvas />
-                        {/* { if (canvas != 0) <p>Explains this specific rendering of the project</p>} this needs to only render if a canvas has been selected*/}
-                      </Container>
-                      : error ? <p>Some error, can't figure out how to render for the user to see</p>
-                        : <p>Nothing yet</p>
-                  }
-                </div>
-              </body>
-            </AppContext.Provider>
+    // {/* navbar? I don't think I want that but meybs */}
+    // <Switch>
+    //   <Route path='/home'>
+    <div className="App">
+      <AppContext.Provider value={{ lyrics, canvas, allPlaylists, playlist, error, dispatchSongEvent, dispatchError }}>
+        <header >
+          <h1>Music Expressed Artistically </h1>
+        </header>
+        <body>
+          {projectExplanation()}
+          <MusicGetterForm />
+          <div>
+            {
+              !error && lyrics ?
+                <Container>
+                  <SelectedCanvas />
+                  {/* { if (canvas != 0) <p>Explains this specific rendering of the project</p>} this needs to only render if a canvas has been selected*/}
+                </Container>
+                : error ? <p>Some error, can't figure out how to render for the user to see</p>
+                  : !error && allPlaylists ?
+                    <SpotifyPlaylists />
+                    : <p>Nothing yet</p>
+            }
           </div>
-      //   </Route>
-      // </Switch>
+        </body>
+      </AppContext.Provider>
+    </div>
+    //   </Route>
+    // </Switch>
 
     //   <Switch>
     //     <Route path='/'>
