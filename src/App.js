@@ -100,7 +100,8 @@ export default function App() {
           {/* { if (canvas != 0) <p>Explains this specific rendering of the project</p>} this needs to only render if a canvas has been selected*/}
         </Container>
         } else if (error) return <p>Some error, can't figure out how to render for the user to see</p>
-        else if (!error && allPlaylists) return <SpotifyPlaylists />
+        else if (!error && allPlaylists && tracks === undefined) return <SpotifyPlaylists />
+        else if (!error && tracks) return <p>{tracks}</p>
         else return <p>Nothing yet</p>
   }
 
