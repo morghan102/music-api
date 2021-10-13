@@ -90,7 +90,7 @@ export default function MusicGetterForm() {
             <Col sm="auto">
                 <Row>
                     {/* keep an eye on this. I will want to refactor at some point cuz this is ugly i think */}
-                    {localStorage.getItem('accessToken') ?
+                    {window.location.hash ?
                         <Col sm="auto">
                             <Form.Control
                                 onChange={e => dispatchSongEvent('SET_CANVAS', e.target.value)}
@@ -106,6 +106,7 @@ export default function MusicGetterForm() {
 
                         : <Col sm="auto">
                             <SpotifyLoginButton /> 
+
                             {/* {!localStorage.getItem('accessToken') ? <SpotifyLoginButton /> : null} */}
                             {/* this expires at some point and then i want it to show up again i think?? */}
                         </Col>

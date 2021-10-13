@@ -124,7 +124,7 @@ export default function App() {
   //   return lyrics;
   // }
   console.log(tracks ? (tracks) : 'no trax yet');
-  
+
   const Music = () => {
     if (error) return <p>Some error, can't figure out how to render for the user to see</p>
     else if (!error) {
@@ -148,6 +148,7 @@ export default function App() {
     }
   }
 
+             console.log( localStorage.getItem("expiresIn"))
 
   function ProjectExplanation() {
     return (
