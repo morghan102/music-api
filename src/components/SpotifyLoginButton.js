@@ -1,5 +1,6 @@
-import { useEffect } from 'react'
+import { useEffect, useContext } from 'react'
 import { spotifyClientID } from '../shared/urls.js';
+import { AppContext } from '../context.js';
 // import { Button, Col, Row, Form, Container } from 'react-bootstrap';
 
 
@@ -20,6 +21,7 @@ const getReturnedParamsFromSpotAuth = (hash) => {
 
 
 export default function SpotifyLoginButton() {
+    const { dispatchSongEvent } = useContext(AppContext);
 
     useEffect(() => {
         if (window.location.hash) {
@@ -33,6 +35,7 @@ export default function SpotifyLoginButton() {
     const handleLogin = (e) => {
         e.preventDefault();
         window.location = `${spotify_auth_endpoint}?client_id=${spotifyClientID}&redirect_uri=${redirect_uri_after_login}&scope=${scopes_url_param}&response_type=token&show_dialog=true`
+        dispatchSongEvent('IS_SPOTIFY_LOGGED_IN', true);
     }
 
     return (

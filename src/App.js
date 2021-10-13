@@ -10,7 +10,7 @@ import 'bootstrap/dist/css/bootstrap.css'; //i think i dont use
 import { Container } from 'react-bootstrap';
 import TextShuffle from './sketches/TextShuffle';
 import MusicGetterForm from './components/MusicGetter';
-import SpotifyPlaylists from './components/SpotifyPlaylists';
+import SpotifyPlaylistsList from './components/SpotifyPlaylistsList';
 import { AppContext } from './context';
 import Anagram from './sketches/Anagram';
 import Sketch3 from './sketches/Sketch3';
@@ -22,6 +22,8 @@ export default function App() {
   const [canvas, setCanvas] = useState('');
   const [allPlaylists, setAllPlaylists] = useState('');
   const [tracks, setTracks] = useState('');
+  const [isSpotifyLoggedIn, setIsSpotifyLoggedIn] = useState(false);
+  const [playlistsorLyrics, setPlaylistsorLyrics] = useState('');
 
 
   const dispatchSongEvent = (actionType, payload) => {
@@ -38,6 +40,12 @@ export default function App() {
         return
       case 'SET_TRACKS':
         setTracks(payload)
+        return
+      case 'IS_SPOTIFY_LOGGED_IN':
+        setIsSpotifyLoggedIn(payload)
+        return
+      case 'SET_P_OR_L':
+        setPlaylistsorLyrics(payload)
         return
       default:
         return;
@@ -91,26 +99,36 @@ export default function App() {
   //   }
   //   return lyrics;
   // }
-
+  console.log(tracks)
   const Music = () => {
-      if (error && lyrics) {
+    if (error) return <p>Some error, can't figure out how to render for the user to see</p>
+    else if (!error) {
+      if (lyrics && !allPlaylists) {
         return <Container>
+          {/* add space to the top */}
           <SelectedCanvas />
+
+          {/* make bold or something */}
+          <p>Unfortunately, due to MusixMatch's restrictions, I can only display a certain number of lyrics.</p>
           {/* { if (canvas != 0) <p>Explains this specific rendering of the project</p>} this needs to only render if a canvas has been selected*/}
         </Container>
-        } else if (error) return <p>Some error, can't figure out how to render for the user to see</p>
-        else if (!error && allPlaylists && tracks === '') return <SpotifyPlaylists />
-        else if (!error && tracks) return <p>You have tracks!</p>
-        else return <p>Nothing yet</p>
+      } else if (allPlaylists && tracks === '' && playlistsorLyrics !== 'lyrics') return <SpotifyPlaylistsList />
+      else if (tracks) {
+        return <Container>
+          <p>You have tracks!</p>
+          <SelectedCanvas />
+        </Container>
+      }
+      else return <p>Nothing yet</p>
+    }
   }
 
 
-  function projectExplanation() {
+  function ProjectExplanation() {
     return (
       <Container>
         <h4>What is this project about?</h4>
         <p> When I was in school studying literature, we did a very special project in my 20th C lit class. Using the texts we'd read throughout the quarter, we were tasked to make some artistic rendering of them. I honestly can't remember what I made -- I didn't consider myself very artistic at the time. Now, I wished I'd had access to tools like P5.js and coding. This project is inspired by that, by my love of music and reading, and by Rodez's inability to memorize any song ever. I hope you enjoy it as much as I did.
-          <br /> Unfortunately, due to MusixMatch's restrictions, I can only display a certain number of lyrics.
         </p>
       </Container>
     )
@@ -123,14 +141,14 @@ export default function App() {
     // <Switch>
     //   <Route path='/home'>
     <div className="App">
-      <AppContext.Provider value={{ lyrics, canvas, allPlaylists, tracks, error, dispatchSongEvent, dispatchError }}>
+      <AppContext.Provider value={{ lyrics, canvas, allPlaylists, tracks, error, isSpotifyLoggedIn, playlistsorLyrics, dispatchSongEvent, dispatchError }}>
         <header >
           <h1>Music Expressed Artistically </h1>
         </header>
         <body>
-          {projectExplanation()}
+          <ProjectExplanation />
           <MusicGetterForm />
-            <Music />
+          <Music />
         </body>
       </AppContext.Provider>
     </div>

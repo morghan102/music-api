@@ -37,7 +37,7 @@ export default function TextShuffle() {
     return (
         <div>
             <Sketch setup={setup} draw={draw} mousePressed={mousePressed} />
-            <p className="displayedLyr">{lyrics}</p>
+            <p className="lyrics">{lyrics}</p>
         </div>
     );
 };

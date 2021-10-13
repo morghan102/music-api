@@ -5,6 +5,7 @@ import { AppContext } from '../context';
 
 // ref https://p5js.org/examples/typography-letters.html
 //take the lyrics, just the letters all together, highlight some and not others to... make a new word? dunno how to doy
+// or just random letters?
 export default function Anagram() {
     const { lyrics } = useContext(AppContext);
     const lyricArr = lyrics.toLowerCase().replaceAll(" ", "").replace(/\s+/, "").split(""); //splits on spaces and line breaks
@@ -54,7 +55,7 @@ export default function Anagram() {
     return (
         <Container>
             <Sketch setup={setup} draw={draw} />
-            <p className="displayedLyr">{lyrics}</p>
+            <p className="lyrics">{lyrics}</p>
         </Container>
     );
 };

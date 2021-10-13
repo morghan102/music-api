@@ -26,7 +26,7 @@
 //     return (
 //         <div>
 //             <Sketch setup={setup} draw={draw} />
-//             <p className="displayedLyr">{lyrics}</p>
+//             <p className="lyrics">{lyrics}</p>
 //         </div>
 //     );
 // };
