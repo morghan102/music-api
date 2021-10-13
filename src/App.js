@@ -14,6 +14,9 @@ import SpotifyPlaylistsList from './components/SpotifyPlaylistsList';
 import { AppContext } from './context';
 import Anagram from './sketches/Anagram';
 import Sketch3 from './sketches/Sketch3';
+import SpotifySketch1 from './sketches/SpotifySketch1';
+import SpotifySketch2 from './sketches/SpotifySketch2';
+import SpotifySketch3 from './sketches/SpotifySketch3';
 
 export default function App() {
 
@@ -65,15 +68,36 @@ export default function App() {
 
   const SelectedCanvas = () => { //add canvases for the playlists
     // console.log(canvas)
-    return (
-      canvas === "lyricsA" ?
-        <TextShuffle />
-        : canvas === "lyricsB" ?
-          <Anagram />
-          : canvas === "lyricsC" ?
-            <Sketch3 />
-            : <p>Please select a canvas</p>
-    )
+    // return (
+    //   playlistsorLyrics === 'lyrics' ? canvas === "lyricsA" ?
+    //     <TextShuffle />
+    //     : canvas === "lyricsB" ?
+    //       <Anagram />
+    //       : canvas === "lyricsC" ?
+    //         <Sketch3 />
+    //         : <p>Please select a canvas</p>
+    // )
+    if (playlistsorLyrics === 'lyrics') {
+      return (
+        canvas === "lyricsA" ?
+          <TextShuffle />
+          : canvas === "lyricsB" ?
+            <Anagram />
+            : canvas === "lyricsC" ?
+              <Sketch3 />
+              : null
+      )
+    } else if (playlistsorLyrics === 'playlists') {
+      return (
+        canvas === "a" ?
+          <SpotifySketch1 />
+          : canvas === "b" ?
+            <SpotifySketch2 />
+            : canvas === "c" ?
+              <SpotifySketch3 />
+              : null
+      )
+    } else return <p>Please select a canvas</p>
   }
 
 
@@ -99,7 +123,8 @@ export default function App() {
   //   }
   //   return lyrics;
   // }
-  console.log(tracks)
+  console.log(tracks ? (tracks) : 'no trax yet');
+  
   const Music = () => {
     if (error) return <p>Some error, can't figure out how to render for the user to see</p>
     else if (!error) {

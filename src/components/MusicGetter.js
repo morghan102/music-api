@@ -15,7 +15,7 @@ export default function MusicGetterForm() {
     const [song, setSong] = useState('');
     // const [playlistsorLyric, setPlaylistsorLyrics] = useState('');
 
-    const { dispatchSongEvent, dispatchError, isSpotifyLoggedIn, playlistsorLyrics } = useContext(AppContext);
+    const { dispatchSongEvent, dispatchError, isSpotifyLoggedIn, playlistsorLyrics, allPlaylists } = useContext(AppContext);
 
     const getLyrics = () => {
         axios.get(`${musixUrl}?q_track=${song.replace(" ", '%20')}q_artist=${artist.replace(" ", '%20')}o&apikey=${musixApikey}`, {
@@ -89,6 +89,7 @@ export default function MusicGetterForm() {
         return (
             <Col sm="auto">
                 <Row>
+                    {/* keep an eye on this. I will want to refactor at some point cuz this is ugly i think */}
                     {localStorage.getItem('accessToken') ?
                         <Col sm="auto">
                             <Form.Control
@@ -100,12 +101,13 @@ export default function MusicGetterForm() {
                                 <option value="b">b</option>
                                 <option value="c">C</option>
                             </Form.Control>
+                            {allPlaylists === '' ? <SpotifyGetPlaylists /> : null}
                         </Col>
 
                         : <Col sm="auto">
-                            {!localStorage.getItem('accessToken') ? <SpotifyLoginButton /> : null}
+                            <SpotifyLoginButton /> 
+                            {/* {!localStorage.getItem('accessToken') ? <SpotifyLoginButton /> : null} */}
                             {/* this expires at some point and then i want it to show up again i think?? */}
-                            <SpotifyGetPlaylists />
                         </Col>
                     }
                 </Row>
@@ -113,7 +115,7 @@ export default function MusicGetterForm() {
         )
     }
 
-    
+
     return (
         <div>
             <Form>
@@ -128,7 +130,7 @@ export default function MusicGetterForm() {
                             <option value="playlists">Playlists</option>
                         </Form.Control>
                     </Col>
-                    {/* i might be able to combine the 2 formcontrol/option things w some conditional rendering */}
+
                     {playlistsorLyrics === 'lyrics' ?
                         <Lyrics />
                         : playlistsorLyrics === 'playlists' ?

@@ -12,6 +12,7 @@ const SpotifyGetPlaylists = () => {
     const { dispatchSongEvent, dispatchError } = useContext(AppContext);
 
     useEffect(() => {
+        // error where it's not resetting this value after i stop the server, so i don't have a token or peace of mind
         if (localStorage.getItem('accessToken')) {
             setToken(localStorage.getItem('accessToken'))
         }
