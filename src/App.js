@@ -27,6 +27,9 @@ export default function App() {
   const [tracks, setTracks] = useState('');
   const [isSpotifyLoggedIn, setIsSpotifyLoggedIn] = useState(false);
   const [playlistsorLyrics, setPlaylistsorLyrics] = useState('');
+  const [accessToken, setAccessToken] = useState('');
+  const [expiresIn, setExpiresIn] = useState('');
+  const [tokenType, setTokenType] = useState('');
 
 
   const dispatchSongEvent = (actionType, payload) => {
@@ -50,6 +53,17 @@ export default function App() {
       case 'SET_P_OR_L':
         setPlaylistsorLyrics(payload)
         return
+      case 'SET_ACCESS_TOKEN':
+        setAccessToken(payload);
+        console.log(payload)
+        return
+      case 'SET_EXPIRES_IN'://I don't think I use these 2 vals??
+        setExpiresIn(payload);
+        return
+      case 'SET_TOKEN_TYPE':
+        setTokenType(payload);
+        return
+
       default:
         return;
     }
@@ -148,8 +162,6 @@ export default function App() {
     }
   }
 
-             console.log( localStorage.getItem("expiresIn"))
-
   function ProjectExplanation() {
     return (
       <Container>
@@ -167,7 +179,7 @@ export default function App() {
     // <Switch>
     //   <Route path='/home'>
     <div className="App">
-      <AppContext.Provider value={{ lyrics, canvas, allPlaylists, tracks, error, isSpotifyLoggedIn, playlistsorLyrics, dispatchSongEvent, dispatchError }}>
+      <AppContext.Provider value={{ lyrics, canvas, allPlaylists, tracks, error, isSpotifyLoggedIn, playlistsorLyrics, accessToken, dispatchSongEvent, dispatchError }}>
         <header >
           <h1>Music Expressed Artistically </h1>
         </header>

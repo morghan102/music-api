@@ -7,16 +7,16 @@ import axios from 'axios';
 
 
 export default function SpotifyPlaylistsList() {
-    const { dispatchSongEvent, dispatchError, allPlaylists } = useContext(AppContext);
-    const [token, setToken] = useState('');
+    const { dispatchSongEvent, dispatchError, allPlaylists, accessToken } = useContext(AppContext);
+    // const [token, setToken] = useState('');
     // const [tracksAudioFeatures, setTracksAudioFeatures] = useState([])
     const tracksAudioFeatures = [];
 
-    useEffect(() => {
-        if (localStorage.getItem('accessToken')) {
-            setToken(localStorage.getItem('accessToken'))
-        }
-    }, [])
+    // useEffect(() => {
+    //     if (localStorage.getItem('accessToken')) {
+    //         setToken(localStorage.getItem('accessToken'))
+    //     }
+    // }, [])
 
     function PlaylistList() {
         let counter = 0;
@@ -43,14 +43,14 @@ export default function SpotifyPlaylistsList() {
         // e.preventDefault();
         axios.get(pl.href, {
             headers: {
-                Authorization: 'Bearer ' + token,
+                Authorization: 'Bearer ' + accessToken,
             },
         }).then((res) => {
             const ids = extractIds(res.data.tracks.items);
             ids.forEach(id => {
                 axios.get(`https://api.spotify.com/v1/audio-features/${id}`, {
                     headers: {
-                        Authorization: 'Bearer ' + token,
+                        Authorization: 'Bearer ' + accessToken,
                     },
                 }).then((res) => {
                     tracksAudioFeatures.push(res.data)

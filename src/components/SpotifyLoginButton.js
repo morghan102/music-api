@@ -21,24 +21,40 @@ const getReturnedParamsFromSpotAuth = (hash) => {
 
 
 export default function SpotifyLoginButton() {
-    const { dispatchSongEvent } = useContext(AppContext);
+    const { dispatchSongEvent, accessToken } = useContext(AppContext);
 
     useEffect(() => {
         if (window.location.hash) {
             const { access_token, expires_in, token_type } = getReturnedParamsFromSpotAuth(window.location.hash); //desctructuing the value
-            localStorage.clear(); //localstorage is just a temp solution?
-            localStorage.setItem("accessToken", access_token);
-            localStorage.setItem("expiresIn", expires_in);
-            localStorage.setItem("tokenType", token_type);
+            dispatchSongEvent('SET_ACCESS_TOKEN', access_token)
+            dispatchSongEvent('SET_EXPIRES_IN', expires_in) //idk if I actually need?
+            dispatchSongEvent('SET_TOKEN_TYPE ', token_type)
+        //     localStorage.clear(); //is just a temp solution?
+        //     localStorage.setItem("accessToken", access_token);
+        //     localStorage.setItem("expiresIn", expires_in);
+        //     localStorage.setItem("tokenType", token_type);
+        //     setTimeout(() => {
+        //         localStorage.clear();
+        //         window.location.hash = ''
+        //         console.log('hi')
+        //         // refresh all those vals? / clear them and require user to log in again
+        //         // will this still work if I've like stopped the terminal?
+        //     }, 5) //converts it to miliseconds
         }
     })
+
     const handleLogin = (e) => {
         e.preventDefault();
         window.location = `${spotify_auth_endpoint}?client_id=${spotifyClientID}&redirect_uri=${redirect_uri_after_login}&scope=${scopes_url_param}&response_type=token&show_dialog=true`
         dispatchSongEvent('IS_SPOTIFY_LOGGED_IN', true);
     }
 
+    const LoginBtn = () => {
+        if (accessToken === '') return <button onClick={handleLogin} className='spotifyBtn'>Login to Spotify</button>
+        else return null
+    }
+
     return (
-        <button onClick={handleLogin} className='spotifyBtn'>Login to Spotify</button>
+        <LoginBtn />
     )
 }

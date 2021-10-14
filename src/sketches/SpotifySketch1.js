@@ -11,14 +11,14 @@ export default function SpotifySketch1() {
     // const lyricArr = lyrics.toLowerCase().replaceAll(" ", "").replace(/\s+/, "").split(""); //splits on spaces and line breaks
 
     const setup = (p5, canvasParentRef) => {
-        p5.createCanvas(500, 600).parent(canvasParentRef);
+        p5.createCanvas(1000, 600).parent(canvasParentRef);
         // p5.textFont(font);
         // p5.textSize(20);
         // p5.textAlign(p5.CENTER, p5.CENTER);
     };
 
     const draw = (p5) => {
-    //     p5.background(50);
+        p5.background(50);
     //     // p5.textSize(16);
     //     let gap = 52;
     //     let margin = 10;
@@ -49,7 +49,6 @@ export default function SpotifySketch1() {
     //             counter++;
     //         }
     //     }
-    <p>hi</p>
     };
 
 
@@ -60,3 +59,4 @@ export default function SpotifySketch1() {
         </Container>
     );
 };
+
