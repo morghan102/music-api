@@ -14,7 +14,7 @@ import SpotifyPlaylistsList from './components/SpotifyPlaylistsList';
 import { AppContext } from './context';
 import Anagram from './sketches/Anagram';
 import Sketch3 from './sketches/Sketch3';
-import SpotifySketch1 from './sketches/SpotifySketch1';
+import Graph from './sketches/Graph';
 import SpotifySketch2 from './sketches/SpotifySketch2';
 import SpotifySketch3 from './sketches/SpotifySketch3';
 
@@ -104,7 +104,7 @@ export default function App() {
     } else if (playlistsorLyrics === 'playlists') {
       return (
         canvas === "a" ?
-          <SpotifySketch1 />
+          <Graph />
           : canvas === "b" ?
             <SpotifySketch2 />
             : canvas === "c" ?
