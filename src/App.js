@@ -30,6 +30,7 @@ export default function App() {
   const [accessToken, setAccessToken] = useState('');
   const [expiresIn, setExpiresIn] = useState('');
   const [tokenType, setTokenType] = useState('');
+  const [graphVal, setGraphVal] = useState('');
 
 
   const dispatchSongEvent = (actionType, payload) => {
@@ -63,7 +64,10 @@ export default function App() {
       case 'SET_TOKEN_TYPE':
         setTokenType(payload);
         return
-
+      case 'SET_GRAPH_VAL':
+        setGraphVal(payload);
+        console.log(payload)
+        return
       default:
         return;
     }
@@ -103,7 +107,7 @@ export default function App() {
       )
     } else if (playlistsorLyrics === 'playlists') {
       return (
-        canvas === "a" ?
+        canvas === "GraphVal" ?
           <Graph />
           : canvas === "b" ?
             <SpotifySketch2 />
@@ -179,7 +183,7 @@ export default function App() {
     // <Switch>
     //   <Route path='/home'>
     <div className="App">
-      <AppContext.Provider value={{ lyrics, canvas, allPlaylists, tracks, error, isSpotifyLoggedIn, playlistsorLyrics, accessToken, dispatchSongEvent, dispatchError }}>
+      <AppContext.Provider value={{ lyrics, canvas, allPlaylists, tracks, error, isSpotifyLoggedIn, playlistsorLyrics, accessToken, graphVal, dispatchSongEvent, dispatchError }}>
         <header >
           <h1>Music Expressed Artistically </h1>
         </header>
