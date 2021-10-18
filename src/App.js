@@ -28,9 +28,9 @@ export default function App() {
   const [isSpotifyLoggedIn, setIsSpotifyLoggedIn] = useState(false);
   const [playlistsorLyrics, setPlaylistsorLyrics] = useState('');
   const [accessToken, setAccessToken] = useState('');
-  const [expiresIn, setExpiresIn] = useState('');
-  const [tokenType, setTokenType] = useState('');
-  const [graphVal, setGraphVal] = useState('');
+  // const [expiresIn, setExpiresIn] = useState('');
+  // const [tokenType, setTokenType] = useState('');
+  const [valOfGraphSketch, setValOfGraphSketch] = useState('');
 
 
   const dispatchSongEvent = (actionType, payload) => {
@@ -56,17 +56,15 @@ export default function App() {
         return
       case 'SET_ACCESS_TOKEN':
         setAccessToken(payload);
-        console.log(payload)
         return
-      case 'SET_EXPIRES_IN'://I don't think I use these 2 vals??
-        setExpiresIn(payload);
-        return
-      case 'SET_TOKEN_TYPE':
-        setTokenType(payload);
-        return
-      case 'SET_GRAPH_VAL':
-        setGraphVal(payload);
-        console.log(payload)
+      // case 'SET_EXPIRES_IN'://I don't think I use these 2 vals??
+      //   setExpiresIn(payload);
+      //   return
+      // case 'SET_TOKEN_TYPE':
+      //   setTokenType(payload);
+      //   return
+      case 'SET_VAL_OF_GRAPH_SKETCH':
+        setValOfGraphSketch(payload);
         return
       default:
         return;
@@ -107,7 +105,7 @@ export default function App() {
       )
     } else if (playlistsorLyrics === 'playlists') {
       return (
-        canvas === "GraphVal" ?
+        canvas === "graph" ?
           <Graph />
           : canvas === "b" ?
             <SpotifySketch2 />
@@ -141,7 +139,7 @@ export default function App() {
   //   }
   //   return lyrics;
   // }
-  console.log(tracks ? (tracks) : 'no trax yet');
+  console.log(tracks ? (tracks) : null);
 
   const Music = () => {
     if (error) return <p>Some error, can't figure out how to render for the user to see</p>
@@ -183,7 +181,7 @@ export default function App() {
     // <Switch>
     //   <Route path='/home'>
     <div className="App">
-      <AppContext.Provider value={{ lyrics, canvas, allPlaylists, tracks, error, isSpotifyLoggedIn, playlistsorLyrics, accessToken, graphVal, dispatchSongEvent, dispatchError }}>
+      <AppContext.Provider value={{ lyrics, canvas, allPlaylists, tracks, error, isSpotifyLoggedIn, playlistsorLyrics, accessToken, valOfGraphSketch, dispatchSongEvent, dispatchError }}>
         <header >
           <h1>Music Expressed Artistically </h1>
         </header>

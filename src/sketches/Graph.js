@@ -5,24 +5,43 @@ import { AppContext } from '../context';
 
 
 export default function Graph() {
-    const { tracks, graphVal } = useContext(AppContext);
-    const danceabilityArr = tracks.map((track) => {
-        return track.danceability
-    }); //splits on spaces and line breaks
-console.log(danceabilityArr)
-    const setup = (p5, canvasParentRef) => {
-        p5.createCanvas(1000, 600).parent(canvasParentRef);
+    const { tracks, valOfGraphSketch } = useContext(AppContext);
+    const danceabilityArr = []
 
+    const getPropValue = (obj, key) => //why does this work while everythng else didnt???????
+        key.split('.').reduce((o, x) =>
+            o == undefined ? o : o[x]
+            , obj)
+    // got this from: https://crunchtech.medium.com/object-destructuring-best-practice-in-javascript-9c8794699a0d
+
+    if (valOfGraphSketch && tracks) (tracks.forEach((track) => {
+        danceabilityArr.push(getPropValue(track, valOfGraphSketch))
+    }));
+
+
+    const setup = (p5, canvasParentRef) => {
+        p5.createCanvas(800, 600).parent(canvasParentRef);
+        // p5.noLoop();
     };
 
     const draw = (p5) => {
-        p5.background(50);
-        let gap = 2;
-        let counter=5;
+        p5.background(255);
+        p5.fill(0,0,0);
+        let counter = 1;
+
         danceabilityArr.forEach((ele) => {
-            p5.ellipse(counter, ele*500, 10,10)
-            counter += 15;
+            // p5.noStroke();
+            let x = counter * (p5.width / danceabilityArr.length);
+            let y = ele * 400;
+            // p5.ellipse(counter, ele * 500, 10, 10)
+            p5.ellipse(x, y, 6)
+            counter += 1;
         })
+
+        p5.stroke = 50;
+        p5.line(1, 0, 1, 600)
+        p5.line(0, 599, 800, 599)
+
     };
 
 

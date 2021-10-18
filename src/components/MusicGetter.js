@@ -15,7 +15,7 @@ export default function MusicGetterForm() {
     const [song, setSong] = useState('');
     // const [playlistsorLyric, setPlaylistsorLyrics] = useState('');
 
-    const { dispatchSongEvent, dispatchError, isSpotifyLoggedIn, playlistsorLyrics, allPlaylists, tracks, canvas } = useContext(AppContext);
+    const { dispatchSongEvent, dispatchError, playlistsorLyrics, allPlaylists, tracks, canvas } = useContext(AppContext);
 
     const getLyrics = () => {
         axios.get(`${musixUrl}?q_track=${song.replace(" ", '%20')}q_artist=${artist.replace(" ", '%20')}o&apikey=${musixApikey}`, {
@@ -45,39 +45,50 @@ export default function MusicGetterForm() {
     // }
 
     const SelectGraphingOpts = () => {
-        let track = '';
-        let keys = ''
-        if (tracks !== '') {
-            track = (tracks[Object.keys(tracks)[0]])
-            if (track) keys = Object.keys(track);
-        };//keys are strings not index
+        // let track = '';
+        // let keys = ''
+        // if (tracks !== '') {
+        //     track = (tracks[Object.keys(tracks)[0]])
+        //     if (track) keys = Object.keys(track);
+        // };//keys are strings not index
 
         // {/* the appearance of this is dependent on if they choose the graph canvas */ }
         // {/* i wanted to put this whole col into selectGraphOts. possible?? */ }
         return (
-            canvas === 'graphVal' && tracks !== '' ?
+            canvas === 'graph' && tracks !== '' ?
                 <Col sm="auto">
                     <Form.Control
-                        onChange={e => dispatchSongEvent('SET_GRAPH_VAL', e.target.value)}
+                        onChange={e => {
+                            // console.log(e.target.value)
+                            dispatchSongEvent('SET_VAL_OF_GRAPH_SKETCH', e.target.value)}}
                         as="select"
                     >
-                        <option>What value would you like to graph on?</option>
-                        <option value="danceability">Danceability</option>
-                        <option value="energy">Energy</option>
-                        <option value="key">Key</option>
-                        <option value="loudness">Loudness</option>
-                        <option value="mode">Mode</option>
-                        <option value="speechiness">Speechiness</option>
-                        <option value="acousticness">Acousticness</option>
-                        <option value="instrumentalness">Instrumentalness</option>
-                        <option value="liveness">Liveness</option>
-                        <option value="valence">Valence</option>
-                        <option value="tempo">Tempo</option>
-                        {/* i wanted this to set dybnamillacy but couldnt get it to work
+
+                    <option>What value would you like to graph on?</option>
+                    <option value="danceability">Danceability</option>
+                    <option value="energy">Energy</option>
+                    <option value="key">Key</option>
+                    <option value="loudness">Loudness</option>
+                    <option value="mode">Mode</option>
+                    <option value="speechiness">Speechiness</option>
+                    <option value="acousticness">Acousticness</option>
+                    <option value="instrumentalness">Instrumentalness</option>
+                    <option value="liveness">Liveness</option>
+                    <option value="valence">Valence</option>
+                    <option value="tempo">Tempo</option>
+                    {/* i wanted this to set dybnamillacy but couldnt get it to work
                         {keys.forEach((k) => {
                             <option value={k}>{k}</option>
-                        })} */}
+                        })} 
+                        WORKS w ul and li but would take some more configuring - maybe later
+                        pluralsight.com/guides/how-to-implement-a-component-"loop"-with-react
+                        <ul>
+                        {keys.map((item) => {
+                            return <li key={item}>{item}</li>
+                        })}
+                    </ul> */}
                     </Form.Control>
+
                 </Col>
                 : null
         )
@@ -139,7 +150,7 @@ export default function MusicGetterForm() {
                             as="select"
                         >
                             <option>Select a Canvas</option>
-                            <option value="graphVal">Graph Values</option>
+                            <option value="graph">Graph Values</option>
                             <option value="b">b</option>
                             <option value="c">C</option>
                         </Form.Control>
