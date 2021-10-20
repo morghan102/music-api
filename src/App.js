@@ -59,7 +59,7 @@ export default function App() {
         return
       case 'SET_EXPIRES_IN'://I don't think I use these 2 vals??
         setExpiresIn(payload);
-        triggerCountDown(expiresIn)
+        triggerCountDown()
         return
       // case 'SET_TOKEN_TYPE':
       //   setTokenType(payload);
@@ -72,7 +72,7 @@ export default function App() {
     }
   };
 
-  const triggerCountDown = (time) => {
+  const triggerCountDown = () => {
     setTimeout(() => {
       console.log("spotify access url being cleared")
       alert("Spotify access url being cleared, please log back in.")

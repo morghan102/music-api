@@ -6,7 +6,7 @@ import { AppContext } from '../context';
 
 export default function Graph() {
     const { tracks, valOfGraphSketch } = useContext(AppContext);
-    const danceabilityArr = []
+    const valsArr = []
 
     const getPropValue = (obj, key) => //why does this work while everythng else didnt???????
         key.split('.').reduce((o, x) =>
@@ -15,12 +15,12 @@ export default function Graph() {
     // got this from: https://crunchtech.medium.com/object-destructuring-best-practice-in-javascript-9c8794699a0d
 
     if (valOfGraphSketch && tracks) (tracks.forEach((track) => { //shd be able to let everything go a level up, don't need to get to music info objs
-        danceabilityArr.push(getPropValue(track, valOfGraphSketch))
+        valsArr.push(getPropValue(track, valOfGraphSketch))
     }));
 
-    const canvasX = 1100, canvasY = 700, xStart = 0;
-    const max = Math.max.apply(Math, danceabilityArr)
-    const min = Math.min.apply(Math, danceabilityArr)
+    const canvasX = 1100, canvasY = 700//, xStart = 0;
+    const max = Math.max.apply(Math, valsArr)
+    const min = Math.min.apply(Math, valsArr)
 
 
     const setup = (p5, canvasParentRef) => {
@@ -28,18 +28,22 @@ export default function Graph() {
         p5.noLoop();
     };
 
-    console.log(max)
-    console.log(min)
-    console.log("---------------------")
+    const median = () => {
+        let half = Math.floor(valsArr.length / 2);
+        return valsArr.length % 2 === 0 ? valsArr[half] : (valsArr[half] + valsArr[half - 1]) / 2
+    }
+    // console.log(max)
+    // console.log(min)
+    // console.log("---------------------")
 
-    const transformVal = (val, count) => {
+    const transformVal = (val) => {
         let x = 0;
         if (valOfGraphSketch !== 'loudness' && valOfGraphSketch !== 'mode' && valOfGraphSketch !== 'tempo') x = val * 600
-        else if (valOfGraphSketch === 'loudness') x = 10* -val; //val will be negative. This requires adjusting on part of the numbers on the lines
+        else if (valOfGraphSketch === 'loudness') x = 10 * -val; //val will be negative. This requires adjusting on part of the numbers on the lines
         else if (valOfGraphSketch === 'mode') x = val * 100; //either 1 or 0
         else if (valOfGraphSketch === 'tempo') x = val * 3;
-        console.log(x)
-        return x+=10; //shd this be +=??
+        // console.log(x)
+        return x += 10; //shd this be +=??
     }
 
     const draw = (p5) => {
@@ -48,28 +52,36 @@ export default function Graph() {
         let counter = 1;
         let yCounter = 0;
         let textCounter = 0;
-        p5.translate(100, 0)
+        p5.translate(80, 0)
+            let reducer = 0;
 
-        danceabilityArr.forEach((val) => {
-            console.log(val)
-            let y = transformVal(val, textCounter)
-            let x = counter * (canvasX / danceabilityArr.length - 1);
-            // let y = val * 100;
+        valsArr.forEach((val) => {
+            // console.log(val)
+            let y = transformVal(val)
+            let x = counter * (canvasX / valsArr.length - 1);
             p5.text(yCounter, -30, yCounter)
-            p5.ellipse(x, y - 5, 6) //cd use p5.point //THIS NEEDS TO HAVE THE CENTER BE AT THE VALUE, NOT RIGHT ABOVE/BELOW
-            // counter += 1;
+            // p5.ellipse(x, y - 5, 6) //cd use p5.point //THIS NEEDS TO HAVE THE CENTER BE AT THE VALUE, NOT RIGHT ABOVE/BELOW
             p5.line(x, 600, x, 590)//x axis tick marks
             // p5.line(95, y, 105, y)//y axis tick marks (rn just the y of the vals. after spreading out more evenly, make it regular intervals like x)
             p5.line(-5, yCounter, 5, yCounter)
             counter += 1;
             textCounter += 100;
             if (yCounter <= 500) yCounter += 100;
+            reducer += y;
+            //         if (p5.mouseX === x && p5.mouseY === y) console.clear()
+            p5.strokeWeight(5.5)
+            p5.point(x,y)
+            p5.strokeWeight(1)
+            // console.log(p5.mouseX)
         })
+        // console.log(reducer)
 
-
-        p5.stroke = 50;
+        p5.stroke(50);
         p5.line(0, 0, 0, canvasY - 100) //y axis
         p5.line(0, canvasY - 100, canvasX, canvasY - 100) //x axis
+        p5.stroke(204,204,204)
+        // let middle = transformVal(median())
+        p5.line(1, reducer/valsArr.length, canvasX, reducer/valsArr.length) //median line
 
     };
 
