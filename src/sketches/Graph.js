@@ -34,9 +34,8 @@ export default function Graph() {
 
     const transformVal = (val, count) => {
         let x = 0;
-        if (valOfGraphSketch !== 'loudness' && valOfGraphSketch !== 'mode' && valOfGraphSketch !== 'tempo') {
-            x = val * 600
-        } else if (valOfGraphSketch === 'loudness') x = 10* -val; //val will be negative. This requires adjusting on part of the numbers on the lines
+        if (valOfGraphSketch !== 'loudness' && valOfGraphSketch !== 'mode' && valOfGraphSketch !== 'tempo') x = val * 600
+        else if (valOfGraphSketch === 'loudness') x = 10* -val; //val will be negative. This requires adjusting on part of the numbers on the lines
         else if (valOfGraphSketch === 'mode') x = val * 100; //either 1 or 0
         else if (valOfGraphSketch === 'tempo') x = val * 3;
         console.log(x)

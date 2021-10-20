@@ -57,7 +57,6 @@ export default function SpotifyPlaylistsList() {
                 })
             })
             dispatchSongEvent('SET_TRACKS', tracksAudioFeatures)
-
         }).catch((err) => {
             dispatchError('SET_ERROR', err)
             console.log(err)
@@ -68,7 +67,6 @@ export default function SpotifyPlaylistsList() {
     const extractIds = (tracksObj) => {
         const arr = [];
         tracksObj.forEach(track => arr.push(track.track.id))
-
         return arr;
     }
 

@@ -28,7 +28,7 @@ export default function App() {
   const [isSpotifyLoggedIn, setIsSpotifyLoggedIn] = useState(false);
   const [playlistsorLyrics, setPlaylistsorLyrics] = useState('');
   const [accessToken, setAccessToken] = useState('');
-  // const [expiresIn, setExpiresIn] = useState('');
+  const [expiresIn, setExpiresIn] = useState('');
   // const [tokenType, setTokenType] = useState('');
   const [valOfGraphSketch, setValOfGraphSketch] = useState('');
 
@@ -57,9 +57,10 @@ export default function App() {
       case 'SET_ACCESS_TOKEN':
         setAccessToken(payload);
         return
-      // case 'SET_EXPIRES_IN'://I don't think I use these 2 vals??
-      //   setExpiresIn(payload);
-      //   return
+      case 'SET_EXPIRES_IN'://I don't think I use these 2 vals??
+        setExpiresIn(payload);
+        triggerCountDown(expiresIn)
+        return
       // case 'SET_TOKEN_TYPE':
       //   setTokenType(payload);
       //   return
@@ -70,6 +71,20 @@ export default function App() {
         return;
     }
   };
+
+  const triggerCountDown = (time) => {
+    setTimeout(() => {
+      console.log("spotify access url being cleared")
+      alert("Spotify access url being cleared, please log back in.")
+      removeHash()
+      window.location.reload(true);
+    }, 3600000);
+
+  }
+
+  function removeHash() {
+    window.history.pushState("", document.title, window.location.pathname + window.location.search);
+  }
 
   const dispatchError = (actionType, payload) => {
     switch (actionType) {
@@ -171,7 +186,7 @@ export default function App() {
     else if (valOfGraphSketch === 'energy') return valOfGraphSketch.toUpperCase() + ': Energy is a measure from 0.0 to 1.0 and represents a perceptual measure of intensity and activity. Typically, energetic tracks feel fast, loud, and noisy. For example, death metal has high energy, while a Bach prelude scores low on the scale. Perceptual features contributing to this attribute include dynamic range, perceived loudness, timbre, onset rate, and general entropy.'
     else if (valOfGraphSketch === 'instrumentalness') return valOfGraphSketch.toUpperCase() + ': Predicts whether a track contains no vocals. “Ooh” and “aah” sounds are treated as instrumental in this context. Rap or spoken word tracks are clearly “vocal”. The closer the instrumentalness value is to 1.0, the greater likelihood the track contains no vocal content. Values above 0.5 are intended to represent instrumental tracks, but confidence is higher as the value approaches 1.0.'
     else if (valOfGraphSketch === 'liveness') return valOfGraphSketch.toUpperCase() + ': Detects the presence of an audience in the recording. Higher liveness values represent an increased probability that the track was performed live. A value above 0.8 provides strong likelihood that the track is live.'
-    else if (valOfGraphSketch === 'loudness') return valOfGraphSketch.toUpperCase() + ': The overall loudness of a track in decibels (dB). Loudness values are averaged across the entire track and are useful for comparing relative loudness of tracks. Loudness is the quality of a sound that is the primary psychological correlate of physical strength (amplitude). Values typical range between -60 and 0 db.'
+    else if (valOfGraphSketch === 'loudness') return valOfGraphSketch.toUpperCase() + ': (Values represented are negative) The overall loudness of a track in decibels (dB). Loudness values are averaged across the entire track and are useful for comparing relative loudness of tracks. Loudness is the quality of a sound that is the primary psychological correlate of physical strength (amplitude). Values typical range between -60 and 0 db.'
     else if (valOfGraphSketch === 'mode') return valOfGraphSketch.toUpperCase() + ': Mode indicates the modality (major or minor) of a track, the type of scale from which its melodic content is derived. Major is represented by 1 and minor is 0.'
     else if (valOfGraphSketch === 'speechiness') return valOfGraphSketch.toUpperCase() + ': Speechiness detects the presence of spoken words in a track. The more exclusively speech-like the recording (e.g. talk show, audio book, poetry), the closer to 1.0 the attribute value. Values above 0.66 describe tracks that are probably made entirely of spoken words. Values between 0.33 and 0.66 describe tracks that may contain both music and speech, either in sections or layered, including such cases as rap music. Values below 0.33most likely represent music and other non-speech-like tracks.'
     else if (valOfGraphSketch === 'tempo') return valOfGraphSketch.toUpperCase() + ': The overall estimated tempo of a track in beats per minute (BPM). In musical terminology, tempo is the speed or pace of a given piece and derives directly from the average beat duration.'
