@@ -67,7 +67,6 @@ export default function MusicGetterForm() {
                     <option>What value would you like to graph on?</option>
                     <option value="danceability">Danceability</option>
                     <option value="energy">Energy</option>
-                    <option value="key">Key</option>
                     <option value="loudness">Loudness</option>
                     <option value="mode">Mode</option>
                     <option value="speechiness">Speechiness</option>
