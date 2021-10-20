@@ -60,22 +60,23 @@ export default function MusicGetterForm() {
                     <Form.Control
                         onChange={e => {
                             // console.log(e.target.value)
-                            dispatchSongEvent('SET_VAL_OF_GRAPH_SKETCH', e.target.value)}}
+                            dispatchSongEvent('SET_VAL_OF_GRAPH_SKETCH', e.target.value)
+                        }}
                         as="select"
                     >
 
-                    <option>What value would you like to graph on?</option>
-                    <option value="danceability">Danceability</option>
-                    <option value="energy">Energy</option>
-                    <option value="loudness">Loudness</option>
-                    <option value="mode">Mode</option>
-                    <option value="speechiness">Speechiness</option>
-                    <option value="acousticness">Acousticness</option>
-                    <option value="instrumentalness">Instrumentalness</option>
-                    <option value="liveness">Liveness</option>
-                    <option value="valence">Valence</option>
-                    <option value="tempo">Tempo</option>
-                    {/* i wanted this to set dybnamillacy but couldnt get it to work
+                        <option>What value would you like to graph on?</option>
+                        <option value="danceability">Danceability</option>
+                        <option value="energy">Energy</option>
+                        <option value="loudness">Loudness</option>
+                        <option value="mode">Mode</option>
+                        <option value="speechiness">Speechiness</option>
+                        <option value="acousticness">Acousticness</option>
+                        <option value="instrumentalness">Instrumentalness</option>
+                        <option value="liveness">Liveness</option>
+                        <option value="valence">Valence</option>
+                        <option value="tempo">Tempo</option>
+                        {/* i wanted this to set dybnamillacy but couldnt get it to work
                         {keys.forEach((k) => {
                             <option value={k}>{k}</option>
                         })} 
@@ -100,6 +101,7 @@ export default function MusicGetterForm() {
                     <Label>
                         Song title:
                         <input
+                            style={{ marginLeft: 5 }}
                             type="text"
                             value={song}
                             onChange={e => setSong(e.target.value)}
@@ -110,6 +112,7 @@ export default function MusicGetterForm() {
                     <Label>
                         Artist:
                         <input
+                            style={{ marginLeft: 5 }}
                             type="text"
                             value={artist}
                             onChange={e => setArtist(e.target.value)}
@@ -147,6 +150,7 @@ export default function MusicGetterForm() {
                         <Form.Control
                             onChange={e => dispatchSongEvent('SET_CANVAS', e.target.value)}
                             as="select"
+                            // defaultValue={e.target.value} need to get option selected to stay populated
                         >
                             <option>Select a Canvas</option>
                             <option value="graph">Graph Values</option>
@@ -158,7 +162,7 @@ export default function MusicGetterForm() {
                     <SelectGraphingOpts />
                     <Col sm="auto">
                         <SpotifyLoginButton />
-                        {allPlaylists === '' ? <SpotifyGetPlaylists /> : null}
+                        <SpotifyGetPlaylists />
 
                         {/* {!localStorage.getItem('accessToken') ? <SpotifyLoginButton /> : null} */}
                         {/* this expires at some point and then i want it to show up again i think?? */}

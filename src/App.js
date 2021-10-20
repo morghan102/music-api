@@ -59,7 +59,7 @@ export default function App() {
         return
       case 'SET_EXPIRES_IN'://I don't think I use these 2 vals??
         setExpiresIn(payload);
-        triggerCountDown()
+        triggerCountDown();
         return
       // case 'SET_TOKEN_TYPE':
       //   setTokenType(payload);
@@ -176,7 +176,7 @@ export default function App() {
           {valOfGraphSketch ? <p>{valOfGraphSketchExplanation()}</p> : null}
         </Container>
       }
-      else return <p>Nothing yet</p>
+      else return null
     }
   }
 
@@ -197,8 +197,8 @@ export default function App() {
 
   function ProjectExplanation() {
     return (
-      <Container>
-        <h4>What is this project about?</h4>
+      <Container className="explanContainer">
+        <h4 className="explanHeader">What is this project about?</h4>
         <p> When I was in school studying literature, we did a very special project in my 20th C lit class. Using the texts we'd read throughout the quarter, we were tasked to make some artistic rendering of them. I honestly can't remember what I made -- I didn't consider myself very artistic at the time. Now, I wished I'd had access to tools like P5.js and coding. This project is inspired by that, by my love of music and reading, and by Rodez's inability to memorize any song ever. I hope you enjoy it as much as I did.
         </p>
       </Container>
@@ -213,7 +213,7 @@ export default function App() {
     //   <Route path='/home'>
     <div className="App">
       <AppContext.Provider value={{ lyrics, canvas, allPlaylists, tracks, error, isSpotifyLoggedIn, playlistsorLyrics, accessToken, valOfGraphSketch, dispatchSongEvent, dispatchError }}>
-        <header >
+        <header className="appHeader">
           <h1>Music Expressed Artistically </h1>
         </header>
         <body>

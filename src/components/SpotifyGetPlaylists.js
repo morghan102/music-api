@@ -9,7 +9,7 @@ const SpotifyGetPlaylists = () => {
     // const [token, setToken] = useState('');
     // const [isLoading, setIsLoading] = useState(false); need to put this in the context
     // const [data, setData] = useState({});//this will be teh data we get from spotify
-    const { dispatchSongEvent, dispatchError, accessToken } = useContext(AppContext);
+    const { dispatchSongEvent, dispatchError, accessToken, allPlaylists } = useContext(AppContext);
 
     // useEffect(() => {
     //     // error where it's not resetting this value after i stop the server, so i don't have a token or peace of mind
@@ -37,10 +37,15 @@ const SpotifyGetPlaylists = () => {
             console.log(err)
         });
     };
+
+    const GetPlaylistsBtn = () => {
+        if (allPlaylists === '' && window.location.hash) return <button onClick={handleGetPlaylists} className='spotifyBtn'>Get Your Playlists</button>
+        else return null;
+    }
     //adding loading thing is necessary
     return (
         <>
-            <button onClick={handleGetPlaylists} className='spotifyBtn'>Get Your Playlists</button>
+        <GetPlaylistsBtn />
             {/* moved to app.js {!isLoading && playlists ? playlists.map((ele) => <p>{ele.name}</p>)
                 : isLoading ? <p>Hold on, loading</p>
                     : null} */}

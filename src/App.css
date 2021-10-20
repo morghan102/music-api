@@ -3,7 +3,15 @@
   margin: 4em;
   /* background-color: burlywood; */
 }
-
+.appHeader {
+  margin-bottom: 1.5em;
+}
+.explanContainer {
+  margin-bottom: 2em;
+}
+.explanHeader {
+  margin-bottom: .5em;
+}
 .lyrics {
   margin-top: 50px;
 }
