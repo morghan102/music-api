@@ -9,6 +9,7 @@ import { AppContext } from '../context';
 import SpotifyGetPlaylists from './SpotifyGetPlaylists';
 import SpotifyLoginButton from './SpotifyLoginButton.js';
 import CanvasSelector from './CanvasSelector.js';
+import BackToPlaylistsBtn from './BackToPlaylistsBtn.js';
 
 export default function MusicGetterForm() {
     const [artist, setArtist] = useState('');
@@ -140,6 +141,7 @@ export default function MusicGetterForm() {
                         <SpotifyGetPlaylists />
                     </Col>                    
                     <CanvasSelector />
+                    <BackToPlaylistsBtn />
                     {/* keep an eye on this. I will want to refactor at some point cuz this is ugly i think */}
                     {/* <Col sm="auto">
                         <Form.Control
