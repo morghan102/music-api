@@ -1,14 +1,14 @@
 import { useState, useContext } from 'react'
 import { Button, Col, Row, Form } from 'react-bootstrap';
 import { musixApikey, musixUrl } from '../shared/urls.js';
-import '../App.css'
+import axios from 'axios';
 import 'bootstrap/dist/css/bootstrap.css'; //i think i dont use
 import { Label } from 'reactstrap';
+import '../App.css'
 import { AppContext } from '../context';
 import SpotifyGetPlaylists from './SpotifyGetPlaylists';
 import SpotifyLoginButton from './SpotifyLoginButton.js';
-import axios from 'axios';
-
+import CanvasSelector from './CanvasSelector.js';
 
 export default function MusicGetterForm() {
     const [artist, setArtist] = useState('');
@@ -59,7 +59,6 @@ export default function MusicGetterForm() {
                 <Col sm="auto">
                     <Form.Control
                         onChange={e => {
-                            // console.log(e.target.value)
                             dispatchSongEvent('SET_VAL_OF_GRAPH_SKETCH', e.target.value)
                         }}
                         as="select"
@@ -94,7 +93,7 @@ export default function MusicGetterForm() {
         )
     }
 
-    const Lyrics = () => {
+    const LyricsView = () => {
         return (
             <>
                 <Col sm="auto">
@@ -121,15 +120,7 @@ export default function MusicGetterForm() {
                 </Col>
 
                 <Col sm="auto">
-                    <Form.Control
-                        onChange={e => dispatchSongEvent('SET_CANVAS', e.target.value)}
-                        as="select"
-                    >
-                        <option>Select a Canvas</option>
-                        <option value="lyricsA">Text Shuffle</option>
-                        <option value="lyricsB">Text in Color</option>
-                        <option value="lyricsC">C</option>
-                    </Form.Control>
+                    <CanvasSelector />
                 </Col>
                 <Row>
                     <Col>
@@ -140,13 +131,17 @@ export default function MusicGetterForm() {
         )
     }
 
-    const Playlists = () => {
+    const PlaylistsView = () => {
         return (
             <Col sm="auto">
                 <Row>
-                    {/* keep an eye on this. I will want to refactor at some point cuz this is ugly i think */}
-                    {/* {window.location.hash ? */}
                     <Col sm="auto">
+                        <SpotifyLoginButton />
+                        <SpotifyGetPlaylists />
+                    </Col>                    
+                    <CanvasSelector />
+                    {/* keep an eye on this. I will want to refactor at some point cuz this is ugly i think */}
+                    {/* <Col sm="auto">
                         <Form.Control
                             onChange={e => dispatchSongEvent('SET_CANVAS', e.target.value)}
                             as="select"
@@ -158,15 +153,9 @@ export default function MusicGetterForm() {
                             <option value="c">C</option>
                         </Form.Control>
                         {/* change */}
-                    </Col>
+                    {/* </Col> */}
                     <SelectGraphingOpts />
-                    <Col sm="auto">
-                        <SpotifyLoginButton />
-                        <SpotifyGetPlaylists />
 
-                        {/* {!localStorage.getItem('accessToken') ? <SpotifyLoginButton /> : null} */}
-                        {/* this expires at some point and then i want it to show up again i think?? */}
-                    </Col>
                 </Row>
             </Col>
         )
@@ -189,9 +178,9 @@ export default function MusicGetterForm() {
                     </Col>
 
                     {playlistsorLyrics === 'lyrics' ?
-                        <Lyrics />
+                        <LyricsView />
                         : playlistsorLyrics === 'playlists' ?
-                            <Playlists />
+                            <PlaylistsView />
                             : null
                     }
                 </Row>
