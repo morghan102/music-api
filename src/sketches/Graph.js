@@ -43,7 +43,7 @@ export default function Graph() {
         else if (valOfGraphSketch === 'mode') x = val * 100; //either 1 or 0
         else if (valOfGraphSketch === 'tempo') x = val * 3;
         // console.log(x)
-        return x += 10; //shd this be +=??
+        return x += 5; //shd this be +=??
     }
 
     const draw = (p5) => {

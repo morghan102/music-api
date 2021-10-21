@@ -17,6 +17,8 @@ import Sketch3 from './sketches/Sketch3';
 import Graph from './sketches/Graph';
 import SpotifySketch2 from './sketches/SpotifySketch2';
 import SpotifySketch3 from './sketches/SpotifySketch3';
+import ErrorBoundary from './components/ErrorBoundary';
+
 
 export default function App() {
 
@@ -31,6 +33,7 @@ export default function App() {
   const [expiresIn, setExpiresIn] = useState('');
   // const [tokenType, setTokenType] = useState('');
   const [valOfGraphSketch, setValOfGraphSketch] = useState('');
+  const [playlistName, setPlaylistName] = useState('');
 
 
   const dispatchSongEvent = (actionType, payload) => {
@@ -67,6 +70,9 @@ export default function App() {
       case 'SET_VAL_OF_GRAPH_SKETCH':
         setValOfGraphSketch(payload);
         return
+        case 'SET_PLAYLIST_NAME':
+          setPlaylistName(payload)
+          return
       default:
         return;
     }
@@ -154,7 +160,7 @@ export default function App() {
   //   }
   //   return lyrics;
   // }
-  console.log(tracks ? (tracks) : null);
+  // console.log(tracks ? (tracks) : null);
 
   const Music = () => {
     if (error) return <p>Some error, can't figure out how to render for the user to see</p>
@@ -171,7 +177,7 @@ export default function App() {
       } else if (allPlaylists && tracks === '' && playlistsorLyrics !== 'lyrics') return <SpotifyPlaylistsList />
       else if (tracks) {
         return <Container>
-          <p>You have tracks!</p>
+          <h4 className="playlistTitle">{playlistName}</h4>
           <SelectedCanvas />
           {valOfGraphSketch ? <p>{valOfGraphSketchExplanation()}</p> : null}
         </Container>
@@ -212,16 +218,18 @@ export default function App() {
     // <Switch>
     //   <Route path='/home'>
     <div className="App">
-      <AppContext.Provider value={{ lyrics, canvas, allPlaylists, tracks, error, isSpotifyLoggedIn, playlistsorLyrics, accessToken, valOfGraphSketch, dispatchSongEvent, dispatchError }}>
-        <header className="appHeader">
-          <h1>Music Expressed Artistically </h1>
-        </header>
-        <body>
-          <ProjectExplanation />
-          <MusicGetterForm />
-          <Music />
-        </body>
-      </AppContext.Provider>
+      <ErrorBoundary>
+        <AppContext.Provider value={{ lyrics, canvas, allPlaylists, tracks, error, isSpotifyLoggedIn, playlistsorLyrics, accessToken, valOfGraphSketch, dispatchSongEvent, dispatchError }}>
+          <header className="appHeader">
+            <h1>Music Expressed Artistically </h1>
+          </header>
+          <body>
+            <ProjectExplanation />
+            <MusicGetterForm />
+            <Music />
+          </body>
+        </AppContext.Provider>
+      </ErrorBoundary>
     </div>
     //   </Route>
     // </Switch>

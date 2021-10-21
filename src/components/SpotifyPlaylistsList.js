@@ -4,6 +4,7 @@ import 'bootstrap/dist/css/bootstrap.css';
 import { Container, Row, ListGroup } from 'react-bootstrap';
 import { AppContext } from '../context';
 import axios from 'axios';
+// import axiosRetry from 'axios-retry'; cant get this tow work. trying to handle if too many req are made to spotify
 
 
 export default function SpotifyPlaylistsList() {
@@ -41,6 +42,7 @@ export default function SpotifyPlaylistsList() {
 
     const handleGetTracks = (pl) => {
         // e.preventDefault();
+        dispatchSongEvent('SET_PLAYLIST_NAME', pl.name)
         axios.get(pl.href, {
             headers: {
                 Authorization: 'Bearer ' + accessToken,
@@ -48,26 +50,62 @@ export default function SpotifyPlaylistsList() {
         }).then((res) => {
             const ids = extractIds(res.data.tracks.items);
             ids.forEach(id => {
+                // fetchAndRetryIfNecessary(() => )
                 axios.get(`https://api.spotify.com/v1/audio-features/${id}`, {
                     headers: {
                         Authorization: 'Bearer ' + accessToken,
                     },
+                    // 'axios-retry': {
+                    //     retries: 3,
+                    //     retryDelay: (retryCount) => {
+                    //         return retryCount * 3000;
+                    //     }
+                    // }
                 }).then((res) => {
                     tracksAudioFeatures.push(res.data)
                 })
+                // if (res.status === 429) {
+                //     const retryAfter = res.headers.get('retry-after')
+                //     const millis = getMillis(retryAfter)
+                //     // sleep(millis);
+                //     setTimeout(res(), millis)
+                // }
+
             })
             dispatchSongEvent('SET_TRACKS', tracksAudioFeatures)
         }).catch((err) => {
             dispatchError('SET_ERROR', err)
             console.log(err)
         });
-
     }
 
     const extractIds = (tracksObj) => {
         const arr = [];
         tracksObj.forEach(track => arr.push(track.track.id))
         return arr;
+    }
+
+    // function sleep(milliseconds) {
+    //     return new Promise((resolve) => setTimeout(resolve, milliseconds))
+    // }
+
+    function getMillis(retryHeaderStr) {
+        let millis = Math.round(parseFloat(retryHeaderStr) * 1000)
+        if (isNaN(millis)) {
+            millis = Math.max(0, new Date(retryHeaderStr) - new Date())
+        }
+        return millis;
+    }
+
+    async function fetchAndRetryIfNecessary(callAPIFn) {
+        const res = await callAPIFn()
+        if (res.status === 429) {
+            const retryAfter = res.headers.get('retry-after')
+            const millis = getMillis(retryAfter)
+            // await sleep(millis);
+            return fetchAndRetryIfNecessary(callAPIFn)
+        }
+        return res;
     }
 
     return (
