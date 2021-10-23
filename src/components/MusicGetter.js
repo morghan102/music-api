@@ -1,4 +1,4 @@
-import { useState, useContext } from 'react'
+import { useState, useContext, useEffect } from 'react'
 import { Button, Col, Row, Form } from 'react-bootstrap';
 import { musixApikey, musixUrl } from '../shared/urls.js';
 import axios from 'axios';
@@ -19,6 +19,7 @@ export default function MusicGetterForm() {
     const { dispatchSongEvent, dispatchError, playlistsorLyrics, allPlaylists, tracks, canvas } = useContext(AppContext);
 
     const getLyrics = () => {
+        dispatchSongEvent('LOADING', true)
         axios.get(`${musixUrl}?q_track=${song.replace(" ", '%20')}q_artist=${artist.replace(" ", '%20')}o&apikey=${musixApikey}`, {
             // headers: {
             //     Authorization: 'Bearer ',
@@ -27,6 +28,7 @@ export default function MusicGetterForm() {
             const fullLyrics = res.data.message.body.lyrics.lyrics_body;
             console.log(fullLyrics)
             dispatchSongEvent('GET_LYRICS', fullLyrics.substring(0, fullLyrics.length - 69))
+            dispatchSongEvent('LOADING', false)
 
         }).catch((err) => {
             dispatchError('SET_ERROR', err)
@@ -39,6 +41,8 @@ export default function MusicGetterForm() {
         dispatchSongEvent('SET_CANVAS', '')
         dispatchSongEvent('SET_TRACKS', '')
         dispatchSongEvent('GET_LYRICS', '')
+        dispatchSongEvent('RESET_VALUES', selection)
+        console.log(selection)
     }
 
     // getTrackKeys = async () => {
@@ -95,6 +99,7 @@ export default function MusicGetterForm() {
     }
 
     const LyricsView = () => {
+
         return (
             <>
                 <Col sm="auto">
@@ -105,6 +110,7 @@ export default function MusicGetterForm() {
                             type="text"
                             value={song}
                             onChange={e => setSong(e.target.value)}
+                            key={0}
                         />
                     </Label>
                 </Col>
@@ -116,6 +122,7 @@ export default function MusicGetterForm() {
                             type="text"
                             value={artist}
                             onChange={e => setArtist(e.target.value)}
+                            key={1}
                         />
                     </Label>
                 </Col>
@@ -133,13 +140,19 @@ export default function MusicGetterForm() {
     }
 
     const PlaylistsView = () => {
+
+        // useEffect(() => { //this is running ea time any of the vals are updated :( 
+        //     dispatchSongEvent('RESET_VALUES', 'lyrics')
+        // }, []);
+
+
         return (
             <Col sm="auto">
                 <Row>
                     <Col sm="auto">
                         <SpotifyLoginButton />
                         <SpotifyGetPlaylists />
-                    </Col>                    
+                    </Col>
                     <CanvasSelector />
                     <BackToPlaylistsBtn />
                     {/* keep an eye on this. I will want to refactor at some point cuz this is ugly i think */}
@@ -179,8 +192,42 @@ export default function MusicGetterForm() {
                         </Form.Control>
                     </Col>
 
-                    {playlistsorLyrics === 'lyrics' ?
-                        <LyricsView />
+                    {playlistsorLyrics === 'lyrics' ? //cannot remove this to a function/component bc the inputs dont stay focused. v annoying
+                        <>
+                            <Col sm="auto">
+                                <Label>
+                                    Song title:
+                                    <input
+                                        style={{ marginLeft: 5 }}
+                                        type="text"
+                                        value={song}
+                                        onChange={e => setSong(e.target.value)}
+                                        key={0}
+                                    />
+                                </Label>
+                            </Col>
+                            <Col sm="auto">
+                                <Label>
+                                    Artist:
+                                    <input
+                                        style={{ marginLeft: 5 }}
+                                        type="text"
+                                        value={artist}
+                                        onChange={e => setArtist(e.target.value)}
+                                        key={1}
+                                    />
+                                </Label>
+                            </Col>
+
+                            <Col sm="auto">
+                                <CanvasSelector />
+                            </Col>
+                            <Row>
+                                <Col>
+                                    <Button onClick={getLyrics}>Get Those Lyrics</Button>
+                                </Col>
+                            </Row>
+                        </>
                         : playlistsorLyrics === 'playlists' ?
                             <PlaylistsView />
                             : null

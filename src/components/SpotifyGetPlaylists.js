@@ -22,6 +22,7 @@ const SpotifyGetPlaylists = () => {
     // }, [])
 
     const handleGetPlaylists = (e) => {
+            dispatchSongEvent('LOADING', true)
         e.preventDefault();
         // setIsLoading(true);
         axios.get(playlists_endpoint, {
@@ -31,6 +32,7 @@ const SpotifyGetPlaylists = () => {
         }).then((res) => {
             // setIsLoading(false);
             dispatchSongEvent('SET_ALL_PLAYLISTS', res.data.items)
+            dispatchSongEvent('LOADING', false)
             // setData(res.data) //i want to set this info with the context
         }).catch((err) => {
             dispatchError('SET_ERROR', err)
@@ -39,8 +41,9 @@ const SpotifyGetPlaylists = () => {
     };
 
     const GetPlaylistsBtn = () => {
-        if (allPlaylists === '' && window.location.hash) return <button onClick={handleGetPlaylists} className='spotifyBtn'>Get Your Playlists</button>
-        else return null;
+        if (allPlaylists === '' && window.location.hash) {
+            return <button onClick={handleGetPlaylists} className='spotifyBtn'>Get Your Playlists</button>
+        } else return null;
     }
     //adding loading thing is necessary
     return (

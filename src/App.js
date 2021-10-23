@@ -18,7 +18,7 @@ import Graph from './sketches/Graph';
 import SpotifySketch2 from './sketches/SpotifySketch2';
 import SpotifySketch3 from './sketches/SpotifySketch3';
 import ErrorBoundary from './components/ErrorBoundary';
-
+import LoadingComponent from './components/LoadingComponent';
 
 export default function App() {
 
@@ -34,6 +34,7 @@ export default function App() {
   // const [tokenType, setTokenType] = useState('');
   const [valOfGraphSketch, setValOfGraphSketch] = useState('');
   const [playlistName, setPlaylistName] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
 
 
   const dispatchSongEvent = (actionType, payload) => {
@@ -70,13 +71,36 @@ export default function App() {
       case 'SET_VAL_OF_GRAPH_SKETCH':
         setValOfGraphSketch(payload);
         return
-        case 'SET_PLAYLIST_NAME':
-          setPlaylistName(payload)
+      case 'SET_PLAYLIST_NAME':
+        setPlaylistName(payload)
+        return
+      case 'RESET_VALUES':
+        reset(payload)
+        return
+        case 'LOADING':
+          setIsLoading(payload)
           return
       default:
         return;
     }
   };
+
+  const reset = (val) => {
+    console.log(val)
+    if (val === 'lyrics') {
+      // setCanvas('');
+      setAllPlaylists('');
+      setTracks('');
+      setIsSpotifyLoggedIn(false);
+      setValOfGraphSketch('');
+      setPlaylistName('');
+
+    } else {
+      setLyrics('');
+      // const [error, setError] = useState('');
+      // setCanvas('');
+    }
+  }
 
   const triggerCountDown = () => {
     setTimeout(() => {
@@ -163,16 +187,18 @@ export default function App() {
   // console.log(tracks ? (tracks) : null);
 
   const Music = () => {
-    if (error) return <p>Some error, can't figure out how to render for the user to see</p>
-    else if (!error) {
-      if (lyrics && !allPlaylists) {
+    if (error) {
+      console.log(error)
+      return <p>Some error {error}</p>
+    } else if (!error) {
+      if (isLoading) {
+        return <LoadingComponent />
+      }
+      else if (lyrics && !allPlaylists) {
         return <Container>
-          {/* add space to the top */}
           <SelectedCanvas />
-
           {/* make bold or something */}
           <p>Unfortunately, due to MusixMatch's restrictions, I can only display a certain number of lyrics.</p>
-          {/* { if (canvas != 0) <p>Explains this specific rendering of the project</p>} this needs to only render if a canvas has been selected*/}
         </Container>
       } else if (allPlaylists && tracks === '' && playlistsorLyrics !== 'lyrics') return <SpotifyPlaylistsList />
       else if (tracks) {
@@ -219,7 +245,7 @@ export default function App() {
     //   <Route path='/home'>
     <div className="App">
       <ErrorBoundary>
-        <AppContext.Provider value={{ lyrics, canvas, allPlaylists, tracks, error, isSpotifyLoggedIn, playlistsorLyrics, accessToken, valOfGraphSketch, dispatchSongEvent, dispatchError }}>
+        <AppContext.Provider value={{ lyrics, canvas, allPlaylists, tracks, error, isSpotifyLoggedIn, playlistsorLyrics, accessToken, valOfGraphSketch, isLoading, dispatchSongEvent, dispatchError }}>
           <header className="appHeader">
             <h1>Music Expressed Artistically </h1>
           </header>
