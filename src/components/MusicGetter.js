@@ -11,6 +11,8 @@ import SpotifyLoginButton from './SpotifyLoginButton.js';
 import CanvasSelector from './CanvasSelector.js';
 import BackToPlaylistsBtn from './BackToPlaylistsBtn.js';
 
+axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
+
 export default function MusicGetterForm() {
     const [artist, setArtist] = useState('');
     const [song, setSong] = useState('');
@@ -18,19 +20,36 @@ export default function MusicGetterForm() {
     // const [playlistsorLyric, setPlaylistsorLyrics] = useState('');
 
     const { dispatchSongEvent, dispatchError, playlistsorLyrics, allPlaylists, tracks, canvas } = useContext(AppContext);
-
+    // https://allorigins.win/
+    // https://allorigins.win/
     const getLyrics = () => {
         dispatchSongEvent('LOADING', true)
-        axios.get(`${musixUrl}?q_track=${song.replace(" ", '%20')}q_artist=${artist.replace(" ", '%20')}o&apikey=${musixApikey}`, {
+        axios.get((`https://api.allorigins.win/get?url=${encodeURIComponent(`${musixUrl}?q_track=${song.replace(" ", '%20')}q_artist=${artist.replace(" ", '%20')}o&apikey=${musixApikey}`)}`), {
+            // headers: { "Access-Control-Allow-Origin": "*" }
+
             // headers: {
-            //     Authorization: 'Bearer ',
+            //     // 'Access-Control-Allow-Credentials': true,
+            //     // withCredentials: false
+            //     crossorigin: true
+
+            //     //     Authorization: 'Bearer ',
             // },
         }).then((res) => {
-            const fullLyrics = res.data.message.body.lyrics.lyrics_body;
-            console.log(fullLyrics)
+            return (JSON.parse(res.data.contents))
+            // throw new Error('Network response was not ok.')
+            // const fullLyrics = parsed.message.body.lyrics.lyrics_body;
+            // console.log(fullLyrics)
+            // dispatchSongEvent('GET_LYRICS', fullLyrics.substring(0, fullLyrics.length - 69))
+            // dispatchSongEvent('LOADING', false)
+            // dispatchSongEvent('SET_COPYRIGHT', res.data.message.body.lyrics.lyrics_copyright)
+        }).then((res) => {
+            console.log(res.message.body.lyrics.lyrics_body)
+            const fullLyrics = res.message.body.lyrics.lyrics_body;
+            // console.log(fullLyrics)
             dispatchSongEvent('GET_LYRICS', fullLyrics.substring(0, fullLyrics.length - 69))
             dispatchSongEvent('LOADING', false)
-            dispatchSongEvent('SET_COPYRIGHT', res.data.message.body.lyrics.lyrics_copyright)
+            dispatchSongEvent('SET_COPYRIGHT', res.message.body.lyrics.lyrics_copyright)
+
         }).catch((err) => {
             dispatchError('SET_ERROR', err)
             console.log(err)

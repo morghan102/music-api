@@ -201,6 +201,7 @@ export default function App() {
       else if (lyrics && !allPlaylists) {
         return <Container>
           <SelectedCanvas />
+          {/* set this apart somehow */}
           {copyright ? copyright : null}
         </Container>
       } else if (allPlaylists && tracks === '' && playlistsorLyrics !== 'lyrics') return <SpotifyPlaylistsList />
