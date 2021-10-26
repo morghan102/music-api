@@ -4,7 +4,7 @@ import { AppContext } from "../context";
 
 
 export default function CanvasSelector() {
-    const { dispatchSongEvent, dispatchError, playlistsorLyrics, allPlaylists, tracks, canvas } = useContext(AppContext);
+    const { dispatchSongEvent, playlistsorLyrics, allPlaylists } = useContext(AppContext);
 
     const Canvas = () => {
         if (playlistsorLyrics === 'playlists' && allPlaylists !== '') {

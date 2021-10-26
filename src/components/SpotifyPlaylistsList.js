@@ -47,8 +47,9 @@ export default function SpotifyPlaylistsList() {
             },
         })
     }
-
+    //shd probably put all this in its own component
     const handleGetTracks = (pl) => {
+        let retryAfter = 0;
         // e.preventDefault();
         dispatchSongEvent('SET_PLAYLIST_NAME', pl.name)
         axios.get(pl.href, {
@@ -58,24 +59,37 @@ export default function SpotifyPlaylistsList() {
         }).then((res) => {
             const ids = extractIds(res.data.tracks.items);
             ids.forEach(id => {
-                    // fetchAndRetryIfNecessary(() => )
-                    axios.get(`https://api.spotify.com/v1/audio-features/${id}`, {
-                        headers: {
-                            Authorization: 'Bearer ' + accessToken,
-                        },
-                        // 'axios-retry': {
-                        //     retries: 3,
-                        //     retryDelay: (retryCount) => {
-                        //         return retryCount * 3000;
-                        //     }
-                        // }
-                    })
+                // fetchAndRetryIfNecessary(() => )
+                axios.get(`https://api.spotify.com/v1/audio-features/${id}`, {
+                    headers: {
+                        Authorization: 'Bearer ' + accessToken,
+                    },
+                    // 'axios-retry': {
+                    //     retries: 3,
+                    //     retryDelay: (retryCount) => {
+                    //         return retryCount * 3000;
+                    //     }
+                    // }
+                })
                     .then((res) => {
                         // if (res.status === 429) { //this doesnt run at all
                         //     setTimeout(getTrack(id), res.headers.get('retry-after') * 1000)
                         //     console.log('you')
                         // }
                         tracksAudioFeatures.push(res.data)
+                    }).catch((err) => { //can deal w 429s here
+                        if (err.response) {// client received an error response (5xx, 4xx)
+                            if (err.response.status === 429) {
+                                console.log(err.response)
+                                retryAfter = err.response.headers.retryAfter;
+
+                            }
+                            // else if ()
+                        } else if (err.request) { // client never received a response, or request never left
+
+                        } else {
+
+                        }
                     })
                 // if (res.status === 429) {
                 //     const millis = getMillis(retryAfter)
@@ -85,8 +99,18 @@ export default function SpotifyPlaylistsList() {
 
             })
             dispatchSongEvent('SET_TRACKS', tracksAudioFeatures)
-        }).catch((err) => {
-            dispatchError('SET_ERROR', err)
+        }).catch((err) => { //can deal w 429s here
+            console.log(err)
+            if (err.response) {// client received an error response (5xx, 4xx)
+                // console.log('no')
+                // if (err.response.statusCode === 429) return console.log('wow')
+                // else if ()
+            } else if (err.request) { // client never received a response, or request never left
+
+            } else {
+
+            }
+            // dispatchError('SET_ERROR', err)
             console.log(err)
         });
     }
@@ -121,7 +145,7 @@ export default function SpotifyPlaylistsList() {
     }
 
     return (
-        <Container>
+        <Container className='playlistList'>
             {/* if no playlist selected show that */}
             <Row>
                 {/* make that bold and unmissable */}

@@ -35,6 +35,7 @@ export default function App() {
   const [valOfGraphSketch, setValOfGraphSketch] = useState('');
   const [playlistName, setPlaylistName] = useState('');
   const [isLoading, setIsLoading] = useState(false);
+  const [copyright, setCopyright] = useState('');
 
 
   const dispatchSongEvent = (actionType, payload) => {
@@ -79,6 +80,9 @@ export default function App() {
         return
         case 'LOADING':
           setIsLoading(payload)
+          return
+        case 'SET_COPYRIGHT':
+          setCopyright(payload)
           return
       default:
         return;
@@ -197,8 +201,7 @@ export default function App() {
       else if (lyrics && !allPlaylists) {
         return <Container>
           <SelectedCanvas />
-          {/* make bold or something */}
-          <p>Unfortunately, due to MusixMatch's restrictions, I can only display a certain number of lyrics.</p>
+          {copyright ? copyright : null}
         </Container>
       } else if (allPlaylists && tracks === '' && playlistsorLyrics !== 'lyrics') return <SpotifyPlaylistsList />
       else if (tracks) {
@@ -247,9 +250,9 @@ export default function App() {
       <ErrorBoundary>
         <AppContext.Provider value={{ lyrics, canvas, allPlaylists, tracks, error, isSpotifyLoggedIn, playlistsorLyrics, accessToken, valOfGraphSketch, isLoading, dispatchSongEvent, dispatchError }}>
           <header className="appHeader">
-            <h1>Music Expressed Artistically </h1>
+            <h1>Music API </h1>
           </header>
-          <body>
+          <body className='background'>
             <ProjectExplanation />
             <MusicGetterForm />
             <Music />

@@ -22,7 +22,7 @@ const SpotifyGetPlaylists = () => {
     // }, [])
 
     const handleGetPlaylists = (e) => {
-            dispatchSongEvent('LOADING', true)
+        dispatchSongEvent('LOADING', true)
         e.preventDefault();
         // setIsLoading(true);
         axios.get(playlists_endpoint, {
@@ -48,7 +48,7 @@ const SpotifyGetPlaylists = () => {
     //adding loading thing is necessary
     return (
         <>
-        <GetPlaylistsBtn />
+            <GetPlaylistsBtn />
             {/* moved to app.js {!isLoading && playlists ? playlists.map((ele) => <p>{ele.name}</p>)
                 : isLoading ? <p>Hold on, loading</p>
                     : null} */}

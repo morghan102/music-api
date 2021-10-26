@@ -1,11 +1,17 @@
+html, .background, #root {
+  /* linear gradient wont work bc it renders in ea individual element as the gradient */
+  background-color: #F4F0EC;
+}
+
 .App {
   text-align: center;
   margin: 4em;
-  /* background-color: burlywood; */
 }
-.appHeader {
+/* .appHeader {
   margin-bottom: 1.5em;
-}
+  background-color: burlywood;
+
+} */
 .explanContainer {
   margin-bottom: 2em;
 }
@@ -15,9 +21,12 @@
 .lyrics {
   margin-top: 50px;
 }
-.playlistTitle {
+.playlistTitle, .loader{
   margin: 3%;
   /* text-decoration: underline; */
+}
+.playlistList {
+  margin: 1%,
 }
 
 

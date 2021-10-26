@@ -14,6 +14,7 @@ import BackToPlaylistsBtn from './BackToPlaylistsBtn.js';
 export default function MusicGetterForm() {
     const [artist, setArtist] = useState('');
     const [song, setSong] = useState('');
+
     // const [playlistsorLyric, setPlaylistsorLyrics] = useState('');
 
     const { dispatchSongEvent, dispatchError, playlistsorLyrics, allPlaylists, tracks, canvas } = useContext(AppContext);
@@ -29,7 +30,7 @@ export default function MusicGetterForm() {
             console.log(fullLyrics)
             dispatchSongEvent('GET_LYRICS', fullLyrics.substring(0, fullLyrics.length - 69))
             dispatchSongEvent('LOADING', false)
-
+            dispatchSongEvent('SET_COPYRIGHT', res.data.message.body.lyrics.lyrics_copyright)
         }).catch((err) => {
             dispatchError('SET_ERROR', err)
             console.log(err)

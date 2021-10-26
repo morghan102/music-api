@@ -8,7 +8,7 @@ import reportWebVitals from './reportWebVitals';
 ReactDOM.render(
   <React.StrictMode>
     {/* <Store> */}
-      <App />
+      <App className='background'/>
     {/* </Store> */}
   </React.StrictMode>,
   document.getElementById('root')
