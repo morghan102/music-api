@@ -250,8 +250,8 @@ export default function App() {
     <div className="App">
       <ErrorBoundary>
         <AppContext.Provider value={{ lyrics, canvas, allPlaylists, tracks, error, isSpotifyLoggedIn, playlistsorLyrics, accessToken, valOfGraphSketch, isLoading, dispatchSongEvent, dispatchError }}>
-          <header className="appHeader">
-            <h1>Music API </h1>
+          <header>
+            <h1 className="appHeader">Music API </h1>
           </header>
           <body className='background'>
             <ProjectExplanation />

@@ -1,17 +1,32 @@
-html, .background, #root {
+html, .background, #root, .list-group-item {
   /* linear gradient wont work bc it renders in ea individual element as the gradient */
   background-color: #F4F0EC;
+  font-family: 'Montserrat', sans-serif;
+  /* mserrat could work for the copyright */
+  /* font-family: 'Josefin Sans', sans-serif;   */
+  /* font-family: 'Source Code Pro', monospace; this one isnt my fave */
+  /* font-family: 'Indie Flower', cursive; kinda silly, maybe as a header? */
+  
+  /* font-family: 'Chakra Petch', sans-serif;  */
+  /* i'm not sure how i feel about this */
+ /* font-size: 20px; */
+  /* font-weight: 500; */
+}
+.list-group .list-group-item .list-group-item-mine  {
+  background-color: #F4F0EC;
+
 }
 
 .App {
   text-align: center;
   margin: 4em;
 }
-/* .appHeader {
-  margin-bottom: 1.5em;
-  background-color: burlywood;
-
-} */
+.appHeader {
+  /* margin-bottom: 1.5em;
+  background-color: burlywood; */
+  font-family: 'Rampart One', cursive;/* music api header?? */
+  font-size: 80px;
+}
 .explanContainer {
   margin-bottom: 2em;
 }
@@ -26,7 +41,8 @@ html, .background, #root {
   /* text-decoration: underline; */
 }
 .playlistList {
-  margin: 1%,
+  margin: 1%; 
+  /* idk if i actually want */
 }
 
 
@@ -46,6 +62,10 @@ html, .background, #root {
   font-weight: 400;
   line-height: 1.5;
   margin-right: 15px;
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  /* --bs-font-sans-serif: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji"; */
+  /* --bs-font-monospace: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace; */
+  /* --bs-body-font-family: var(--bs-font-sans-serif); */
 }
 
 

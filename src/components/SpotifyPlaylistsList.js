@@ -30,10 +30,11 @@ export default function SpotifyPlaylistsList() {
                             onClick={() => handleGetTracks(pl)}
                             eventKey={pl.name}
                             key={counter}
+                            className='list-group-item-warning'
                         // Im getting an error about key not being set??? not sure why
                         >
                             {pl.name}
-                        </ListGroup.Item>
+                        </ListGroup.Item >
                     </ListGroup>
                 )
             }, counter++) : null
@@ -147,7 +148,7 @@ export default function SpotifyPlaylistsList() {
     return (
         <Container className='playlistList'>
             {/* if no playlist selected show that */}
-            <Row>
+            <Row className='playlistList'>
                 {/* make that bold and unmissable */}
                 <p>Please select a playlist</p>
             </Row>
