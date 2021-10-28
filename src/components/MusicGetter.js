@@ -10,12 +10,15 @@ import SpotifyGetPlaylists from './SpotifyGetPlaylists';
 import SpotifyLoginButton from './SpotifyLoginButton.js';
 import CanvasSelector from './CanvasSelector.js';
 import BackToPlaylistsBtn from './BackToPlaylistsBtn.js';
+import ErrorBoundary from './ErrorBoundary';
+
 
 axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
 
 export default function MusicGetterForm() {
     const [artist, setArtist] = useState('');
     const [song, setSong] = useState('');
+    const [error, setError] = useState('');
 
     // const [playlistsorLyric, setPlaylistsorLyrics] = useState('');
 
@@ -23,19 +26,17 @@ export default function MusicGetterForm() {
     // https://allorigins.win/
     // https://allorigins.win/
     const getLyrics = () => {
+        setSong('');
+        setArtist('');
+        dispatchSongEvent('RESET_VALUES', null)
+
         dispatchSongEvent('LOADING', true)
-        axios.get((`https://api.allorigins.win/get?url=${encodeURIComponent(`${musixUrl}?q_track=${song.replace(" ", '%20')}q_artist=${artist.replace(" ", '%20')}o&apikey=${musixApikey}`)}`), {
-            // headers: { "Access-Control-Allow-Origin": "*" }
-
-            // headers: {
-            //     // 'Access-Control-Allow-Credentials': true,
-            //     // withCredentials: false
-            //     crossorigin: true
-
-            //     //     Authorization: 'Bearer ',
-            // },
-        }).then((res) => {
-            return (JSON.parse(res.data.contents))
+        axios.get((`https://api.allorigins.win/get?url=${encodeURIComponent(`${musixUrl}?q_track=${song.replace(" ", '%20')}q_artist=${artist.replace(" ", '%20')}o&apikey=${musixApikey}`)}`)
+        ).then((res) => {
+            let contents = (JSON.parse(res.data.contents))
+            if (contents.message.header.status_code !== 200) throw new Error(contents.message.header.status_code)
+            // console.log(contents.message)
+            return contents;
             // throw new Error('Network response was not ok.')
             // const fullLyrics = parsed.message.body.lyrics.lyrics_body;
             // console.log(fullLyrics)
@@ -45,14 +46,17 @@ export default function MusicGetterForm() {
         }).then((res) => {
             console.log(res.message.body.lyrics.lyrics_body)
             const fullLyrics = res.message.body.lyrics.lyrics_body;
-            // console.log(fullLyrics)
             dispatchSongEvent('GET_LYRICS', fullLyrics.substring(0, fullLyrics.length - 69))
             dispatchSongEvent('LOADING', false)
             dispatchSongEvent('SET_COPYRIGHT', res.message.body.lyrics.lyrics_copyright)
 
         }).catch((err) => {
-            dispatchError('SET_ERROR', err)
-            console.log(err)
+            dispatchSongEvent('LOADING', false)
+            setError(err);
+
+            // throw new Error(err)
+            // dispatchError('SET_ERROR', err)
+            // console.log(err)
         });
     }
 
@@ -118,46 +122,44 @@ export default function MusicGetterForm() {
         )
     }
 
-    const LyricsView = () => {
-
-        return (
-            <>
-                <Col sm="auto">
-                    <Label>
-                        Song title:
-                        <input
-                            style={{ marginLeft: 5 }}
-                            type="text"
-                            value={song}
-                            onChange={e => setSong(e.target.value)}
-                            key={0}
-                        />
-                    </Label>
-                </Col>
-                <Col sm="auto">
-                    <Label>
-                        Artist:
-                        <input
-                            style={{ marginLeft: 5 }}
-                            type="text"
-                            value={artist}
-                            onChange={e => setArtist(e.target.value)}
-                            key={1}
-                        />
-                    </Label>
-                </Col>
-
-                <Col sm="auto">
-                    <CanvasSelector />
-                </Col>
-                <Row>
-                    <Col>
-                        <Button onClick={getLyrics}>Get Those Lyrics</Button>
-                    </Col>
-                </Row>
-            </>
-        )
-    }
+    // const LyricsView = () => {
+    //     return (
+    //         <>
+    //             <Col sm="auto">
+    //                 <Label>
+    //                     Song title:
+    //                     <input
+    //                         style={{ marginLeft: 5 }}
+    //                         type="text"
+    //                         value={song}
+    //                         onChange={e => setSong(e.target.value)}
+    //                         key={0}
+    //                     />
+    //                 </Label>
+    //             </Col>
+    //             <Col sm="auto">
+    //                 <Label>
+    //                     Artist:
+    //                     <input
+    //                         style={{ marginLeft: 5 }}
+    //                         type="text"
+    //                         value={artist}
+    //                         onChange={e => setArtist(e.target.value)}
+    //                         key={1}
+    //                     />
+    //                 </Label>
+    //             </Col>
+    //             <Col sm="auto">
+    //                 <CanvasSelector />
+    //             </Col>
+    //             <Row>
+    //                 <Col>
+    //                     <Button onClick={getLyrics}>Get Those Lyrics</Button>
+    //                 </Col>
+    //             </Row>
+    //         </>
+    //     )
+    // }
 
     const PlaylistsView = () => {
 
@@ -213,43 +215,49 @@ export default function MusicGetterForm() {
                     </Col>
 
                     {playlistsorLyrics === 'lyrics' ? //cannot remove this to a function/component bc the inputs dont stay focused. v annoying
-                        <>
-                            <Col sm="auto">
-                                <Label>
-                                    Song title:
-                                    <input
-                                        style={{ marginLeft: 5 }}
-                                        type="text"
-                                        value={song}
-                                        onChange={e => setSong(e.target.value)}
-                                        key={0}
-                                    />
-                                </Label>
-                            </Col>
-                            <Col sm="auto">
-                                <Label>
-                                    Artist:
-                                    <input
-                                        style={{ marginLeft: 5 }}
-                                        type="text"
-                                        value={artist}
-                                        onChange={e => setArtist(e.target.value)}
-                                        key={1}
-                                    />
-                                </Label>
-                            </Col>
-
-                            <Col sm="auto">
-                                <CanvasSelector />
-                            </Col>
-                            <Row>
-                                <Col>
-                                    <Button onClick={getLyrics}>Get Those Lyrics</Button>
+                        // <>
+                            <ErrorBoundary>
+                                {console.log(error)}
+                                {/* i want to add  style={{marginTop: '10px'}} to the top when its small */}
+                                <Col xs={12} md={3}>
+                                    <Label>
+                                        Song title:
+                                        <input
+                                            style={{ marginLeft: 5 }}
+                                            type="text"
+                                            value={song}
+                                            onChange={e => setSong(e.target.value)}
+                                            key={0}
+                                        />
+                                    </Label>
                                 </Col>
-                            </Row>
-                        </>
+                                <Col sm="auto" xs={12} md={3}>
+                                    <Label>
+                                        Artist:
+                                        <input
+                                            style={{ marginLeft: 5 }}
+                                            type="text"
+                                            value={artist}
+                                            onChange={e => setArtist(e.target.value)}
+                                            key={1}
+                                        />
+                                    </Label>
+                                </Col>
+
+                                <Col sm="auto">
+                                    <CanvasSelector />
+                                </Col>
+                                <Row>
+                                    <Col>
+                                        <Button onClick={getLyrics}>Get Those Lyrics</Button>
+                                    </Col>
+                                </Row>
+                            </ErrorBoundary>
+                        // </>
                         : playlistsorLyrics === 'playlists' ?
-                            <PlaylistsView />
+                            <ErrorBoundary>
+                                <PlaylistsView />
+                            </ErrorBoundary>
                             : null
                     }
                 </Row>

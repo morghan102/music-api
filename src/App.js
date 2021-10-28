@@ -89,8 +89,21 @@ export default function App() {
     }
   };
 
+  const dispatchError = (actionType, payload) => {
+    return <p>hi</p>
+    // switch (actionType) {
+    //   case 'SET_ERROR':
+        // console.log(typeof payload);
+    //     setError(payload);
+    //     return;
+    //   default:
+    //     return;
+    // }
+  };
+
+  
   const reset = (val) => {
-    console.log(val)
+    // console.log(valS)
     if (val === 'lyrics') {
       // setCanvas('');
       setAllPlaylists('');
@@ -120,16 +133,6 @@ export default function App() {
     window.history.pushState("", document.title, window.location.pathname + window.location.search);
   }
 
-  const dispatchError = (actionType, payload) => {
-    switch (actionType) {
-      case 'SET_ERROR':
-        console.log(payload);
-        setError(payload);
-        return;
-      default:
-        return;
-    }
-  };
 
   const SelectedCanvas = () => { //add canvases for the playlists
     // console.log(canvas)

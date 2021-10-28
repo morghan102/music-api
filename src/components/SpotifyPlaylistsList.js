@@ -30,7 +30,6 @@ export default function SpotifyPlaylistsList() {
                             onClick={() => handleGetTracks(pl)}
                             eventKey={pl.name}
                             key={counter}
-                            className='list-group-item-warning'
                         // Im getting an error about key not being set??? not sure why
                         >
                             {pl.name}
