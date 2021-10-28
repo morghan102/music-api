@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import '../App.css';
 import { AppContext } from '../context';
 import axios from "axios";
@@ -9,7 +9,9 @@ const SpotifyGetPlaylists = () => {
     // const [token, setToken] = useState('');
     // const [isLoading, setIsLoading] = useState(false); need to put this in the context
     // const [data, setData] = useState({});//this will be teh data we get from spotify
-    const { dispatchSongEvent, dispatchError, accessToken, allPlaylists } = useContext(AppContext);
+    const { dispatchSongEvent, accessToken, allPlaylists } = useContext(AppContext);
+    const [error, setError] = useState('');
+
 
     // useEffect(() => {
     //     // error where it's not resetting this value after i stop the server, so i don't have a token or peace of mind
@@ -35,8 +37,9 @@ const SpotifyGetPlaylists = () => {
             dispatchSongEvent('LOADING', false)
             // setData(res.data) //i want to set this info with the context
         }).catch((err) => {
-            dispatchError('SET_ERROR', err)
+            // dispatchError('SET_ERROR', err)
             console.log(err)
+            setError(err)
         });
     };
 
@@ -49,6 +52,7 @@ const SpotifyGetPlaylists = () => {
     return (
         <>
             <GetPlaylistsBtn />
+            {error ? <p>error</p> : null}
             {/* moved to app.js {!isLoading && playlists ? playlists.map((ele) => <p>{ele.name}</p>)
                 : isLoading ? <p>Hold on, loading</p>
                     : null} */}

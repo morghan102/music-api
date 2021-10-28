@@ -52,9 +52,10 @@ export default function MusicGetterForm() {
 
         }).catch((err) => {
             dispatchSongEvent('LOADING', false)
-            setError(err);
+            console.log(err.toString())
+            setError(err.toString());
 
-            throw new Error(err)
+            // throw new Error(err)
             // dispatchError('SET_ERROR', err)
             // console.log(err)
         });
@@ -216,47 +217,51 @@ export default function MusicGetterForm() {
 
                     {playlistsorLyrics === 'lyrics' ? //cannot remove this to a function/component bc the inputs dont stay focused. v annoying
                         // <>
-                            <ErrorBoundary>
-                                {console.log(error)}
-                                {/* i want to add  style={{marginTop: '10px'}} to the top when its small */}
-                                <Col xs={12} md={3}>
-                                    <Label>
-                                        Song title:
-                                        <input
-                                            style={{ marginLeft: 5 }}
-                                            type="text"
-                                            value={song}
-                                            onChange={e => setSong(e.target.value)}
-                                            key={0}
-                                        />
-                                    </Label>
-                                </Col>
-                                <Col sm="auto" xs={12} md={3}>
-                                    <Label>
-                                        Artist:
-                                        <input
-                                            style={{ marginLeft: 5 }}
-                                            type="text"
-                                            value={artist}
-                                            onChange={e => setArtist(e.target.value)}
-                                            key={1}
-                                        />
-                                    </Label>
-                                </Col>
+                        <ErrorBoundary>
+                            {console.log(error)}
+                            {/* i want to add  style={{marginTop: '10px'}} to the top when its small */}
+                            <Col xs={12} md={3}>
+                                <Label>
+                                    Song title:
+                                    <input
+                                        style={{ marginLeft: 5 }}
+                                        type="text"
+                                        value={song}
+                                        onChange={e => setSong(e.target.value)}
+                                        key={0}
+                                    />
+                                </Label>
+                            </Col>
+                            <Col sm="auto" xs={12} md={3}>
+                                <Label>
+                                    Artist:
+                                    <input
+                                        style={{ marginLeft: 5 }}
+                                        type="text"
+                                        value={artist}
+                                        onChange={e => setArtist(e.target.value)}
+                                        key={1}
+                                    />
+                                </Label>
+                            </Col>
 
-                                <Col sm="auto">
-                                    <CanvasSelector />
+                            <Col sm="auto">
+                                <CanvasSelector />
+                            </Col>
+                            <Row>
+                                <Col>
+                                    <Button onClick={getLyrics}>Get Those Lyrics</Button>
                                 </Col>
-                                <Row>
-                                    <Col>
-                                        <Button onClick={getLyrics}>Get Those Lyrics</Button>
-                                    </Col>
-                                </Row>
-                                {error ? <p>There has been an error: {error}</p> : null}
-                                {/* error is hitting the boundary, but only bc you can't pass an obj as a whild, which is what i'm (accidentally) 
-                                doing when there's an error. I am aware this is the wrong way to handle error here but I am getting my desired behavior and am
-                                not going to "fix" it */}
-                            </ErrorBoundary>
+                            </Row>
+                            {error ? <Row className={'my-5'}>
+                                <Col>
+                                    <p>There has been an error: {error}</p>
+                                </Col>
+                            </Row> : null}
+                            {/* error is hitting the boundary, but only bc you can't pass an obj as a child, which is what i'm (accidentally) 
+                                doing when there's an error. I am aware this is the wrong way to handle errors here but I am getting my desired behavior 
+                                and am not going to "fix" it */}
+                        </ErrorBoundary>
                         // </>
                         : playlistsorLyrics === 'playlists' ?
                             <ErrorBoundary>

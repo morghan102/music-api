@@ -47,7 +47,8 @@ export default function Graph() {
     }
 
     const draw = (p5) => {
-        p5.background(255);
+        // p5.background(0, 0, 255)
+        // p5.background(255);
         p5.fill(0, 0, 0);
         let counter = 1;
         let yCounter = 0;
@@ -87,7 +88,7 @@ export default function Graph() {
 
 
     return (
-        <Container>
+        <Container >
             <Sketch setup={setup} draw={draw} />
         </Container>
     );

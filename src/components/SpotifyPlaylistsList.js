@@ -1,5 +1,5 @@
 import '../App.css';
-import { useContext } from 'react'
+import { useContext, useState } from 'react'
 import 'bootstrap/dist/css/bootstrap.css';
 import { Container, Row, ListGroup } from 'react-bootstrap';
 import { AppContext } from '../context';
@@ -12,6 +12,7 @@ export default function SpotifyPlaylistsList() {
     // const [token, setToken] = useState('');
     // const [tracksAudioFeatures, setTracksAudioFeatures] = useState([])
     const tracksAudioFeatures = [];
+    const [error, setError] = useState('');
 
     // useEffect(() => {
     //     if (localStorage.getItem('accessToken')) {
@@ -90,6 +91,7 @@ export default function SpotifyPlaylistsList() {
                         } else {
 
                         }
+                        setError(err)
                     })
                 // if (res.status === 429) {
                 //     const millis = getMillis(retryAfter)
@@ -111,6 +113,7 @@ export default function SpotifyPlaylistsList() {
 
             }
             // dispatchError('SET_ERROR', err)
+            setError(err)
             console.log(err)
         });
     }
@@ -152,6 +155,7 @@ export default function SpotifyPlaylistsList() {
                 <p>Please select a playlist</p>
             </Row>
             <PlaylistList />
+            {error ? <p>{error}</p> : null}
             {/* if playlistSelected, show playlists in dropdown and render select canvas */}
         </Container>
     )
