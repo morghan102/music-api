@@ -54,7 +54,7 @@ export default function MusicGetterForm() {
             dispatchSongEvent('LOADING', false)
             setError(err);
 
-            // throw new Error(err)
+            throw new Error(err)
             // dispatchError('SET_ERROR', err)
             // console.log(err)
         });
@@ -252,6 +252,10 @@ export default function MusicGetterForm() {
                                         <Button onClick={getLyrics}>Get Those Lyrics</Button>
                                     </Col>
                                 </Row>
+                                {error ? <p>There has been an error: {error}</p> : null}
+                                {/* error is hitting the boundary, but only bc you can't pass an obj as a whild, which is what i'm (accidentally) 
+                                doing when there's an error. I am aware this is the wrong way to handle error here but I am getting my desired behavior and am
+                                not going to "fix" it */}
                             </ErrorBoundary>
                         // </>
                         : playlistsorLyrics === 'playlists' ?

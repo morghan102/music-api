@@ -1,5 +1,6 @@
 import React from "react";
 import PropTypes from 'prop-types';
+import { Row, Col } from "react-bootstrap";
 
 export default class ErrorBoundary extends React.Component {
     // constructor(props) {
@@ -35,8 +36,8 @@ export default class ErrorBoundary extends React.Component {
         if (hasError) {
             return (
                 // my-5 might do nothing
-                <div className="card my-5">
-                    <div className="card-header">
+                <Row className="card my-5">
+                    <Col className="card-body">
                         <p>There was an error. {' '}
                             <span
                                 style={{ cursor: 'pointer', color: '#0077FF' }}
@@ -45,16 +46,16 @@ export default class ErrorBoundary extends React.Component {
                                 Reload this page
                             </span>{' '}
                         </p>
-                    </div>
-                    <div className="card-body">
+                    </Col>
+                    {/* <div className="card-body">
                         <details className="error-details">
                             <summary>Click for error details</summary>
                             {errorInfo && errorInfo.componentStack.toString()}
                         </details>
-                    </div>
+                    </div> */}
                     {/* <h1>An error has occured, please reload the page.</h1>
                     <p>{this.props.error}</p> */}
-                </div>
+                </Row>
             );
         }
         return this.props.children; // represents whatever component that this error boundary encloses.

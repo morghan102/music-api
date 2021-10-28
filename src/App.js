@@ -90,7 +90,7 @@ export default function App() {
   };
 
   const dispatchError = (actionType, payload) => {
-    return <p>hi</p>
+    return <p>this doesnt do anything anymore</p>
     // switch (actionType) {
     //   case 'SET_ERROR':
         // console.log(typeof payload);
