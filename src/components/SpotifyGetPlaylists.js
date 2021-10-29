@@ -52,7 +52,7 @@ const SpotifyGetPlaylists = () => {
     return (
         <>
             <GetPlaylistsBtn />
-            {error ? <p>error</p> : null}
+            {error ? <p>{error}</p> : null}
             {/* moved to app.js {!isLoading && playlists ? playlists.map((ele) => <p>{ele.name}</p>)
                 : isLoading ? <p>Hold on, loading</p>
                     : null} */}

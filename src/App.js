@@ -7,7 +7,7 @@
 import './App.css';
 import { useState } from 'react'
 import 'bootstrap/dist/css/bootstrap.css'; //i think i dont use
-import { Container } from 'react-bootstrap';
+import { Collapse, Container, Button } from 'react-bootstrap';
 import TextShuffle from './sketches/TextShuffle';
 import MusicGetterForm from './components/MusicGetter';
 import SpotifyPlaylistsList from './components/SpotifyPlaylistsList';
@@ -78,12 +78,12 @@ export default function App() {
       case 'RESET_VALUES':
         reset(payload)
         return
-        case 'LOADING':
-          setIsLoading(payload)
-          return
-        case 'SET_COPYRIGHT':
-          setCopyright(payload)
-          return
+      case 'LOADING':
+        setIsLoading(payload)
+        return
+      case 'SET_COPYRIGHT':
+        setCopyright(payload)
+        return
       default:
         return;
     }
@@ -93,7 +93,7 @@ export default function App() {
     return <p>this doesnt do anything anymore</p>
     // switch (actionType) {
     //   case 'SET_ERROR':
-        // console.log(typeof payload);
+    // console.log(typeof payload);
     //     setError(payload);
     //     return;
     //   default:
@@ -101,7 +101,7 @@ export default function App() {
     // }
   };
 
-  
+
   const reset = (val) => {
     // console.log(valS)
     if (val === 'lyrics') {
@@ -233,13 +233,24 @@ export default function App() {
     // else if (valOfGraphSketch === '') return 
 
   }
-
+  const [open, setOpen] = useState(false);
   function ProjectExplanation() {
     return (
       <Container className="explanContainer">
         <h4 className="explanHeader">What is this project about?</h4>
-        <p> When I was in school studying literature, we did a very special project in my 20th C lit class. Using the texts we'd read throughout the quarter, we were tasked to make some artistic rendering of them. I honestly can't remember what I made -- I didn't consider myself very artistic at the time. Now, I wished I'd had access to tools like P5.js and coding. This project is inspired by that, by my love of music and reading, and by Rodez's inability to memorize any song ever. I hope you enjoy it as much as I did.
-        </p>
+        <Container className='d-none .d-lg-block .d-xl-none'>
+          <Button
+            onClick={() => setOpen(!open)}
+            aria-controls="example-collapse-text"
+            aria-expanded={open}
+          >
+            Expand
+          </Button>
+          <Collapse in={open}>
+            <p> When I was in school studying literature, we did a very special project in my 20th C lit class. Using the texts we'd read throughout the quarter, we were tasked to make some artistic rendering of them. I honestly can't remember what I made -- I didn't consider myself very artistic at the time. Now, I wished I'd had access to tools like P5.js and coding. This project is inspired by that, by my love of music and reading, and by Rodez's inability to memorize any song ever. I hope you enjoy it as much as I did.
+            </p>
+          </Collapse>
+        </Container>
       </Container>
     )
   }
@@ -256,7 +267,7 @@ export default function App() {
           <header>
             <h1 className="appHeader">Music API </h1>
           </header>
-          <body className='background'>
+          <body className='background' className="border border-success">
             <ProjectExplanation />
             <MusicGetterForm />
             <Music />

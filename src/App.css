@@ -16,6 +16,10 @@ html, .background, #root, .list-group-item {
   background-color: #F4F0EC;
 
 }
+.flexbox {
+  flex: 1 1;
+
+}
 
 .App {
   text-align: center;

@@ -201,30 +201,33 @@ export default function MusicGetterForm() {
 
 
     return (
-        <div>
-            <Form>
-                <Row className="justify-content-sm-center">
-                    <Col sm="auto">
-                        <Form.Control
-                            onChange={e => handlePorLChange(e.target.value)}
-                            as="select"
-                        >
-                            <option>Would you like to use playlists or lyrics?</option>
-                            <option value="lyrics">Lyrics</option>
-                            <option value="playlists">Playlists</option>
-                        </Form.Control>
-                    </Col>
+        <Row className='d-flex flex-row border border-success'>
+            <Col sm="auto" >
+                <Form.Control
+                    onChange={e => handlePorLChange(e.target.value)}
+                    as="select"
+                >
+                    <option>Would you like to use playlists or lyrics?</option>
+                    <option value="lyrics">Lyrics</option>
+                    <option value="playlists">Playlists</option>
+                </Form.Control>
+            </Col>
 
-                    {playlistsorLyrics === 'lyrics' ? //cannot remove this to a function/component bc the inputs dont stay focused. v annoying
-                        // <>
-                        <ErrorBoundary>
+            {playlistsorLyrics === 'lyrics' ? //cannot remove this to a function/component bc the inputs dont stay focused. v annoying
+                // <>
+                // <ErrorBoundary>
+                <Col className="justify-content-sm-center border border-success">
+                    <Form>
+                        <Row >
+
                             {console.log(error)}
                             {/* i want to add  style={{marginTop: '10px'}} to the top when its small */}
-                            <Col xs={12} md={3}>
+                            <Col xs={12} md={3} className="border border-primary">
                                 <Label>
                                     Song title:
                                     <input
-                                        style={{ marginLeft: 5 }}
+                                        className='mx-md-1'
+                                        // style={{ marginLeft: 5 }}
                                         type="text"
                                         value={song}
                                         onChange={e => setSong(e.target.value)}
@@ -232,11 +235,12 @@ export default function MusicGetterForm() {
                                     />
                                 </Label>
                             </Col>
-                            <Col sm="auto" xs={12} md={3}>
+                            <Col sm="auto" xs={12} md={3} className="border border-primary">
                                 <Label>
                                     Artist:
                                     <input
-                                        style={{ marginLeft: 5 }}
+                                        className='mx-md-1'
+                                        // style={{ marginLeft: 5 }}
                                         type="text"
                                         value={artist}
                                         onChange={e => setArtist(e.target.value)}
@@ -248,11 +252,7 @@ export default function MusicGetterForm() {
                             <Col sm="auto">
                                 <CanvasSelector />
                             </Col>
-                            <Row>
-                                <Col>
-                                    <Button onClick={getLyrics}>Get Those Lyrics</Button>
-                                </Col>
-                            </Row>
+
                             {error ? <Row className={'my-5'}>
                                 <Col>
                                     <p>There has been an error: {error}</p>
@@ -261,16 +261,23 @@ export default function MusicGetterForm() {
                             {/* error is hitting the boundary, but only bc you can't pass an obj as a child, which is what i'm (accidentally) 
                                 doing when there's an error. I am aware this is the wrong way to handle errors here but I am getting my desired behavior 
                                 and am not going to "fix" it */}
-                        </ErrorBoundary>
-                        // </>
-                        : playlistsorLyrics === 'playlists' ?
-                            <ErrorBoundary>
-                                <PlaylistsView />
-                            </ErrorBoundary>
-                            : null
-                    }
-                </Row>
-            </Form>
-        </div>
+                        </Row>
+                    </Form>
+                </Col>
+                // </ErrorBoundary>
+                // </>
+                : playlistsorLyrics === 'playlists' ?
+                    <ErrorBoundary>
+                        <PlaylistsView />
+                    </ErrorBoundary>
+                    : null
+            }
+            {playlistsorLyrics === 'lyrics' ?
+                <Row>
+                    <Col>
+                        <Button onClick={getLyrics}>Get Those Lyrics</Button>
+                    </Col>
+                </Row> : null}
+        </Row >
     )
 }
