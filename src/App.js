@@ -5,7 +5,7 @@
 //   Link
 // } from "react-router-dom";
 import './App.css';
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import 'bootstrap/dist/css/bootstrap.css'; //i think i dont use
 import { Collapse, Container, Button } from 'react-bootstrap';
 import TextShuffle from './sketches/TextShuffle';
@@ -36,6 +36,12 @@ export default function App() {
   const [playlistName, setPlaylistName] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [copyright, setCopyright] = useState('');
+  const [open, setOpen] = useState(false);
+  const [width, setWidth] = useState(window.innerWidth);
+
+  // proj explanation expand
+  const handleResize = e => setWidth(window.innerWidth);
+  useEffect(() => window.addEventListener('resize', handleResize));
 
 
   const dispatchSongEvent = (actionType, payload) => {
@@ -233,13 +239,15 @@ export default function App() {
     // else if (valOfGraphSketch === '') return 
 
   }
-  const [open, setOpen] = useState(false);
+  
+
   function ProjectExplanation() {
     return (
       <Container className="explanContainer">
         <h4 className="explanHeader">What is this project about?</h4>
-        <Container className='d-none .d-lg-block .d-xl-none'>
+        {width <= 768 ? <Container>
           <Button
+            // className='d-none .d-lg-block .d-xl-none' //so we cant see the btn at this pt
             onClick={() => setOpen(!open)}
             aria-controls="example-collapse-text"
             aria-expanded={open}
@@ -250,7 +258,8 @@ export default function App() {
             <p> When I was in school studying literature, we did a very special project in my 20th C lit class. Using the texts we'd read throughout the quarter, we were tasked to make some artistic rendering of them. I honestly can't remember what I made -- I didn't consider myself very artistic at the time. Now, I wished I'd had access to tools like P5.js and coding. This project is inspired by that, by my love of music and reading, and by Rodez's inability to memorize any song ever. I hope you enjoy it as much as I did.
             </p>
           </Collapse>
-        </Container>
+        </Container> 
+        : <p> When I was in school studying literature, we did a very special project in my 20th C lit class. Using the texts we'd read throughout the quarter, we were tasked to make some artistic rendering of them. I honestly can't remember what I made -- I didn't consider myself very artistic at the time. Now, I wished I'd had access to tools like P5.js and coding. This project is inspired by that, by my love of music and reading, and by Rodez's inability to memorize any song ever. I hope you enjoy it as much as I did.</p>}
       </Container>
     )
   }
