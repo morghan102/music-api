@@ -8,7 +8,7 @@ export default function BackToPlaylistsBtn() {
     const BackToPlaylistsBtn = () => {
         if (tracks !== '') {
             return (
-                <Col sm="auto">
+                <Col className='col-sm-auto mt-2'>
                     <Button onClick={() => removeTracks()} >Go back to playlists list</Button>
                 </Col>
             )

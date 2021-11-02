@@ -87,7 +87,7 @@ export default function MusicGetterForm() {
         // {/* i wanted to put this whole col into selectGraphOts. possible?? */ }
         return (
             canvas === 'graph' && tracks !== '' ?
-                <Col sm="auto">
+                <Col className='col-sm-auto mt-2'>
                     <Form.Control
                         onChange={e => {
                             dispatchSongEvent('SET_VAL_OF_GRAPH_SKETCH', e.target.value)
@@ -171,12 +171,12 @@ export default function MusicGetterForm() {
 
 
         return (
-            <Col sm="auto">
-                <Row>
-                    <Col sm="auto">
-                        <SpotifyLoginButton />
-                        <SpotifyGetPlaylists />
-                    </Col>
+            // <Col className='justify-content-center align-items-center border col-sm-6'>
+            // <Container className='border justify-content-center '>
+                // {/* <Row> */}
+                <Row  className='justify-content-center '>
+                    <SpotifyLoginButton />
+                    <SpotifyGetPlaylists />
                     <CanvasSelector />
                     <BackToPlaylistsBtn />
                     {/* keep an eye on this. I will want to refactor at some point cuz this is ugly i think */}
@@ -194,15 +194,16 @@ export default function MusicGetterForm() {
                         {/* change */}
                     {/* </Col> */}
                     <SelectGraphingOpts />
-
-                </Row>
-            </Col>
+                    </Row>
+            //     </Row>
+            // </Container>
+            // </Col>
         )
     }
 
 
     return (
-        <Container >
+        <Container className=''>
             <Row className='justify-content-center mb-3'>
                 <Col sm={5} lg={2}>
                     <Form.Control
@@ -261,104 +262,15 @@ export default function MusicGetterForm() {
                         </Col>
                     </Row>
                 </Form>
+
                 : playlistsorLyrics === 'playlists' ?
                     <ErrorBoundary>
-                        <PlaylistsView />
+                        {/* <Row> */}
+                            <PlaylistsView />
+                        {/* </Row> */}
                     </ErrorBoundary>
+
                     : null}
         </Container>
-        // <Row 
-
-        // // className='d-flex justify-content-center border text-center flex-sm-column flex-xl-row '
-        // >
-        //     <Col
-        //      sm="auto" lg={2} className=''
-        //     >
-        //         <Form.Control
-        //             onChange={e => handlePorLChange(e.target.value)}
-        //             as="select"
-        //         >
-        //             <option>Playlists or Lyrics?</option>
-        //             <option value="lyrics">Lyrics</option>
-        //             <option value="playlists">Playlists</option>
-        //         </Form.Control>
-        //     </Col>
-
-        //     {playlistsorLyrics === 'lyrics' ? //cannot remove this to a function/component bc the inputs dont stay focused. v annoying
-        //         // <>
-        //         // <ErrorBoundary>justify-content-sm-center
-        //         <Col 
-        //         // className="flex-sm-column d-flex" xl='auto' sm={6} 
-        //         >
-        //             <Form>
-        //                 <Row 
-        //                 // className="flex-sm-column flex-xl-row  d-flex" xl='auto'  sm={6}
-        //                 >
-
-        //                     {console.log(error)}
-        //                     {/* i want to add  style={{marginTop: '10px'}} to the top when its small  className="border border-primary"*/}
-        //                     <Col className=""
-        //                     // xs={12} md={5}
-        //                     >
-        //                         <Label>
-        //                             Song title:
-        //                             <input
-        //                                 className='mx-md-1'
-        //                                 style={{ marginLeft: 5 }}
-        //                                 type="text"
-        //                                 value={song}
-        //                                 onChange={e => setSong(e.target.value)}
-        //                                 key={0}
-        //                             />
-        //                         </Label>
-        //                     </Col>
-        //                     <Col className="" 
-        //                     // xs={12} md={5}
-        //                     >
-        //                         <Label>
-        //                             Artist:
-        //                             <input
-        //                                 className='mx-md-1'
-        //                                 style={{ marginLeft: 5 }}
-        //                                 type="text"
-        //                                 value={artist}
-        //                                 onChange={e => setArtist(e.target.value)}
-        //                                 key={1}
-        //                             />
-        //                         </Label>
-        //                     </Col>
-
-        //                     <Col
-        //                     //  sm='auto' lg={2} className=''
-        //                     >
-        //                         <CanvasSelector />
-        //                     </Col>
-
-        //                     {error ? <Row className={'my-5'}>
-        //                         <Col>
-        //                             <p>There has been an error: {error}</p>
-        //                         </Col>
-        //                     </Row> : null}
-        //                     {/* error is hitting the boundary, but only bc you can't pass an obj as a child, which is what i'm (accidentally) 
-        //                         doing when there's an error. I am aware this is the wrong way to handle errors here but I am getting my desired behavior 
-        //                         and am not going to "fix" it */}
-        //                 </Row>
-        //             </Form>
-        //         </Col>
-        //         // </ErrorBoundary>
-        //         // </>
-        //         : playlistsorLyrics === 'playlists' ?
-        //             <ErrorBoundary>
-        //                 <PlaylistsView />
-        //             </ErrorBoundary>
-        //             : null
-        //     }
-        //     {playlistsorLyrics === 'lyrics' ?
-        //         <Row className=''>
-        //             <Col className=''>
-        //                 <Button onClick={getLyrics}>Get Those Lyrics</Button>
-        //             </Col>
-        //         </Row> : null}
-        // </Row >
     )
 }

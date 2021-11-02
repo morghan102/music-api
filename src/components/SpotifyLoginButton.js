@@ -1,6 +1,7 @@
 import { useEffect, useContext } from 'react'
 import { spotifyClientID } from '../shared/urls.js';
 import { AppContext } from '../context.js';
+import { Col } from 'react-bootstrap';
 // import { Button, Col, Row, Form, Container } from 'react-bootstrap';
 
 
@@ -27,19 +28,19 @@ export default function SpotifyLoginButton() {
         if (window.location.hash) {
             const { access_token, expires_in, token_type } = getReturnedParamsFromSpotAuth(window.location.hash); //desctructuing the value
             dispatchSongEvent('SET_ACCESS_TOKEN', access_token)
-            dispatchSongEvent('SET_EXPIRES_IN', expires_in) 
+            dispatchSongEvent('SET_EXPIRES_IN', expires_in)
             dispatchSongEvent('SET_TOKEN_TYPE ', token_type)//idk if I actually need?
-        //     localStorage.clear(); //is just a temp solution?
-        //     localStorage.setItem("accessToken", access_token);
-        //     localStorage.setItem("expiresIn", expires_in);
-        //     localStorage.setItem("tokenType", token_type);
-        //     setTimeout(() => {
-        //         localStorage.clear();
-        //         window.location.hash = ''
-        //         console.log('hi')
-        //         // refresh all those vals? / clear them and require user to log in again
-        //         // will this still work if I've like stopped the terminal?
-        //     }, 5) //converts it to miliseconds
+            //     localStorage.clear(); //is just a temp solution?
+            //     localStorage.setItem("accessToken", access_token);
+            //     localStorage.setItem("expiresIn", expires_in);
+            //     localStorage.setItem("tokenType", token_type);
+            //     setTimeout(() => {
+            //         localStorage.clear();
+            //         window.location.hash = ''
+            //         console.log('hi')
+            //         // refresh all those vals? / clear them and require user to log in again
+            //         // will this still work if I've like stopped the terminal?
+            //     }, 5) //converts it to miliseconds
         }
     })
 
@@ -50,7 +51,9 @@ export default function SpotifyLoginButton() {
     }
 
     const LoginBtn = () => {
-        if (accessToken === '') return <button onClick={handleLogin} className='spotifyBtn'>Login to Spotify</button>
+        if (accessToken === '') return <Col>
+            <button onClick={handleLogin} className='spotifyBtn'>Login to Spotify</button>
+        </Col>
         else return null
     }
 

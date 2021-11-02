@@ -2,6 +2,7 @@ import React, { useContext, useState } from "react";
 import '../App.css';
 import { AppContext } from '../context';
 import axios from "axios";
+import { Col } from "react-bootstrap";
 
 const playlists_endpoint = 'https://api.spotify.com/v1/me/playlists';//this is for the logged in user: https://developer.spotify.com/documentation/web-api/reference/#endpoint-get-list-users-playlists
 
@@ -44,21 +45,22 @@ const SpotifyGetPlaylists = () => {
     };
 
     const GetPlaylistsBtn = () => {
-        if (allPlaylists === '' && window.location.hash) {
-            return <button onClick={handleGetPlaylists} className='spotifyBtn'>Get Your Playlists</button>
-        } else return null;
+        return <button onClick={handleGetPlaylists} className='spotifyBtn'>Get Your Playlists</button>
     }
     //adding loading thing is necessary
     return (
-        <>
-            <GetPlaylistsBtn />
-            {error ? <p>{error}</p> : null}
-            {/* moved to app.js {!isLoading && playlists ? playlists.map((ele) => <p>{ele.name}</p>)
+        allPlaylists === '' && window.location.hash ?
+            <Col>
+                <GetPlaylistsBtn />
+                {error ? <p>{error}</p> : null}
+                {/* moved to app.js {!isLoading && playlists ? playlists.map((ele) => <p>{ele.name}</p>)
                 : isLoading ? <p>Hold on, loading</p>
                     : null} */}
-            {/* // using experimental optional chaining */}
-            {/* {data?.items ? data.items.map((ele) => <p>{ele.name}</p>) : null} */}
-        </>
+                {/* // using experimental optional chaining */}
+                {/* {data?.items ? data.items.map((ele) => <p>{ele.name}</p>) : null} */}
+            </Col> 
+            : null
+
     );
 }
 
