@@ -5,9 +5,9 @@
 //   Link
 // } from "react-router-dom";
 import './App.css';
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useRef } from 'react'
 import 'bootstrap/dist/css/bootstrap.css'; //i think i dont use
-import { Collapse, Container, Button } from 'react-bootstrap';
+import { Collapse, Container, Button, Row } from 'react-bootstrap';
 import TextShuffle from './sketches/TextShuffle';
 import MusicGetterForm from './components/MusicGetter';
 import SpotifyPlaylistsList from './components/SpotifyPlaylistsList';
@@ -37,11 +37,17 @@ export default function App() {
   const [isLoading, setIsLoading] = useState(false);
   const [copyright, setCopyright] = useState('');
   const [open, setOpen] = useState(false);
-  const [width, setWidth] = useState(window.innerWidth);
+  // const [width, setWidth] = useState(window.innerWidth);
+  // const canvasRef = useRef();
+  const [width, setWidth] = useState();
+  const [height, setHeight] = useState();
+
+
+
 
   // proj explanation expand
-  const handleResize = e => setWidth(window.innerWidth);
-  useEffect(() => window.addEventListener('resize', handleResize));
+  // const handleResize = e => setWidth(window.innerWidth);
+  // useEffect(() => window.addEventListener('resize', handleResize));
 
 
   const dispatchSongEvent = (actionType, payload) => {
@@ -140,7 +146,24 @@ export default function App() {
   }
 
 
+
   const SelectedCanvas = () => { //add canvases for the playlists
+
+    // const getWindowSize = () => {
+    //   console.log(canvasRef.current.clientWidth)
+    //   const newWidth = canvasRef.current.clientWidth;
+    //   setWidth(newWidth);
+
+    //   const newHeight = canvasRef.current.clientHeight;
+    //   setHeight(newHeight);
+    // };
+    // // useEffect(() => {
+    // //   getWindowSize();
+    // // }, []);
+    // useEffect(() => {
+    //   // getWindowSize()
+    //   window.addEventListener("resize", getWindowSize);
+    // }, []);    
     // console.log(canvas)
     // return (
     //   playlistsorLyrics === 'lyrics' ? canvas === "lyricsA" ?
@@ -153,23 +176,28 @@ export default function App() {
     // )
     if (playlistsorLyrics === 'lyrics') {
       return (
-        canvas === "lyricsA" ?
-          <TextShuffle />
-          : canvas === "lyricsB" ?
-            <Anagram />
-            : canvas === "lyricsC" ?
-              <Sketch3 />
-              : null
+        // need to hook the size of canvas to those ones too
+        <Row> 
+          {canvas === "lyricsA" ?
+            <TextShuffle />
+            : canvas === "lyricsB" ?
+              <Anagram />
+              : canvas === "lyricsC" ?
+                <Sketch3 />
+                : null}
+        </Row>
       )
     } else if (playlistsorLyrics === 'playlists') {
       return (
-        canvas === "graph" ?
-          <Graph />
-          : canvas === "b" ?
-            <SpotifySketch2 />
-            : canvas === "c" ?
-              <SpotifySketch3 />
-              : null
+        <Row className='border'>
+          {canvas === "graph" ?
+            <Graph />
+            : canvas === "b" ?
+              <SpotifySketch2 />
+              : canvas === "c" ?
+                <SpotifySketch3 />
+                : null}
+        </Row>
       )
     } else return <p>Please select a canvas</p>
   }
@@ -207,15 +235,17 @@ export default function App() {
       if (isLoading) {
         return <LoadingComponent />
       }
-      else if (lyrics && !allPlaylists) {
-        return <Container>
+      else if (lyrics && !allPlaylists) {// canvas for lysircs
+        return <Container className='mt-3 border'>
+
           <SelectedCanvas />
           {/* set this apart somehow */}
-          {copyright ? copyright : null}
+          {copyright ? <p>{copyright}</p> : null}
         </Container>
       } else if (allPlaylists && tracks === '' && playlistsorLyrics !== 'lyrics') return <SpotifyPlaylistsList />
-      else if (tracks) {
-        return <Container>
+
+      else if (tracks) { //canvas for playlist
+        return <Container className='mt-3 border'>
           <h4 className="playlistTitle">{playlistName}</h4>
           <SelectedCanvas />
           {valOfGraphSketch ? <p>{valOfGraphSketchExplanation()}</p> : null}
@@ -245,7 +275,7 @@ export default function App() {
     return (
       <Container className="explanContainer">
         <h4 className="explanHeader">What is this project about?</h4>
-        {/* {width} */}
+        {width}
         {width <= 768 ? <Container>
           <Button
             className='btn-warning'
@@ -274,7 +304,7 @@ export default function App() {
     //   <Route path='/home'>
     <div className="App">
       <ErrorBoundary>
-        <AppContext.Provider value={{ lyrics, canvas, allPlaylists, tracks, error, isSpotifyLoggedIn, playlistsorLyrics, accessToken, valOfGraphSketch, isLoading, dispatchSongEvent, dispatchError }}>
+        <AppContext.Provider value={{ lyrics, canvas, allPlaylists, tracks, error, isSpotifyLoggedIn, playlistsorLyrics, accessToken, width, height, valOfGraphSketch, isLoading, dispatchSongEvent, dispatchError }}>
           <header>
             <h1 className="appHeader">Music API </h1>
           </header>

@@ -205,7 +205,7 @@ export default function MusicGetterForm() {
     return (
         <Container className=''>
             <Row className='justify-content-center mb-3'>
-                <Col sm={5} lg={2}>
+                <Col sm={5} lg={3}>
                     <Form.Control
                         onChange={e => handlePorLChange(e.target.value)}
                         as="select"
