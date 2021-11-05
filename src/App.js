@@ -1,5 +1,5 @@
 import './App.css';
-import { useState, useRef } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import 'bootstrap/dist/css/bootstrap.css'; //i think i dont use
 import { Collapse, Container, Button, Row } from 'react-bootstrap';
 import TextShuffle from './sketches/TextShuffle';
@@ -31,7 +31,7 @@ export default function App() {
   const [open, setOpen] = useState(false);
   const [width, setWidth] = useState();
   const [height, setHeight] = useState(); //using those 2 vals?
-
+  const [alreadyFetchedSpotify, setAlreadyFetchedSpotify] = useState({});
 
   const dispatchSongEvent = (actionType, payload) => {
     switch (actionType) {
@@ -108,7 +108,7 @@ export default function App() {
   const SelectedCanvas = () => { //add canvases for the playlists
 
     // const getWindowSize = () => {
-    //   console.log(canvasRef.current.clientWidth)
+
     //   const newWidth = canvasRef.current.clientWidth;
     //   setWidth(newWidth);
 
