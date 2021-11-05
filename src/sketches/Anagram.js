@@ -62,9 +62,9 @@ export default function Anagram() {
         // keep in mind, `p5` can be `undefined`
         // so check it before using
         if (p5) {
-            p5.resizeCanvas(window.innerWidth/3, window.innerHeight/1.5);
-// this only works sometimes? im confused
-        }        
+            p5.resizeCanvas(window.innerWidth / 3, window.innerHeight / 1.5);
+            // this only works sometimes? im confused
+        }
     }
 
     // window.onresize = function (p5) {

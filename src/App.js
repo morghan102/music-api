@@ -29,9 +29,14 @@ export default function App() {
   const [isLoading, setIsLoading] = useState(false);
   const [copyright, setCopyright] = useState('');
   const [open, setOpen] = useState(false);
-  const [width, setWidth] = useState();
-  const [height, setHeight] = useState(); //using those 2 vals?
+  const [width, setWidth] = useState(window.innerWidth);
+  const [height, setHeight] = useState(window.innerHeight); //using those 2 vals?
   const [alreadyFetchedSpotify, setAlreadyFetchedSpotify] = useState({});
+
+
+  const handleResize = e => setWidth(window.innerWidth);
+  useEffect(() => window.addEventListener('resize', handleResize));
+
 
   const dispatchSongEvent = (actionType, payload) => {
     switch (actionType) {
@@ -197,7 +202,8 @@ export default function App() {
     return (
       <Container className="explanContainer">
         <h4 className="explanHeader">What is this project about?</h4>
-        {width}
+        {width}<br/>
+        {height}
         {width <= 768 ? <Container>
           <Button
             className='btn-warning'
