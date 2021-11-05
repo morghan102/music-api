@@ -3,18 +3,10 @@ import PropTypes from 'prop-types';
 import { Row, Col } from "react-bootstrap";
 
 export default class ErrorBoundary extends React.Component {
-    // constructor(props) {
-    //     super(props);
-    //     this.state = {
-    //         hasError: false,
-    //         error: '',
-    //         errorInfo: '',
-    //     };
-    // }
     state = {
         error: '',
         eventId: '',
-        errorInfo: '',
+        // errorInfo: '',
         hasError: false,
       };
 
@@ -32,7 +24,7 @@ export default class ErrorBoundary extends React.Component {
     // state with the errorInfo. It’s totally up to you what you want to do with these two.
 
     render() {
-        const { hasError, errorInfo } = this.state;
+        const { hasError } = this.state; //errorinfo
         if (hasError) {
             return (
                 // my-5 might do nothing
@@ -47,14 +39,6 @@ export default class ErrorBoundary extends React.Component {
                             </span>{' '}
                         </p>
                     </Col>
-                    {/* <div className="card-body">
-                        <details className="error-details">
-                            <summary>Click for error details</summary>
-                            {errorInfo && errorInfo.componentStack.toString()}
-                        </details>
-                    </div> */}
-                    {/* <h1>An error has occured, please reload the page.</h1>
-                    <p>{this.props.error}</p> */}
                 </Row>
             );
         }

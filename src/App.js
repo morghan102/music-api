@@ -1,11 +1,5 @@
-// import {
-//   BrowserRouter as Router,
-//   Switch,
-//   Route,
-//   Link
-// } from "react-router-dom";
 import './App.css';
-import { useEffect, useState, useRef } from 'react'
+import { useState, useRef } from 'react'
 import 'bootstrap/dist/css/bootstrap.css'; //i think i dont use
 import { Collapse, Container, Button, Row } from 'react-bootstrap';
 import TextShuffle from './sketches/TextShuffle';
@@ -27,36 +21,24 @@ export default function App() {
   const [canvas, setCanvas] = useState('');
   const [allPlaylists, setAllPlaylists] = useState('');
   const [tracks, setTracks] = useState('');
-  const [isSpotifyLoggedIn, setIsSpotifyLoggedIn] = useState(false);
   const [playlistsorLyrics, setPlaylistsorLyrics] = useState('');
   const [accessToken, setAccessToken] = useState('');
   const [expiresIn, setExpiresIn] = useState('');
-  // const [tokenType, setTokenType] = useState('');
   const [valOfGraphSketch, setValOfGraphSketch] = useState('');
   const [playlistName, setPlaylistName] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [copyright, setCopyright] = useState('');
   const [open, setOpen] = useState(false);
-  // const [width, setWidth] = useState(window.innerWidth);
-  // const canvasRef = useRef();
   const [width, setWidth] = useState();
-  const [height, setHeight] = useState();
-
-
-
-
-  // proj explanation expand
-  // const handleResize = e => setWidth(window.innerWidth);
-  // useEffect(() => window.addEventListener('resize', handleResize));
+  const [height, setHeight] = useState(); //using those 2 vals?
 
 
   const dispatchSongEvent = (actionType, payload) => {
     switch (actionType) {
       case 'GET_LYRICS':
         setLyrics(payload);
-        // need to clear lyrics afterwards too to make room for a new set?? i shouldnt need to i think!
         return;
-      case 'SET_CANVAS': //this updates ea time you make a new selection
+      case 'SET_CANVAS': 
         setCanvas(payload);
         return
       case 'SET_ALL_PLAYLISTS':
@@ -65,22 +47,16 @@ export default function App() {
       case 'SET_TRACKS':
         setTracks(payload)
         return
-      case 'IS_SPOTIFY_LOGGED_IN':
-        setIsSpotifyLoggedIn(payload)
-        return
       case 'SET_P_OR_L':
         setPlaylistsorLyrics(payload)
         return
       case 'SET_ACCESS_TOKEN':
         setAccessToken(payload);
         return
-      case 'SET_EXPIRES_IN'://I don't think I use these 2 vals??
+      case 'SET_EXPIRES_IN':
         setExpiresIn(payload);
         triggerCountDown();
         return
-      // case 'SET_TOKEN_TYPE':
-      //   setTokenType(payload);
-      //   return
       case 'SET_VAL_OF_GRAPH_SKETCH':
         setValOfGraphSketch(payload);
         return
@@ -101,33 +77,15 @@ export default function App() {
     }
   };
 
-  const dispatchError = (actionType, payload) => {
-    return <p>this doesnt do anything anymore</p>
-    // switch (actionType) {
-    //   case 'SET_ERROR':
-    // console.log(typeof payload);
-    //     setError(payload);
-    //     return;
-    //   default:
-    //     return;
-    // }
-  };
-
 
   const reset = (val) => {
-    // console.log(valS)
     if (val === 'lyrics') {
-      // setCanvas('');
-      setAllPlaylists('');
       setTracks('');
-      setIsSpotifyLoggedIn(false);
       setValOfGraphSketch('');
       setPlaylistName('');
 
     } else {
       setLyrics('');
-      // const [error, setError] = useState('');
-      // setCanvas('');
     }
   }
 
@@ -164,19 +122,9 @@ export default function App() {
     //   // getWindowSize()
     //   window.addEventListener("resize", getWindowSize);
     // }, []);    
-    // console.log(canvas)
-    // return (
-    //   playlistsorLyrics === 'lyrics' ? canvas === "lyricsA" ?
-    //     <TextShuffle />
-    //     : canvas === "lyricsB" ?
-    //       <Anagram />
-    //       : canvas === "lyricsC" ?
-    //         <Sketch3 />
-    //         : <p>Please select a canvas</p>
-    // )
+
     if (playlistsorLyrics === 'lyrics') {
       return (
-        // need to hook the size of canvas to those ones too
         <Row> 
           {canvas === "lyricsA" ?
             <TextShuffle />
@@ -204,29 +152,6 @@ export default function App() {
 
 
 
-  // trying to fix the cors error. also reference server.js
-  // const [data, setData] = useState('');
-
-  // useEffect(() => {
-  //   callBackendAPI()
-  //   .then(res => setData(res.express))
-  //   .catch(err => console.log(err))    
-  // })
-  // const callBackendAPI = async() => {
-  //   const response = await fetch('/express_backend');
-  //   // console.log(response)
-  //   const body = await response.json();
-  //   const almostThere = data.message.body.lyrics.lyrics_body;
-  //   setLyrics(almostThere.substring(0, almostThere.length - 69))
-  //   console.log(lyrics)
-
-  //   if (response.status !== 200) {
-  //     throw Error(body.message) 
-  //   }
-  //   return lyrics;
-  // }
-  // console.log(tracks ? (tracks) : null);
-
   const Music = () => {
     if (error) {
       console.log(error)
@@ -239,8 +164,7 @@ export default function App() {
         return <Container className='mt-3'>
 
           <SelectedCanvas />
-          {/* set this apart somehow */}
-          {copyright ? <p>{copyright}</p> : null}
+          {copyright ? <p className='copyright'>{copyright}</p> : null}
         </Container>
       } else if (allPlaylists && tracks === '' && playlistsorLyrics !== 'lyrics') return <SpotifyPlaylistsList />
 
@@ -266,8 +190,6 @@ export default function App() {
     else if (valOfGraphSketch === 'speechiness') return valOfGraphSketch.toUpperCase() + ': Speechiness detects the presence of spoken words in a track. The more exclusively speech-like the recording (e.g. talk show, audio book, poetry), the closer to 1.0 the attribute value. Values above 0.66 describe tracks that are probably made entirely of spoken words. Values between 0.33 and 0.66 describe tracks that may contain both music and speech, either in sections or layered, including such cases as rap music. Values below 0.33most likely represent music and other non-speech-like tracks.'
     else if (valOfGraphSketch === 'tempo') return valOfGraphSketch.toUpperCase() + ': The overall estimated tempo of a track in beats per minute (BPM). In musical terminology, tempo is the speed or pace of a given piece and derives directly from the average beat duration.'
     else if (valOfGraphSketch === 'valence') return valOfGraphSketch.toUpperCase() + ': A measure from 0.0 to 1.0 describing the musical positiveness conveyed by a track. Tracks with high valence sound more positive (e.g. happy, cheerful, euphoric), while tracks with low valence sound more negative (e.g. sad, depressed, angry).'
-    // else if (valOfGraphSketch === '') return 
-
   }
 
 
@@ -279,7 +201,6 @@ export default function App() {
         {width <= 768 ? <Container>
           <Button
             className='btn-warning'
-            // className='d-none .d-lg-block .d-xl-none' //so we cant see the btn at this pt
             onClick={() => setOpen(!open)}
             aria-controls="example-collapse-text"
             aria-expanded={open}
@@ -297,14 +218,9 @@ export default function App() {
   }
 
   return (
-    // not sure I need router? will decide later 
-    // <Router>
-    // {/* navbar? I don't think I want that but meybs */}
-    // <Switch>
-    //   <Route path='/home'>
     <div className="App">
       <ErrorBoundary>
-        <AppContext.Provider value={{ lyrics, canvas, allPlaylists, tracks, error, isSpotifyLoggedIn, playlistsorLyrics, accessToken, width, height, valOfGraphSketch, isLoading, dispatchSongEvent, dispatchError }}>
+        <AppContext.Provider value={{ lyrics, canvas, allPlaylists, tracks, error, playlistsorLyrics, accessToken, width, height, valOfGraphSketch, isLoading, dispatchSongEvent }}>
           <header>
             <h1 className="appHeader"><span>Music API</span></h1>
           </header>
@@ -316,22 +232,5 @@ export default function App() {
         </AppContext.Provider>
       </ErrorBoundary>
     </div>
-    //   </Route>
-    // </Switch>
-
-    //   <Switch>
-    //     <Route path='/'>
-    //       {/* <Login /> */}
-    //       <h1>hi</h1>
-    //     </Route>
-    //   </Switch>
-
-
-    // </Router>
   );
 }
-
-// 
-// musixmatch expects a tracking thing in here that i need to add
-
-// https://medium.com/nerd-for-tech/using-context-api-in-react-with-functional-components-dbc653c7d485

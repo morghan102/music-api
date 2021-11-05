@@ -1,21 +1,8 @@
 html, .background, #root, .list-group-item {
-  /* linear gradient wont work bc it renders in ea individual element as the gradient */
   background-color: #F4F0EC !important;
   font-family: 'Montserrat', sans-serif;
-  /* mserrat could work for the copyright */
-  /* font-family: 'Josefin Sans', sans-serif;   */
-  /* font-family: 'Source Code Pro', monospace; this one isnt my fave */
-  /* font-family: 'Indie Flower', cursive; kinda silly, maybe as a header? */
-  
-  /* font-family: 'Chakra Petch', sans-serif;  */
-  /* i'm not sure how i feel about this */
- /* font-size: 20px; */
-  /* font-weight: 500; */
 }
-/* .list-group .list-group-item .list-group-item-mine  {
-  background-color: #F4F0EC;
 
-} */
 .flexbox {
   flex: 1 1;
 
@@ -26,11 +13,8 @@ html, .background, #root, .list-group-item {
   margin: 4em;
 }
 .appHeader {
-  /* margin-bottom: 1.5em;
-  background-color: burlywood; */
-  font-family: 'Rampart One', cursive;/* music api header?? */
+  font-family: 'Rampart One', cursive;
   font-size: 80px;
-  /* color: blue  */
 }
 .explanContainer {
   margin-bottom: 2em;
@@ -43,11 +27,9 @@ html, .background, #root, .list-group-item {
 }
 .playlistTitle, .loader{
   margin: 3%;
-  /* text-decoration: underline; */
 }
 .playlistList {
   margin: 1%; 
-  /* idk if i actually want */
 }
 
 .playlistList.container {
@@ -55,6 +37,11 @@ html, .background, #root, .list-group-item {
 }
 .list-group-item {
   margin-top: 2.5%;
+}
+
+.copyright {
+  color: gray;
+  margin-top: 3%;
 }
 
 
@@ -75,9 +62,6 @@ html, .background, #root, .list-group-item {
   line-height: 1.5;
   margin-right: 15px;
   font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
-  /* --bs-font-sans-serif: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji"; */
-  /* --bs-font-monospace: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace; */
-  /* --bs-body-font-family: var(--bs-font-sans-serif); */
 }
 
 

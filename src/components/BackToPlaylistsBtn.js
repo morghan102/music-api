@@ -1,9 +1,9 @@
 import React, { useContext } from "react";
-import { Form, Col, Button } from "react-bootstrap"
+import { Col, Button } from "react-bootstrap"
 import { AppContext } from "../context";
 
 export default function BackToPlaylistsBtn() {
-    const { dispatchSongEvent, dispatchError, playlistsorLyrics, allPlaylists, tracks, canvas } = useContext(AppContext);
+    const { dispatchSongEvent, tracks } = useContext(AppContext);
 
     const BackToPlaylistsBtn = () => {
         if (tracks !== '') {

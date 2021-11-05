@@ -13,9 +13,6 @@ export default function CanvasSelector() {
                 <Form.Control
                     onChange={e => dispatchSongEvent('SET_CANVAS', e.target.value)}
                     as="select"
-                //    className='border border-danger'
-
-                // defaultValue={e.target.value} need to get option selected to stay populated
                 >
                     <option>Select a Canvas</option>
                     <option value="graph">Graph Values</option>

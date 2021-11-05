@@ -1,8 +1,8 @@
-import { useState, useContext, useEffect } from 'react'
+import { useState, useContext } from 'react'
 import { Button, Col, Row, Form, Container } from 'react-bootstrap';
 import { musixApikey, musixUrl } from '../shared/urls.js';
 import axios from 'axios';
-import 'bootstrap/dist/css/bootstrap.css'; //i think i dont use
+import 'bootstrap/dist/css/bootstrap.css';
 import { Label } from 'reactstrap';
 import '../App.css'
 import { AppContext } from '../context';
@@ -20,10 +20,7 @@ export default function MusicGetterForm() {
     const [song, setSong] = useState('');
     const [error, setError] = useState('');
 
-    // const [playlistsorLyric, setPlaylistsorLyrics] = useState('');
-
-    const { dispatchSongEvent, dispatchError, playlistsorLyrics, allPlaylists, tracks, canvas } = useContext(AppContext);
-    // https://allorigins.win/
+    const { dispatchSongEvent, playlistsorLyrics, tracks, canvas } = useContext(AppContext);
     // https://allorigins.win/
     const getLyrics = () => {
         setSong('');
@@ -36,14 +33,7 @@ export default function MusicGetterForm() {
         ).then((res) => {
             let contents = (JSON.parse(res.data.contents))
             if (contents.message.header.status_code !== 200) throw new Error(contents.message.header.status_code)
-            // console.log(contents.message)
             return contents;
-            // throw new Error('Network response was not ok.')
-            // const fullLyrics = parsed.message.body.lyrics.lyrics_body;
-            // console.log(fullLyrics)
-            // dispatchSongEvent('GET_LYRICS', fullLyrics.substring(0, fullLyrics.length - 69))
-            // dispatchSongEvent('LOADING', false)
-            // dispatchSongEvent('SET_COPYRIGHT', res.data.message.body.lyrics.lyrics_copyright)
         }).then((res) => {
             console.log(res.message.body.lyrics.lyrics_body)
             const fullLyrics = res.message.body.lyrics.lyrics_body;
@@ -55,10 +45,6 @@ export default function MusicGetterForm() {
             dispatchSongEvent('LOADING', false)
             console.log(err.toString())
             setError(err.toString());
-
-            // throw new Error(err)
-            // dispatchError('SET_ERROR', err)
-            // console.log(err)
         });
     }
 
@@ -71,9 +57,6 @@ export default function MusicGetterForm() {
         console.log(selection)
     }
 
-    // getTrackKeys = async () => {
-    //     await 
-    // }
 
     const SelectGraphingOpts = () => {
         // let track = '';
@@ -118,86 +101,23 @@ export default function MusicGetterForm() {
                         })}
                     </ul> */}
                     </Form.Control>
-
                 </Col>
                 : null
         )
     }
 
-    // const LyricsView = () => {
-    //     return (
-    //         <>
-    //             <Col sm="auto">
-    //                 <Label>
-    //                     Song title:
-    //                     <input
-    //                         style={{ marginLeft: 5 }}
-    //                         type="text"
-    //                         value={song}
-    //                         onChange={e => setSong(e.target.value)}
-    //                         key={0}
-    //                     />
-    //                 </Label>
-    //             </Col>
-    //             <Col sm="auto">
-    //                 <Label>
-    //                     Artist:
-    //                     <input
-    //                         style={{ marginLeft: 5 }}
-    //                         type="text"
-    //                         value={artist}
-    //                         onChange={e => setArtist(e.target.value)}
-    //                         key={1}
-    //                     />
-    //                 </Label>
-    //             </Col>
-    //             <Col sm="auto">
-    //                 <CanvasSelector />
-    //             </Col>
-    //             <Row>
-    //                 <Col>
-    //                     <Button onClick={getLyrics}>Get Those Lyrics</Button>
-    //                 </Col>
-    //             </Row>
-    //         </>
-    //     )
-    // }
 
     const PlaylistsView = () => {
 
-        // useEffect(() => { //this is running ea time any of the vals are updated :( 
-        //     dispatchSongEvent('RESET_VALUES', 'lyrics')
-        // }, []);
-
-
         return (
-            // <Col className='justify-content-center align-items-center border col-sm-6'>
-            // <Container className='border justify-content-center '>
-                // {/* <Row> */}
-                <Row  className='justify-content-center '>
-                    <SpotifyLoginButton />
-                    <SpotifyGetPlaylists />
-                    <CanvasSelector />
-                    <BackToPlaylistsBtn />
-                    {/* keep an eye on this. I will want to refactor at some point cuz this is ugly i think */}
-                    {/* <Col sm="auto">
-                        <Form.Control
-                            onChange={e => dispatchSongEvent('SET_CANVAS', e.target.value)}
-                            as="select"
-                            // defaultValue={e.target.value} need to get option selected to stay populated
-                        >
-                            <option>Select a Canvas</option>
-                            <option value="graph">Graph Values</option>
-                            <option value="b">b</option>
-                            <option value="c">C</option>
-                        </Form.Control>
-                        {/* change */}
-                    {/* </Col> */}
-                    <SelectGraphingOpts />
-                    </Row>
-            //     </Row>
-            // </Container>
-            // </Col>
+            <Row className='justify-content-center '>
+                <SpotifyLoginButton />
+                <SpotifyGetPlaylists />
+                <CanvasSelector />
+                <BackToPlaylistsBtn />
+                <SelectGraphingOpts />
+            </Row>
+
         )
     }
 
@@ -224,7 +144,6 @@ export default function MusicGetterForm() {
                             <Label className=''>
                                 Song:
                                 <input
-                                    // className='mx-md-1'
                                     style={{ marginLeft: 5 }}
                                     type="text"
                                     value={song}
@@ -253,6 +172,7 @@ export default function MusicGetterForm() {
                         {error ? <Row className={'my-5'}>
                             <Col>
                                 <p>There has been an error: {error}</p>
+                                <p>MusixMatch's library is limited; try a different song or check the spelling.</p>
                             </Col>
                         </Row> : null}
                     </Row>
@@ -265,9 +185,7 @@ export default function MusicGetterForm() {
 
                 : playlistsorLyrics === 'playlists' ?
                     <ErrorBoundary>
-                        {/* <Row> */}
-                            <PlaylistsView />
-                        {/* </Row> */}
+                        <PlaylistsView />
                     </ErrorBoundary>
 
                     : null}

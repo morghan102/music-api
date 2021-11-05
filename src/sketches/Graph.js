@@ -1,6 +1,4 @@
-import p5 from 'p5';
-import React, { useContext, useEffect, useState, useRef } from 'react';
-import { Col, Container } from 'react-bootstrap';
+import React, { useContext } from 'react';
 import { AppContext } from '../context';
 import Plotly from "plotly.js-basic-dist-min";
 import createPlotlyComponent from "react-plotly.js/factory";
@@ -9,12 +7,10 @@ const Plot = createPlotlyComponent(Plotly);
 
 export default function Graph() {
     const { tracks, valOfGraphSketch } = useContext(AppContext);//tracks is now an object w the vals, names, artists\
-    const { audioFeatsVals, tracksNames, tracksArtists } = tracks; //artists needs to be messed w a lil
-    // console.log(tracksNames)
+    const { audioFeatsVals, tracksNames } = tracks; //artists needs to be messed w a lil. trcksArtists????
     const valsArr = [];
     let valOfGraphSketchCapitalized = valOfGraphSketch.charAt(0).toUpperCase() + valOfGraphSketch.slice(1);
 
-    // cant remember what this is for.
     const getPropValue = (obj, key) => //why does this work while everythng else didnt???????
         key.split('.').reduce((o, x) =>
             o == undefined ? o : o[x]
@@ -45,38 +41,24 @@ export default function Graph() {
         <Plot
             data={[
                 {
-                    x: tracksNames, //the indeces, CHANGE TO ADD 1
+                    x: tracksNames,
                     y: values,
-                    // z: tracksNames,
                     mode: 'markers+text',
                     type: 'scatter',
                     name: tracksNames,
-                    // hovertext: tracksArtists,// too close together, can't see
-                    // hoverinfo: 'y+z+text',
-                    // textposition: 'top center',
-                    // textposition: 'top',
-                    // marker: { color: 'red' },
                 },
             ]}
-            layout={{ 
-                autosize: true, 
+            layout={{
+                autosize: true,
                 title: valOfGraphSketchCapitalized,
                 height: 800,
                 plot_bgcolor: '#F4F0EC',
                 paper_bgcolor: '#F4F0EC',
-                xaxis: {automargin: true, tickfont:{size: 9}, tickangle: '45' } //layout.scene
-                // hoverlabel: ,
-                // hovermode: 'x'
-                // paper_bgcolor: 'rgb(230,242,236)',
-
-                // xaxis: {range: [-.5, keys.length], title: 'title'},
-                // yaxis: {range: [-.5, 1], title: 'vals'} //get the max val of the vals
+                xaxis: { automargin: true, tickfont: { size: 9 }, tickangle: '45' } //layout.scene
             }}
             useResizeHandler
-            // style might work better
-            // style={{width=100% height=100%} }
-            className='width: 90%; height: 100%' //this is where I do the sizing on render.... Note: To make a plot responsive, i.e. to fill its containing element and resize when the window is resized, use style or className to set the dimensions of the element (i.e. using width: 100%; height: 100% or some similar values) and set useResizeHandler to true while setting layout.autosize to true and leaving layout.height and layout.width undefined. This can be seen in action in this CodePen and will implement the behaviour documented here: https://plot.ly/javascript/responsive-fluid-layout/
-            // onClick={() => pp}
+            className='width: 90%; height: 100%' 
+//this is where I do the sizing on render.... Note: To make a plot responsive, i.e. to fill its containing element and resize when the window is resized, use style or className to set the dimensions of the element (i.e. using width: 100%; height: 100% or some similar values) and set useResizeHandler to true while setting layout.autosize to true and leaving layout.height and layout.width undefined. This can be seen in action in this CodePen and will implement the behaviour documented here: https://plot.ly/javascript/responsive-fluid-layout/
         />
         // dunno if need but maybe good? https://plotly.com/javascript/text-and-annotations/#styling-and-formatting-annotations
     )
