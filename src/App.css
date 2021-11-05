@@ -1,6 +1,6 @@
 html, .background, #root, .list-group-item {
   /* linear gradient wont work bc it renders in ea individual element as the gradient */
-  background-color: #F4F0EC;
+  background-color: #F4F0EC !important;
   font-family: 'Montserrat', sans-serif;
   /* mserrat could work for the copyright */
   /* font-family: 'Josefin Sans', sans-serif;   */
@@ -12,10 +12,10 @@ html, .background, #root, .list-group-item {
  /* font-size: 20px; */
   /* font-weight: 500; */
 }
-.list-group .list-group-item .list-group-item-mine  {
+/* .list-group .list-group-item .list-group-item-mine  {
   background-color: #F4F0EC;
 
-}
+} */
 .flexbox {
   flex: 1 1;
 
@@ -30,6 +30,7 @@ html, .background, #root, .list-group-item {
   background-color: burlywood; */
   font-family: 'Rampart One', cursive;/* music api header?? */
   font-size: 80px;
+  /* color: blue  */
 }
 .explanContainer {
   margin-bottom: 2em;
@@ -47,6 +48,13 @@ html, .background, #root, .list-group-item {
 .playlistList {
   margin: 1%; 
   /* idk if i actually want */
+}
+
+.playlistList.container {
+  width: 30%;
+}
+.list-group-item {
+  margin-top: 2.5%;
 }
 
 

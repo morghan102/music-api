@@ -189,7 +189,7 @@ export default function App() {
       )
     } else if (playlistsorLyrics === 'playlists') {
       return (
-        <Row className='border'>
+        <Row>
           {canvas === "graph" ?
             <Graph />
             : canvas === "b" ?
@@ -236,7 +236,7 @@ export default function App() {
         return <LoadingComponent />
       }
       else if (lyrics && !allPlaylists) {// canvas for lysircs
-        return <Container className='mt-3 border'>
+        return <Container className='mt-3'>
 
           <SelectedCanvas />
           {/* set this apart somehow */}
@@ -245,7 +245,7 @@ export default function App() {
       } else if (allPlaylists && tracks === '' && playlistsorLyrics !== 'lyrics') return <SpotifyPlaylistsList />
 
       else if (tracks) { //canvas for playlist
-        return <Container className='mt-3 border'>
+        return <Container className='mt-3'>
           <h4 className="playlistTitle">{playlistName}</h4>
           <SelectedCanvas />
           {valOfGraphSketch ? <p>{valOfGraphSketchExplanation()}</p> : null}
@@ -306,7 +306,7 @@ export default function App() {
       <ErrorBoundary>
         <AppContext.Provider value={{ lyrics, canvas, allPlaylists, tracks, error, isSpotifyLoggedIn, playlistsorLyrics, accessToken, width, height, valOfGraphSketch, isLoading, dispatchSongEvent, dispatchError }}>
           <header>
-            <h1 className="appHeader">Music API </h1>
+            <h1 className="appHeader"><span>Music API</span></h1>
           </header>
           <body className='background'>
             <ProjectExplanation />

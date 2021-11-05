@@ -47,11 +47,13 @@ export default function Graph() {
                 {
                     x: tracksNames, //the indeces, CHANGE TO ADD 1
                     y: values,
-                    z: tracksArtists,
-                    mode: 'markers',
+                    // z: tracksNames,
+                    mode: 'markers+text',
                     type: 'scatter',
-                    // name: tracksNames,
-                    // text: tracksArtists,
+                    name: tracksNames,
+                    // hovertext: tracksArtists,// too close together, can't see
+                    // hoverinfo: 'y+z+text',
+                    // textposition: 'top center',
                     // textposition: 'top',
                     // marker: { color: 'red' },
                 },
@@ -59,8 +61,16 @@ export default function Graph() {
             layout={{ 
                 autosize: true, 
                 title: valOfGraphSketchCapitalized,
-                xaxis: {range: [-.5, keys.length], title: 'title'},
-                yaxis: {range: [-.5, 1], title: 'vals'} //get the max val of the vals
+                height: 800,
+                plot_bgcolor: '#F4F0EC',
+                paper_bgcolor: '#F4F0EC',
+                xaxis: {automargin: true, tickfont:{size: 9}, tickangle: '45' } //layout.scene
+                // hoverlabel: ,
+                // hovermode: 'x'
+                // paper_bgcolor: 'rgb(230,242,236)',
+
+                // xaxis: {range: [-.5, keys.length], title: 'title'},
+                // yaxis: {range: [-.5, 1], title: 'vals'} //get the max val of the vals
             }}
             useResizeHandler
             // style might work better
@@ -71,7 +81,7 @@ export default function Graph() {
         // dunno if need but maybe good? https://plotly.com/javascript/text-and-annotations/#styling-and-formatting-annotations
     )
 };
-
+// this is what i was looking for layout.annotations would be the place to look https://plotly.com/javascript/reference/#layout
 // https://dev.to/dheerajmurali/building-a-responsive-chart-in-react-with-plotly-js-4on8 for info on if need to change size bc of popup
 
 
