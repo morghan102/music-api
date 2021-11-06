@@ -26,7 +26,7 @@ export default function SpotifyLoginButton() {
         if (window.location.hash) {
             const { access_token, expires_in } = getReturnedParamsFromSpotAuth(window.location.hash);
             dispatchSongEvent('SET_ACCESS_TOKEN', access_token)
-            dispatchSongEvent('SET_EXPIRES_IN', expires_in)
+            // dispatchSongEvent('SET_EXPIRES_IN', expires_in)
         }
     })
 

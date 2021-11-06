@@ -7,9 +7,8 @@ import { AppContext } from '../context';
 let w = window.innerWidth;
 let h = window.innerHeight;// ref https://p5js.org/examples/typography-letters.html
 export default function Anagram() {
-    const { lyrics, width, height } = useContext(AppContext);
+    const { lyrics } = useContext(AppContext);
     const lyricArr = lyrics.toLowerCase().replaceAll(" ", "").replace(/\s+/, "").split(""); //splits on spaces and line breaks
-    // let canvas = null;
     const [p5, setP5] = useState();
 
     // Just register event as mounted
@@ -21,7 +20,6 @@ export default function Anagram() {
 
 
     const setup = (p5, canvasParentRef) => {
-        // canvas = 
         setP5(p5)
         p5.createCanvas(w / 3, h / 1.4).parent(canvasParentRef);
         p5.textSize(20);

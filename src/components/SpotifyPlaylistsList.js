@@ -8,7 +8,7 @@ import axios from 'axios';
 
 
 export default function SpotifyPlaylistsList() {
-    const { dispatchSongEvent, allPlaylists, accessToken } = useContext(AppContext);
+    const { dispatchSongEvent, allPlaylists, accessToken, alreadyFetchedSpotifyPlaylist } = useContext(AppContext);
     const tracksAudioFeatures = [];
     const tracksArtists = [];
     const tracksNames = [];
@@ -40,82 +40,85 @@ export default function SpotifyPlaylistsList() {
         // let retryAfter = 0;
         // e.preventDefault();
         dispatchSongEvent('SET_PLAYLIST_NAME', pl.name)
-        axios.get(pl.href, {
-            headers: {
-                Authorization: 'Bearer ' + accessToken,
-            },
-        }).then((res) => {
-            // this is for getting name of the tracks and artists to the graph
-            res.data.tracks.items.forEach((track) => tracksNames.push(track.track.name))
-            res.data.tracks.items.forEach((track, i) => {
-                let arr = [];
-                track.track.artists.forEach(function (arrayItem) {
-                    var x = arrayItem.name;
-                    arr.push(x);
-                })
-                tracksArtists.push(arr)
-            })
-
-
-
-            // fetches the audio features of ea track
-            const ids = extractIds(res.data.tracks.items);
-            ids.forEach(id => {
-                // fetchAndRetryIfNecessary(() => )
-
-                axios.get(`https://api.spotify.com/v1/audio-features/${id}`, {
-                    headers: {
-                        Authorization: 'Bearer ' + accessToken,
-                    },
-                    // 'axios-retry': {
-                    //     retries: 3,
-                    //     retryDelay: (retryCount) => {
-                    //         return retryCount * 3000;
-                    //     }
-                    // }
-                })
-                    .then((res) => {
-                        // if (res.status === 429) { //this doesnt run at all
-                        //     setTimeout(getTrack(id), res.headers.get('retry-after') * 1000)
-                        //     console.log('you')
-                        // }
-                        tracksAudioFeatures.push(res.data)
-                    }).catch((err) => { //can deal w 429s here
-                        // if (err.response) {// client received an error response (5xx, 4xx)
-                        //     if (err.response.status === 429) {
-                        //         console.log(err.response)
-                        //         retryAfter = err.response.headers.retryAfter;
-
-                        //     }
-                        //     // else if ()
-                        // } else if (err.request) { // client never received a response, or request never left
-
-                        // } else {
-
-                        // }
-                        setError(err)
+        if (pl.name in alreadyFetchedSpotifyPlaylist && alreadyFetchedSpotifyPlaylist[pl.name] !== '') {
+            dispatchSongEvent('SET_TRACKS', alreadyFetchedSpotifyPlaylist[pl.name])
+        } else {
+            axios.get(pl.href, {
+                headers: {
+                    Authorization: 'Bearer ' + accessToken,
+                },
+            }).then((res) => {
+                // this is for getting name of the tracks and artists to the graph
+                res.data.tracks.items.forEach((track) => tracksNames.push(track.track.name))
+                res.data.tracks.items.forEach((track, i) => {
+                    let arr = [];
+                    track.track.artists.forEach(function (arrayItem) {
+                        var x = arrayItem.name;
+                        arr.push(x);
                     })
-                // if (res.status === 429) {
-                //     const millis = getMillis(retryAfter)
-                //     // sleep(millis);
-                //     setTimeout(res(), millis)
+                    tracksArtists.push(arr)
+                })
+
+                // fetches the audio features of ea track
+                const ids = extractIds(res.data.tracks.items);
+                ids.forEach(id => {
+                    // fetchAndRetryIfNecessary(() => )
+
+                    axios.get(`https://api.spotify.com/v1/audio-features/${id}`, {
+                        headers: {
+                            Authorization: 'Bearer ' + accessToken,
+                        },
+                        // 'axios-retry': {
+                        //     retries: 3,
+                        //     retryDelay: (retryCount) => {
+                        //         return retryCount * 3000;
+                        //     }
+                        // }
+                    })
+                        .then((res) => {
+                            // if (res.status === 429) { //this doesnt run at all
+                            //     setTimeout(getTrack(id), res.headers.get('retry-after') * 1000)
+                            //     console.log('you')
+                            // }
+                            tracksAudioFeatures.push(res.data)
+                        }).catch((err) => { //can deal w 429s here
+                            // if (err.response) {// client received an error response (5xx, 4xx)
+                            //     if (err.response.status === 429) {
+                            //         console.log(err.response)
+                            //         retryAfter = err.response.headers.retryAfter;
+
+                            //     }
+                            //     // else if ()
+                            // } else if (err.request) { // client never received a response, or request never left
+
+                            // } else {
+
+                            // }
+                            setError(err)
+                        })
+                    // if (res.status === 429) {
+                    //     const millis = getMillis(retryAfter)
+                    //     // sleep(millis);
+                    //     setTimeout(res(), millis)
+                    // }
+
+                })
+
+                dispatchSongEvent('SET_TRACKS', { 'audioFeatsVals': tracksAudioFeatures, 'tracksNames': tracksNames, 'tracksArtists': tracksArtists })
+            }).catch((err) => { //can deal w 429s here
+                // if (err.response) {// client received an error response (5xx, 4xx)
+                //     // console.log('no')
+                //     // if (err.response.statusCode === 429) return console.log('wow')
+                //     // else if ()
+                // } else if (err.request) { // client never received a response, or request never left
+
+                // } else {
+
                 // }
-
-            })
-            dispatchSongEvent('SET_TRACKS', { 'audioFeatsVals': tracksAudioFeatures, 'tracksNames': tracksNames, 'tracksArtists': tracksArtists })
-        }).catch((err) => { //can deal w 429s here
-            // if (err.response) {// client received an error response (5xx, 4xx)
-            //     // console.log('no')
-            //     // if (err.response.statusCode === 429) return console.log('wow')
-            //     // else if ()
-            // } else if (err.request) { // client never received a response, or request never left
-
-            // } else {
-
-            // }
-            setError(err)
-            console.log(err)
-        });
+                setError(err)
+                console.log(err)
+            });
+        }
     }
 
     const extractIds = (tracksObj) => {

@@ -1,5 +1,5 @@
 import './App.css';
-import { useState, useEffect, useRef } from 'react'
+import { useState, useEffect } from 'react'
 import 'bootstrap/dist/css/bootstrap.css'; //i think i dont use
 import { Collapse, Container, Button, Row } from 'react-bootstrap';
 import TextShuffle from './sketches/TextShuffle';
@@ -23,15 +23,15 @@ export default function App() {
   const [tracks, setTracks] = useState('');
   const [playlistsorLyrics, setPlaylistsorLyrics] = useState('');
   const [accessToken, setAccessToken] = useState('');
-  const [expiresIn, setExpiresIn] = useState('');
+  // const [expiresIn, setExpiresIn] = useState('');
   const [valOfGraphSketch, setValOfGraphSketch] = useState('');
   const [playlistName, setPlaylistName] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [copyright, setCopyright] = useState('');
   const [open, setOpen] = useState(false);
   const [width, setWidth] = useState(window.innerWidth);
-  const [height, setHeight] = useState(window.innerHeight); //using those 2 vals?
-  const [alreadyFetchedSpotify, setAlreadyFetchedSpotify] = useState({});
+  // const [height, setHeight] = useState(window.innerHeight); //using those 2 vals?
+  const [alreadyFetchedSpotifyPlaylist, setAlreadyFetchedSpotifyPlaylist] = useState({});
 
 
   const handleResize = e => setWidth(window.innerWidth);
@@ -43,7 +43,7 @@ export default function App() {
       case 'GET_LYRICS':
         setLyrics(payload);
         return;
-      case 'SET_CANVAS': 
+      case 'SET_CANVAS':
         setCanvas(payload);
         return
       case 'SET_ALL_PLAYLISTS':
@@ -51,6 +51,7 @@ export default function App() {
         return
       case 'SET_TRACKS':
         setTracks(payload)
+        alreadyFetchedSpotifyPlaylist[playlistName] = payload;
         return
       case 'SET_P_OR_L':
         setPlaylistsorLyrics(payload)
@@ -58,10 +59,10 @@ export default function App() {
       case 'SET_ACCESS_TOKEN':
         setAccessToken(payload);
         return
-      case 'SET_EXPIRES_IN':
-        setExpiresIn(payload);
-        triggerCountDown();
-        return
+      // case 'SET_EXPIRES_IN':
+      //   setExpiresIn(payload);
+      //   triggerCountDown();
+      //   return
       case 'SET_VAL_OF_GRAPH_SKETCH':
         setValOfGraphSketch(payload);
         return
@@ -77,6 +78,14 @@ export default function App() {
       case 'SET_COPYRIGHT':
         setCopyright(payload)
         return
+      // case 'SET_ALREADY_FETCHED_SPOTIFY_PLAYLIST':
+      //   // setAlreadyFetchedSpotifyPlaylist(payload)
+      //   // console.log(payload)
+      //   // let {p} = payload;
+      //   // console.log(p)
+      //   alreadyFetchedSpotifyPlaylist[playlistName] = payload;
+      //   console.log(alreadyFetchedSpotifyPlaylist)
+      //   return
       default:
         return;
     }
@@ -94,19 +103,19 @@ export default function App() {
     }
   }
 
-  const triggerCountDown = () => {
-    setTimeout(() => {
-      console.log("spotify access url being cleared")
-      alert("Spotify access url being cleared, please log back in.")
-      removeHash()
-      window.location.reload(true);
-    }, 3600000);
+  // const triggerCountDown = () => {
+  //   setTimeout(() => {
+  //     console.log("spotify access url being cleared")
+  //     alert("Spotify access url being cleared, please log back in.")
+  //     removeHash()
+  //     window.location.reload(true);
+  //   }, 3600000);
 
-  }
+  // }
 
-  function removeHash() {
-    window.history.pushState("", document.title, window.location.pathname + window.location.search);
-  }
+  // function removeHash() {
+  //   window.history.pushState("", document.title, window.location.pathname + window.location.search);
+  // }
 
 
 
@@ -130,7 +139,7 @@ export default function App() {
 
     if (playlistsorLyrics === 'lyrics') {
       return (
-        <Row> 
+        <Row>
           {canvas === "lyricsA" ?
             <TextShuffle />
             : canvas === "lyricsB" ?
@@ -202,8 +211,8 @@ export default function App() {
     return (
       <Container className="explanContainer">
         <h4 className="explanHeader">What is this project about?</h4>
-        {width}<br/>
-        {height}
+        {/* {width}<br/>
+        {height} */}
         {width <= 768 ? <Container>
           <Button
             className='btn-warning'
@@ -226,7 +235,7 @@ export default function App() {
   return (
     <div className="App">
       <ErrorBoundary>
-        <AppContext.Provider value={{ lyrics, canvas, allPlaylists, tracks, error, playlistsorLyrics, accessToken, width, height, valOfGraphSketch, isLoading, dispatchSongEvent }}>
+        <AppContext.Provider value={{ alreadyFetchedSpotifyPlaylist, lyrics, canvas, allPlaylists, tracks, error, playlistsorLyrics, accessToken, width, valOfGraphSketch, isLoading, dispatchSongEvent }}>
           <header>
             <h1 className="appHeader"><span>Music API</span></h1>
           </header>
