@@ -5,7 +5,7 @@ import { Col } from 'react-bootstrap';
 
 
 const spotify_auth_endpoint = 'https://accounts.spotify.com/authorize';
-const redirect_uri_after_login = 'http://localhost:3000/';
+const redirect_uri_after_login = 'https://music-api-f364a.web.app';
 const scopes = ['playlist-read-private'] //can add more here https://developer.spotify.com/documentation/general/guides/scopes/
 const scopes_url_param = scopes.join("%20");
 

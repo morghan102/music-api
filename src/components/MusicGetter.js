@@ -54,7 +54,7 @@ export default function MusicGetterForm() {
         dispatchSongEvent('SET_TRACKS', '')
         dispatchSongEvent('GET_LYRICS', '')
         dispatchSongEvent('RESET_VALUES', selection)
-        console.log(selection)
+        // console.log(selection)
     }
 
 
