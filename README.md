@@ -14,12 +14,8 @@
 
 <!-- and add the kanye rest api as a fun addition -->
 
-todo:
-1. add spotify api
-    - https://developer.spotify.com/documentation/general/guides/authorization-guide/#client-credentials-flow for reference to how to add w/o user auth
-    - https://community.spotify.com/t5/Spotify-for-Developers/Accessing-Spotify-API-without-Logging-In/td-p/5063968 also this
-
-
+Find the project here!
+https://music-api-f364a.web.app
 
 
 
