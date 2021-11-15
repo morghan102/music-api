@@ -14,9 +14,29 @@
 
 <!-- and add the kanye rest api as a fun addition -->
 
-Find the project here!
+Try the project here!
 https://music-api-f364a.web.app
 
+# Music API
+This is a mobile first, streamlined front-end React app using Axios to fetch playlists and song lyrics from MusixMatch & Spotify APIs that visually draws and graphs user's selected inquiry using P5.js and Plotly.js. Project caches playlists for improved performance. The simple interface keeps focus on the data and not on clicking through a complicated website.
+
+Plots and drawings will be added on a weekly and monthly basis.
+
+# Project Motivation
+In honing my JavaScript and React skills, I settled on doing an API project. I love music and Spotify and have always wondered how they can make such good suggestions for me based on what I've liked, so using Spotify's song data seemed like a fun project. As for MusixMatch, I wanted to use song lyrics to make some kind of art, to turn music into something visual.
+
+# Tech/Frameworks Used:
+### built using
+- React
+- Bootstrap
+- Firebase
+- Axios
+- Bootstrap, React-Bootstrap, and Reactstrap
+- Plotly.js
+- P5.js
+
+# License
+MIT morghan102
 
 
 
@@ -25,13 +45,7 @@ https://music-api-f364a.web.app
 
 
 
-
-
-
-
-
-
-### `yarn test`
+<!-- ### `yarn test`
 
 Launches the test runner in the interactive watch mode.\
 See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
@@ -84,4 +98,4 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/d
 
 ### `yarn build` fails to minify
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify) -->

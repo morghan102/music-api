@@ -18,7 +18,7 @@ export default function SpotifyPlaylistsList() {
     function PlaylistList() {
         let counter = 0;
         return (
-            <ListGroup variant="flush" className='playlistLitGrp'>
+            <ListGroup variant="flush">
                 {allPlaylists ? allPlaylists.map((pl) => {
                     counter++
                     return (
