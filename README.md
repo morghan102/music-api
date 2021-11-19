@@ -14,8 +14,12 @@
 
 <!-- and add the kanye rest api as a fun addition -->
 
-Try the project here!
+Try the project here! (Only lyric (MusixMatch) portion)
 https://music-api-f364a.web.app
+
+To view the playlist (Spotify) functionality, refer to the videos below:
+
+This is not available to be tested because of Spotify restrictions. I am waiting on Spotify to lift user access restricitons. If you would like to test it yourself please contact me and I will add your credentials.
 
 # Music API
 This is a mobile first, streamlined front-end React app using Axios to fetch playlists and song lyrics from MusixMatch & Spotify APIs that visually draws and graphs user's selected inquiry using P5.js and Plotly.js. Project caches playlists for improved performance. The simple interface keeps focus on the data and not on clicking through a complicated website.

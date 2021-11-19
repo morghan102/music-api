@@ -21,8 +21,9 @@ const SpotifyGetPlaylists = () => {
             dispatchSongEvent('SET_ALL_PLAYLISTS', res.data.items)
             dispatchSongEvent('LOADING', false)
         }).catch((err) => {
-            console.log(err)
-            setError(err)
+            console.log(err.toString())
+            setError(err.toString())
+            dispatchSongEvent('LOADING', false)
         });
     };
 
