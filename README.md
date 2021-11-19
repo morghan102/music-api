@@ -18,6 +18,9 @@ Try the project here! (Only lyric (MusixMatch) portion)
 https://music-api-f364a.web.app
 
 To view the playlist (Spotify) functionality, refer to the videos below:
+https://user-images.githubusercontent.com/48462502/142554697-d16c12ec-b623-41bd-a3f2-1f7b09c3a8d7.mp4
+
+
 
 This is not available to be tested because of Spotify restrictions. I am waiting on Spotify to lift user access restricitons. If you would like to test it yourself please contact me and I will add your credentials.
 
